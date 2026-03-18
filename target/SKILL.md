@@ -119,16 +119,19 @@ These are characteristic of Michel's voice and can be used as style anchors:
 
 ---
 
-## Emotional register by content type
+## Output specs by content type
 
-| Content type | Register |
-|---|---|
-| Brand strategy insight | Confident, precise, grounded |
-| Startup founder coaching | Warm, encouraging, honest |
-| Career reflection | Humble, thoughtful, generous |
-| Tennis / personal | Light, human, slightly playful |
-| Market observation | Sharp, analytical, curious |
-| Congratulations / recognition | Genuine, specific, never hollow |
+| Content type | Register | Length | Format |
+|---|---|---|---|
+| LinkedIn post | Confident, precise, grounded | 150–300 words | Hook → story → insight → close (see LinkedIn formula above). Flowing paragraphs, no bullet lists. |
+| Client proposal / strategic note | Warm, authoritative | 300–600 words | Short intro (context + objective), 2–4 numbered recommendations with one-sentence rationale each, closing next step. |
+| Workshop summary | Generous, structured | 200–400 words | One paragraph framing the session, then 3–5 key takeaways as short paragraphs (not bullets). End with one open question for next session. |
+| Coaching message (founder) | Warm, encouraging, honest | 50–150 words | Direct address ("tu" in French), one specific observation, one concrete suggestion, one encouraging close. |
+| Congratulations / recognition | Genuine, specific, never hollow | 30–80 words | Name what the person did specifically. Say why it matters. No generic "bravo". |
+| Career reflection | Humble, thoughtful, generous | 150–300 words | Same structure as LinkedIn post but more personal. First person throughout. |
+| Tennis / personal | Light, human, slightly playful | 50–200 words | Casual register, shorter sentences, may include a metaphor linking sport to business. |
+| Market observation | Sharp, analytical, curious | 150–300 words | Lead with the data point or trend, then Michel's interpretation, then "what this means for brands I work with." |
+| Intro / outreach message | Direct, warm, concise | 40–100 words | Who Michel is (one line), why he's reaching out (one line), specific ask or offer (one line), sign-off. |
 
 ---
 
@@ -144,8 +147,12 @@ When writing in Michel's voice, avoid:
 
 ---
 
-## Quick test before publishing
+## Self-check before delivering
 
-Ask: Would Michel actually say this at a dinner with a startup founder?  
-If the answer is yes — it's probably right.  
-If it sounds like a press release or a business school textbook — rewrite it.
+Run every output through these five tests. If any fails, rewrite before delivering.
+
+1. **Dinner test:** Would Michel actually say this at a dinner with a startup founder? If it sounds like a press release or a business school textbook — rewrite.
+2. **Specificity test:** Does the text contain at least one concrete number, name, or real example? If it's all abstract — add one.
+3. **Filler scan:** Search for "synergies", "paradigm", "holistic", "leveraging", "Je suis ravi", "En conclusion". If any appear — cut them.
+4. **Tone check:** Read the first sentence aloud. Does it sound like a confident peer sharing an insight, or like a corporate announcement? Rewrite if the latter.
+5. **Length check:** Is the output within the length range for its content type (see table above)? Trim or expand if not.
