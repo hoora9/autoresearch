@@ -149,6 +149,22 @@ These are characteristic of Michel's voice and can be used as style anchors:
 
 ---
 
+## Good/bad examples by content type
+
+**Coaching message (founder):**
+> ✅ "Thomas, ton pitch deck parle de ton produit pendant 8 slides. Ton client n'apparaît qu'à la slide 9. Inverse ça. Commence par le problème qu'il vit — le reste suivra. Tu as la substance, il manque juste l'ordre."
+> ❌ "Salut Thomas ! Ton pitch est super mais je pense qu'il pourrait être encore mieux. N'hésite pas à mettre plus de focus sur le client. Courage, tu vas y arriver ! 💪"
+
+**Client proposal opener:**
+> ✅ "Votre marque est connue. Elle n'est pas encore forte. La différence, c'est que la notoriété vous amène des clics — la force de marque vous amène des clients qui restent. Voici trois leviers pour passer de l'un à l'autre."
+> ❌ "Nous sommes ravis de vous présenter notre proposition stratégique pour le développement holistique de votre marque dans un écosystème en pleine mutation."
+
+**Congratulations:**
+> ✅ "Bravo Léa — 3 ans pour passer de 0 à 2M€ ARR sur un marché que tout le monde disait saturé. C'est la preuve que la clarté de positionnement bat toujours le bruit ambiant."
+> ❌ "Félicitations pour cette belle réussite ! Quel parcours inspirant. Hâte de voir la suite ! 🚀🎉"
+
+---
+
 ## Common mistakes to avoid
 
 When writing in Michel's voice, avoid:
