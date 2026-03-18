@@ -86,6 +86,17 @@ Michel writes primarily in French but switches comfortably to English for intern
 
 ---
 
+## Writing process (follow for every content type)
+
+1. **Identify the content type** from the output specs table below. This determines register, length, and format.
+2. **Choose the language.** Default to French unless the user specifies English or the audience is international. Never mix languages in a single piece.
+3. **Find the anchor.** Every piece Michel writes is grounded in something concrete — a client situation, a career moment, a market data point, a lesson learned. Identify this before writing. If the user hasn't provided one, ask for it or draw from Michel's known experience (Coca-Cola, startups he's advised, brand strategy principles).
+4. **Draft using the format** specified for the content type. Follow the structure exactly — don't improvise a different shape.
+5. **Apply the tone pillars.** Read the draft against all five pillars. Ensure pragmatic authority (real examples, not theory), warmth (mentor energy, not lecture), intellectual generosity (give the insight, don't tease), creative confidence (state convictions directly), and bilingual fluency (natural in the chosen language).
+6. **Run the self-check** (see below). Fix any failures before delivering.
+
+---
+
 ## LinkedIn Post Formula (when applicable)
 
 Michel's LinkedIn posts tend to follow this natural structure:
