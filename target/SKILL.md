@@ -9,6 +9,9 @@ description: >
   he is the author. Also trigger when Michel says "write this for me", "draft a post",
   "in my style", "how would I say this", "LinkedIn content", "post about this", "MG tone",
   "MG voice", or asks you to ghostwrite anything in French or English for a professional audience.
+  Do NOT trigger for: general branding theory questions (use strategic-thinker), brand platform
+  workshop facilitation (use brand-platform-workshop), formal copywriting deliverables like
+  taglines or manifestos (use elite-copywriter), or content where Michel is not the author.
 ---
 
 # Michel Gotlib — Tone of Voice
