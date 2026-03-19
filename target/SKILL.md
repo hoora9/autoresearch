@@ -1,6 +1,8 @@
 ---
 name: workflow-to-manual-skill
-description: This skill transforms any described workflow into a clear, step-by-step manual that tells the user exactly what to set up on their computer — folders, files, prompts, MCPs, skills, and plugins — before they can run it. Every time the user describes a workflow, Claude produces a structured setup-and-execution guide.
+description: >
+  Transforms any described workflow into a step-by-step manual covering folders, files, prompts, MCPs, skills, and plugins needed to run it. Use when the user says: 'turn this into steps', 'make me a manual', 'how do I set this up', 'what do I need to do first', 'write setup instructions for this workflow', or describes a repeatable process they want to run using Claude Desktop, Cowork, or Claude Code.
+  Do NOT trigger for: designing workflow architecture (use architecture), orchestrating self-improving agent loops (use workflow-orchestration), preparing a workflow definition file (use prepare-workflow), or executing a workflow directly (just do it — this skill only produces documentation).
 ---
 
 Workflow-to-Manual Skill
@@ -203,4 +205,4 @@ Example Interaction
 User says: "I want to take a call transcript and turn it into a strategy deck using my brand template."
 Claude responds with the full manual, starting by asking any clarifying questions needed, then producing all 8 sections with exact folders to create, files to place, prompts to paste, and outputs to expect.
 
-This skill is always active. Any time a user describes a workflow involving files, prompts, MCPs, skills, or Claude tools, produce the manual in this format.
+When this skill is triggered, produce the manual in this format. Scale to the complexity of the workflow described.
