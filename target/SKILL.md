@@ -8,6 +8,7 @@ description: >
   or wants to create interactive 3D experiences, product configurators, data visualizations in 3D,
   immersive web experiences, or portfolios with 3D elements. If the user references Three.js, Babylon.js,
   R3F, or any WebGL-related library, use this skill.
+  Do NOT trigger for: 2D scroll animations without 3D (use kinetic-minimalism), general frontend UI (use frontend-design), Figma-to-code (use figma-designer), GSAP-only animation reference (use gsap-cheat-sheet-skills), or video-to-website conversions (use video-to-website).
 ---
 
 # WebGL & 3D Web Development Skill Guide
