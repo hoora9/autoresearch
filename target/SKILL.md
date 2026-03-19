@@ -1183,6 +1183,20 @@ For each board session, structure the response as:
 - **Recommended action**: [Concrete next step informed by the strongest arguments]
 ```
 
+## Good vs Bad Example
+
+**User asks:** "Should I launch my MVP now or wait until it's more polished?"
+
+❌ **Bad (generic, no real persona voice):**
+> Steve Jobs would say quality matters. Warren Buffett would say be patient. You should probably wait.
+
+✅ **Good (distinct voices, real references, actionable):**
+> ### Steve Jobs — The Visionary Product Philosopher
+> "Real artists ship." I delayed the original Macintosh by over a year chasing perfection, and it nearly killed Apple. But when I came back in '97, I killed 70% of Apple's product line and focused on four things done exceptionally well. The question isn't "is it perfect?" — the question is "is it insanely great at the ONE thing that matters?" If your core experience makes people say "wow," ship it tomorrow. If it doesn't, no amount of polish will save it. Cut features until what remains is undeniable, then ship.
+>
+> ### Warren Buffett — The Patient Capital Allocator
+> "Rule number one: never lose money. Rule number two: never forget rule number one." Every launch is a bet on your reputation. I'd ask: what's the cost of waiting three more months versus the cost of a bad first impression? In my experience, the market rarely punishes you for being late — but it has a long memory for disappointment. If your early users will forgive rough edges because the value proposition is clear, launch. If they'll churn and never come back, you only get one shot.
+
 ## Quality Checks
 
 - Each advisor's voice must be distinct — Steve Jobs should sound nothing like Warren Buffett
