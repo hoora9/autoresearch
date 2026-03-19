@@ -1,6 +1,8 @@
 ---
 name: video-to-website
-description: Turn a video into a premium scroll-driven animated website with GSAP, canvas frame rendering, and layered animation choreography.
+description: >
+  Turn a video into a premium scroll-driven animated website with GSAP, canvas frame rendering, and layered animation choreography. Use when the user says: 'turn this video into a website', 'video to website', 'scroll-driven video site', 'make a website from this video', 'canvas frame animation', or provides a video file and asks for an interactive scroll experience built from its frames.
+  Do NOT trigger for: general scroll animation without video frames (use kinetic-minimalism), static website builds (use frontend-design), Figma-to-code (use figma-designer), or video analysis/reporting (use video-report).
 ---
 
 # Video to Premium Scroll-Driven Website
@@ -36,7 +38,7 @@ If the user doesn't specify these, ask briefly or use sensible creative defaults
 
 ## Workflow
 
-**FFmpeg and FFprobe are already installed at `C:\Users\nateh\bin\` and on PATH. Do NOT reinstall.**
+**Requires FFmpeg and FFprobe on PATH.** Check with `ffmpeg -version` before starting.
 
 ### Step 1: Analyze the Video
 
