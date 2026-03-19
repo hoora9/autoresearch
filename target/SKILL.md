@@ -11,6 +11,9 @@ description: >
   "pin sections", "luxury web aesthetic", "institutional website", or wants to add life and
   motion to a clean, minimal layout. If the user asks for a website that should feel "premium",
   "cinematic", "alive", or "sophisticated" — this is the skill to use.
+  Do NOT trigger for: static websites without animation (use frontend-design), 3D/WebGL scenes
+  (use webgl-3d-dev), video-to-website conversions (use video-to-website), general GSAP API
+  reference (use gsap-cheat-sheet-skills), or Figma-to-code without motion requirements (use figma-designer).
 ---
 
 # Kinetic Minimalism — Motion & Design System
