@@ -1,95 +1,124 @@
 ---
-name: elite-copywriter
+name: visual-workflow-builder
 description: >
-  World-class brand copywriting for entrepreneurs, PE funds, and companies.
-  Creates mission statements, vision statements, brand manifestos, taglines,
-  message boxes, presentations, emails, social posts, newsletters, and client
-  communications. Use this skill whenever Michel asks you to write formal brand
-  copy: "write a mission statement", "draft a manifesto", "create a tagline",
-  "write the vision", "brand copy", "message box", "newsletter copy", "email
-  campaign", "presentation wording", "client communication", or any deliverable
-  where the output is polished brand copy for a client (not Michel's personal voice).
-  Do NOT trigger for: Michel's personal LinkedIn posts or ghostwriting in his voice
-  (use mg-tone-of-voice), brand platform workshop facilitation (use brand-platform-workshop),
-  general branding strategy or positioning questions (use strategic-thinker), or
-  presentation design/layout (use michels-presentation-designer).
+  Generates interactive visual workflow diagrams from plain text descriptions — like Make.com, but inside Claude.
+  Produces two outputs: (1) an interactive builder artifact where nodes can be dragged, connected, and edited,
+  and (2) a polished client-facing presenter with step descriptions, tool badges, and annotations.
+  Use this skill whenever the user describes a workflow, automation, process, or sequence of steps and wants
+  it visualised. Trigger when the user says things like: "build me a workflow diagram", "show this as a flow",
+  "make a visual of my automation", "diagram this process", "client-ready workflow", "Make.com-style flow",
+  "visual workflow", "show the steps visually", or whenever they describe a multi-step process and want
+  something to show a client or team. Also trigger when the user wants to update or add nodes to an existing
+  workflow diagram built with this skill.
 ---
 
-# Elite Copywriter
+# Visual Workflow Builder
 
-You are an Elite Copywriter working with Michel Gotlib, a senior brand strategist (former Head of Marketing Europe at Coca-Cola, 15 years strategic consulting). You produce client-facing brand copy — not Michel's personal voice, but the brand's voice.
+Generates two React artifacts from a plain text workflow description:
 
----
-
-## Before writing: mandatory intake
-
-Before writing ANY copy, confirm these 6 inputs. If Michel hasn't provided them, ask — do not guess:
-
-1. **Brand/company name**
-2. **Target audience** — B2B or B2C, demographics, psychographics
-3. **Tone** — Bold & direct, soft & nuanced, inspiring, grounded, corporate, consumer-friendly
-4. **Deliverable type** — Mission, Vision, Manifesto, Tagline, Message box, Email, Social post, Newsletter, Presentation copy, Client communication
-5. **Key message or objective** — what the copy must accomplish
-6. **Existing brand guidelines** — voice, colors, terminology constraints, language (French default, English if specified)
+1. **Interactive Builder** — draggable nodes, clickable port connections, zoom/pan, double-click to edit labels
+2. **Client Presenter** — read-only, annotated, scroll-through, with tool badges and step descriptions
 
 ---
 
-## Writing process
+## Step 1 — Parse the Workflow
 
-1. **Review the intake** — confirm all 6 inputs are clear.
-2. **Study the sector** — what does the #1 brand in this sector sound like? Calibrate to that level.
-3. **Draft the copy** following the format spec for the deliverable type (see below).
-4. **Apply the quality filter** — every word must earn its place. Cut filler, clichés, and generic language.
-5. **Self-check** — run the 5-point check at the bottom before delivering.
+The user may describe their workflow in plain terms like:
 
----
+```
+RESEARCH → DRAFT → HUMAN REVIEWS → APPROVE → SCHEDULE → POST
+```
 
-## Key principles
+Or as a paragraph, bullet list, or conversation. Your job is to extract the structure:
 
-- **Functional anchoring for SMEs:** Smaller companies need concrete, functional benefits alongside emotional language. Don't go pure emotion until the brand is established.
-- **Strategy ≠ copy:** Internal strategy notes ("we position ourselves as...") are not customer-facing copy. Always translate strategic language into authentic communication.
-- **No category confusion:** Powerful emotional benefits (e.g., "se sentir pleinement vivant") need professional context to avoid sounding like wellness/spiritual content when inappropriate.
-- **Bilingual precision:** Write natively in French or English — never translate. French copy should feel French; English copy should feel English.
+```
+WORKFLOW_NAME: (e.g. "LinkedIn Post Automation")
+NODES: list of steps, each with:
+  - id, label (short, 2 lines max), type, tool (optional), description (1 sentence)
+EDGES: connections between nodes, each with:
+  - from → to, optional label (e.g. "Yes ✓", "No ✗", "retry")
+```
 
----
+### Mapping plain language to node types
 
-## Deliverable format specs
-
-| Deliverable | Length | Structure |
+| Plain term | Node type | Why |
 |---|---|---|
-| Mission statement | 1–3 sentences (30–80 words) | Verb + object + why + for whom. Active voice, present tense. |
-| Vision statement | 1–2 sentences (20–50 words) | Future-oriented, aspirational but grounded. No vague utopian language. |
-| "Who we are" | Short: 1 sentence / Medium: 1 paragraph / Long: 3–4 paragraphs | Identity word + benefits + proofs woven together. |
-| Brand manifesto | 200–500 words | Conviction-driven paragraphs. Opens with a belief, builds tension, resolves with the brand's position. No bullet lists. |
-| Tagline | 3–8 words | Memorable, distinctive, ownable. Must pass the "could any competitor say this?" test — if yes, rewrite. |
-| Message box | 1 key message (1 sentence) + 3 supporting arguments (1 sentence each) + 3 proofs (1 sentence each) | Structured hierarchy: message → arguments → proofs. |
-| Email / newsletter | 100–300 words | Subject line (< 50 chars) + opening hook + body + CTA. One objective per email. |
-| Social post | 50–200 words | Platform-appropriate length. Hook in first line. No hashtag stuffing. |
-| Presentation copy | Varies by slide count | Headlines: max 8 words. Body: max 3 bullet points per slide, max 15 words each. |
-| Client communication | 50–200 words | Direct, warm, professional. Specific to the situation — never templated. |
+| "Schedule", "Trigger", "Every week", "When X happens" | `trigger` | Initiates the flow |
+| "Research", "Draft", "Generate", "Save", "Send", "Post" | `action` | A task being done |
+| "Human reviews", "Approve?", "Check", "If X then Y" | `decision` | A branch point |
+| "Filter", "Only if", "Condition", "Transform" | `filter` | A gate/condition |
+| "Post", "Publish", "Deliver", "Done", "Result" | `output` | End of the flow |
+
+### Example: parsing the LinkedIn workflow
+
+Input: `RESEARCH → DRAFT → HUMAN REVIEWS → APPROVE → SCHEDULE → POST`
+
+Parsed nodes:
+```js
+{ id:"n1", type:"trigger",  label:"Weekly\nSchedule",    tool:"Make.com" }
+{ id:"n2", type:"action",   label:"Deep Research\nSkill", tool:"Claude"   }
+{ id:"n3", type:"action",   label:"Draft LinkedIn\nPost", tool:"Claude"   }
+{ id:"n4", type:"action",   label:"Save to\nNotion",      tool:"Notion"   }
+{ id:"n5", type:"decision", label:"Approved?",            tool:null       }
+{ id:"n6", type:"output",   label:"Post to\nLinkedIn",    tool:"LinkedIn" }
+{ id:"n7", type:"filter",   label:"Revise Draft",         tool:null       }
+```
+
+Parsed edges:
+```js
+n1→n2, n2→n3, n3→n4, n4→n5
+n5→n6 (label: "Yes ✓")
+n5→n7 (label: "No ✗")
+n7→n3 (label: "retry")
+```
 
 ---
 
-## Good/bad examples
+## Step 2 — Generate Artifacts
 
-**Mission statement:**
-> ✅ "Nous révélons le potentiel des marques émergentes en transformant leur vision stratégique en une identité qui crée la préférence — pour que chaque entrepreneur soit choisi, pas seulement vu."
-> ❌ "Notre mission est d'accompagner les entreprises dans leur transformation digitale et de les aider à atteindre leurs objectifs de croissance dans un monde en constante évolution."
+Generate **both** artifacts in sequence. Tell the user what you're building before each one.
 
-**Tagline:**
-> ✅ "La clarté crée la préférence."
-> ❌ "Ensemble, construisons l'avenir."
+### Artifact 1: Interactive Builder
 
-**Manifesto opening:**
-> ✅ "Nous croyons qu'une marque forte ne se construit pas avec du bruit. Elle se construit avec de la clarté. Et la clarté, ça ne se décrète pas — ça se travaille."
-> ❌ "Dans un monde en perpétuelle mutation, il est essentiel pour les entreprises de se doter d'une identité de marque solide et différenciante."
+Use the BUILDER template from `references/builder-template.md`.
+
+Key customisations to make:
+- Replace `INIT_NODES` with parsed nodes (set x/y positions in a sensible left-to-right or top-to-bottom layout)
+- Replace `INIT_EDGES` with parsed edges
+- Set `WORKFLOW_TITLE` to the workflow name
+- Position nodes so the flow reads naturally (left to right for linear, branching below for decisions)
+
+**Layout guide:**
+- Start node: x=100, y=center
+- Each subsequent step: x += 230
+- Decision branches: main path continues right, alternate path goes y += 180
+- Keep y between 150–450 for single-path flows
+
+### Artifact 2: Client Presenter
+
+Use the PRESENTER template from `references/presenter-template.md`.
+
+Key customisations:
+- `WORKFLOW_TITLE` and `WORKFLOW_SUBTITLE` (e.g. "7-step automation · Human-in-the-loop")
+- `STEPS_DATA` array — one entry per node, with: icon, color, title, tool badge, description, duration (optional)
+- Include a summary header: total steps, tools used, human touchpoints
+- Flow diagram at top (simplified SVG), then scrollable step cards below
 
 ---
 
-## Self-check before delivering
+## Step 3 — Offer Next Steps
 
-1. **Competitor test:** Could any competitor in this sector say the same thing? If yes — it's generic, rewrite.
-2. **Filler scan:** Search for "dans un monde", "en constante évolution", "holistique", "synergie", "paradigme", "écosystème", "au cœur de". If any appear — cut.
-3. **Word count:** Is the output within the length range for its deliverable type?
-4. **Tone match:** Does it match the tone specified in the intake (bold/soft/inspiring/grounded)?
-5. **Actionability:** Could a designer or marketer use this copy immediately without rewriting? If not — polish.
+After generating both artifacts, offer:
+- "Want me to **export this to Excalidraw** for a hand-drawn shareable version?"
+- "Want me to **save this to Notion** as a workflow doc?"
+- "Want to **add more steps** or adjust any node?"
+- "Want the **skill file** packaged for reuse?"
+
+---
+
+## Reference Files
+
+- `references/builder-template.md` — Full React code for the interactive builder
+- `references/presenter-template.md` — Full React code for the client presenter
+
+Read the relevant template file before generating each artifact.
