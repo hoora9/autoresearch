@@ -10,6 +10,9 @@ description: >
   "visual workflow", "show the steps visually", or whenever they describe a multi-step process and want
   something to show a client or team. Also trigger when the user wants to update or add nodes to an existing
   workflow diagram built with this skill.
+  Do NOT trigger for: simple text-based architecture plans (use architecture), Excalidraw hand-drawn
+  diagrams without interactive nodes (use excalidraw-diagram), step-by-step manual/checklist creation
+  (use workflow-to-manual-skill or prepare-workflow), or Mermaid diagram generation.
 ---
 
 # Visual Workflow Builder
@@ -116,9 +119,19 @@ After generating both artifacts, offer:
 
 ---
 
+## Edge Cases
+
+- **2–3 nodes only:** Still generate both artifacts. Use a compact horizontal layout (x spacing = 200).
+- **No tools specified:** Omit tool badges. Use generic icons (gear for action, diamond for decision).
+- **Parallel paths:** If the user describes steps that happen simultaneously, stack them vertically at the same x position and connect from a single source node.
+- **Updates to existing diagram:** When the user says "add a step" or "change X", modify only the affected nodes/edges. Re-render both artifacts with changes highlighted.
+- **Very large workflows (15+ nodes):** Switch to top-to-bottom layout. Group related nodes into labeled swimlanes if the user describes different teams or systems.
+
+---
+
 ## Reference Files
 
 - `references/builder-template.md` — Full React code for the interactive builder
 - `references/presenter-template.md` — Full React code for the client presenter
 
-Read the relevant template file before generating each artifact.
+**Important:** Read the relevant template file before generating each artifact. These templates contain the full React component code that you customize with the parsed workflow data.
