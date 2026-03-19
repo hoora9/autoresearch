@@ -1,6 +1,14 @@
 ---
 name: notion-knowledge-capture
-description: Transforms conversations and discussions into structured documentation pages in Notion. Captures insights, decisions, and knowledge from chat context, formats appropriately, and saves to wikis or databases with proper organization and linking for easy discovery.
+description: >
+  Transforms conversations and discussions into structured documentation pages in Notion.
+  Use this skill when the user says "save this to Notion", "document this", "capture this
+  decision", "add this to the wiki", "create a how-to from this", "save what we discussed",
+  "put this in Notion", "write this up as a doc", "turn this into a FAQ", or asks to
+  transform any conversation content into Notion documentation.
+  Do NOT trigger for: meeting prep and agendas (use notion-meeting-intelligence), multi-source
+  research across Notion (use notion-research-documentation), or turning specs into implementation
+  tasks (use notion-spec-to-implementation).
 ---
 
 # Knowledge Capture
@@ -186,6 +194,17 @@ See [reference/database-best-practices.md](reference/database-best-practices.md)
 ## Advanced Features
 
 **Documentation databases**: See [reference/database-best-practices.md](reference/database-best-practices.md) for database schema patterns.
+
+## Good/Bad Example: Decision Record
+
+> ✅ **Decision: Use Supabase over Firebase for Belveo's customer portal**
+> Context: Need real-time database for customer accounts, order tracking, and support tickets. Team has 2 backend developers with PostgreSQL experience.
+> Rationale: Supabase uses PostgreSQL (team expertise), offers row-level security (compliance requirement from Phase 5 review), and costs ~40% less at projected 5K users. Firebase would require learning NoSQL patterns.
+> Alternatives considered: Firebase (faster setup but higher cost and team ramp-up), custom PostgreSQL (too much infrastructure work for 2-person team).
+
+> ❌ "We decided to use Supabase because it seemed like the best option for our needs. The team discussed various alternatives and agreed this was the right approach going forward."
+
+---
 
 ## Common Issues
 
