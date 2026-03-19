@@ -282,6 +282,24 @@ After completion, summarize:
 
 ---
 
+## Good vs Bad Entry Example
+
+**Screenshot shows:** A ChatGPT conversation about prompt engineering techniques
+
+❌ **Bad entry (vague, no research):**
+> **ChatGPT Screenshot**
+> A conversation about prompts.
+
+✅ **Good entry (specific, researched, actionable):**
+> **Chain-of-Thought Prompting Technique — ChatGPT**
+> *Source: Screenshot 2024-03-15 at 14.22.33.png*
+>
+> Screenshot shows a ChatGPT conversation demonstrating chain-of-thought (CoT) prompting — prefixing a question with "Let's think step by step" to improve reasoning accuracy. The user tested CoT on a math word problem and got a correct answer vs. an incorrect one without CoT.
+>
+> Chain-of-thought prompting was introduced by Google Brain researchers (Wei et al., 2022) and has become one of the most widely adopted prompt engineering techniques. It works by encouraging LLMs to break complex problems into intermediate steps, improving accuracy on arithmetic, commonsense reasoning, and symbolic tasks by 10-40%. Most effective with larger models (GPT-4, Claude 3+). Free to use — just add "Let's think step by step" or similar phrasing to any prompt.
+>
+> 🔗 https://chat.openai.com
+
 ## Important Behavior Notes
 
 - **Be patient with large libraries.** Process in batches, give progress updates.
