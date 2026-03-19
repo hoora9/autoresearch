@@ -401,4 +401,43 @@ let xTo = gsap.quickTo("#id", "x", {
 
 document.addEventListener("mousemove", e => xTo(e.pageX));
 ```
+
+---
+
+## Quick Decision Guide
+
+| I want to... | Use |
+|--------------|-----|
+| Animate one element | `gsap.to()` / `gsap.from()` / `gsap.fromTo()` |
+| Set values instantly | `gsap.set()` |
+| Sequence multiple animations | `gsap.timeline()` + `.to()` chains |
+| Trigger on scroll | `scrollTrigger` property or `ScrollTrigger.create()` |
+| Scrub animation with scroll | `scrollTrigger: { scrub: true }` |
+| Pin a section while scrolling | `scrollTrigger: { pin: true }` |
+| Animate text per character/word | `SplitText` plugin |
+| Smooth scroll experience | `ScrollSmoother` plugin |
+| Follow cursor smoothly | `gsap.quickTo()` |
+| Reuse animation pattern | `gsap.registerEffect()` |
+| Run code on every frame | `gsap.ticker.add()` |
+
+## Good vs Bad GSAP Usage
+
+❌ **Bad (fights the API):**
+```js
+// Manually managing timeouts for sequencing
+setTimeout(() => { gsap.to(".a", { opacity: 1 }) }, 0);
+setTimeout(() => { gsap.to(".b", { opacity: 1 }) }, 300);
+setTimeout(() => { gsap.to(".c", { opacity: 1 }) }, 600);
+```
+
+✅ **Good (uses timeline + stagger):**
+```js
+gsap.timeline()
+  .from(".a, .b, .c", {
+    opacity: 0,
+    y: 30,
+    stagger: 0.15,
+    duration: 0.6,
+    ease: "power2.out"
+  });
 ```
