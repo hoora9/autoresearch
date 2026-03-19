@@ -1,274 +1,88 @@
 ---
-name: figma-designer
-description: >
-  Transform Figma designs into production-ready, animated websites and components. Use this skill whenever the user mentions Figma, references a Figma file or URL, asks to extract designs from Figma, wants to convert Figma to code, or needs design tokens/variables pulled from Figma. Also trigger when the user says 'pull from Figma', 'match my Figma', 'Figma to HTML/React', 'design handoff', 'extract my design', or references design specs, component libraries, or design systems from Figma. Requires Figma MCP tools. Combines well with frontend-design and kinetic-minimalism skills.
-  Do NOT trigger for: building websites without a Figma reference (use frontend-design or kinetic-minimalism), creating Figma diagrams in FigJam (use Figma MCP directly), 3D/WebGL development (use webgl-3d-dev), or general GSAP animation questions without a Figma design (use gsap-cheat-sheet-skills).
+name: frontend-design
+description: Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, or applications. Generates creative, polished code that avoids generic AI aesthetics.
+license: Complete terms in LICENSE.txt
 ---
 
-# Figma Designer Skill
+This skill guides creation of distinctive, production-grade frontend interfaces that avoid generic "AI slop" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.
 
-Transform Figma designs into pixel-perfect, animated, production-grade websites and components. This skill orchestrates the full pipeline from Figma extraction to deployed code.
+The user provides frontend requirements: a component, page, application, or interface to build. They may include context about the purpose, audience, or technical constraints.
 
-## Core Workflow
+## Design Thinking
 
-```
-1. EXTRACT  →  Pull design context, variables, screenshots from Figma
-2. ANALYZE  →  Map typography, colors, spacing, layout structure
-3. PLAN     →  Decide animation strategy and component architecture
-4. BUILD    →  Generate production code with animations
-5. REFINE   →  Compare against screenshot, iterate
-```
+Before coding, understand the context and commit to a BOLD aesthetic direction:
+- **Purpose**: What problem does this interface solve? Who uses it?
+- **Tone**: Pick an extreme: brutally minimal, maximalist chaos, retro-futuristic, organic/natural, luxury/refined, playful/toy-like, editorial/magazine, brutalist/raw, art deco/geometric, soft/pastel, industrial/utilitarian, etc. There are so many flavors to choose from. Use these for inspiration but design one that is true to the aesthetic direction.
+- **Constraints**: Technical requirements (framework, performance, accessibility).
+- **Differentiation**: What makes this UNFORGETTABLE? What's the one thing someone will remember?
 
-## Step 1: Extract from Figma
+**CRITICAL**: Choose a clear conceptual direction and execute it with precision. Bold maximalism and refined minimalism both work - the key is intentionality, not intensity.
 
-When the user references a Figma file or has one open in the Figma desktop app:
+Then implement working code (HTML/CSS/JS, React, Vue, etc.) that is:
+- Production-grade and functional
+- Visually striking and memorable
+- Cohesive with a clear aesthetic point-of-view
+- Meticulously refined in every detail
 
-### Pull Design Context
-Use `Figma:get_design_context` to extract UI code, layout specs, and component structure. If the user provides a Figma URL, extract the node ID from it:
-- URL format: `https://figma.com/design/:fileKey/:fileName?node-id=1-2`
-- Extracted nodeId: `1:2`
+## Frontend Aesthetics Guidelines
 
-### Capture Visual Reference
-Use `Figma:get_screenshot` to capture the exact visual appearance. This is your ground truth for pixel-perfect implementation.
+Focus on:
+- **Typography**: Choose fonts that are beautiful, unique, and interesting. Avoid generic fonts like Arial and Inter; opt instead for distinctive choices that elevate the frontend's aesthetics; unexpected, characterful font choices. Pair a distinctive display font with a refined body font.
+- **Color & Theme**: Commit to a cohesive aesthetic. Use CSS variables for consistency. Dominant colors with sharp accents outperform timid, evenly-distributed palettes.
+- **Motion**: Use animations for effects and micro-interactions. Prioritize CSS-only solutions for HTML. Use Motion library for React when available. Focus on high-impact moments: one well-orchestrated page load with staggered reveals (animation-delay) creates more delight than scattered micro-interactions. Use scroll-triggering and hover states that surprise.
+- **Spatial Composition**: Unexpected layouts. Asymmetry. Overlap. Diagonal flow. Grid-breaking elements. Generous negative space OR controlled density.
+- **Backgrounds & Visual Details**: Create atmosphere and depth rather than defaulting to solid colors. Add contextual effects and textures that match the overall aesthetic. Apply creative forms like gradient meshes, noise textures, geometric patterns, layered transparencies, dramatic shadows, decorative borders, custom cursors, and grain overlays.
 
-### Map the Structure
-Use `Figma:get_metadata` to get the full layer tree in XML format — node IDs, layer types, names, positions, and sizes. This helps understand the component hierarchy.
+NEVER use generic AI-generated aesthetics like overused font families (Inter, Roboto, Arial, system fonts), cliched color schemes (particularly purple gradients on white backgrounds), predictable layouts and component patterns, and cookie-cutter design that lacks context-specific character.
 
-### Extract Design Tokens
-Use `Figma:get_variable_defs` to pull the design system variables:
-- Colors (primary, secondary, accent, neutrals)
-- Typography scales (font families, sizes, weights, line heights)
-- Spacing values (padding, margins, gaps)
-- Border radius, shadows, and other tokens
+Interpret creatively and make unexpected choices that feel genuinely designed for the context. No design should be the same. Vary between light and dark themes, different fonts, different aesthetics. NEVER converge on common choices (Space Grotesk, for example) across generations.
 
-### Check Code Connect
-Use `Figma:get_code_connect_map` to see if components are already mapped to codebase components. This avoids rebuilding what already exists.
+**IMPORTANT**: Match implementation complexity to the aesthetic vision. Maximalist designs need elaborate code with extensive animations and effects. Minimalist or refined designs need restraint, precision, and careful attention to spacing, typography, and subtle details. Elegance comes from executing the vision well.
 
-## Step 2: Analyze the Design
+Remember: Claude is capable of extraordinary creative work. Don't hold back, show what can truly be created when thinking outside the box and committing fully to a distinctive vision.
 
-After extraction, build a **Design Brief** that captures:
+## Scroll-Driven Website Design Guidelines
 
-### Typography System
-```
-Primary Font:     [extracted or identified from screenshot]
-Secondary Font:   [if applicable]
-Scale:            [h1 → body sizes, weights, letter-spacing]
-Special:          [any display/decorative fonts]
-```
+When this skill is invoked for a scroll-driven animated website (used alongside `video-to-website`), follow these additional rules:
 
-### Color Palette
-```
-Background:       [hex + css variable name]
-Text Primary:     [hex]
-Text Secondary:   [hex]
-Accent:           [hex]
-Surface:          [hex for cards/containers]
-Border:           [hex]
-```
+### Typography as Design
+- Hero headings: **6rem minimum**, tight line-height (0.9-1.0), heavy weight (700-800)
+- Section headings: **3rem minimum**, confident weight (600-700)
+- Horizontal marquee text: **10-15vw**, uppercase, letterspaced
+- Section labels: small (0.7rem), uppercase, letterspaced (0.15em+), muted color — like "001 / Features"
+- Text hierarchy replaces card containers. Size, weight, and color ARE the structure
 
-### Layout Grid
-```
-Max Width:        [container width]
-Columns:          [grid system]
-Gutter:           [gap between columns]
-Breakpoints:      [responsive behavior]
-```
+### No Cards, No Boxes
+- **NEVER** use glassmorphism cards, frosted glass, or visible containers around text on scroll-driven sites
+- Text sits directly on the background — clean, confident, editorial
+- Readability comes from: font weight (600+), text-shadow if needed, and ensuring video frames have clean backgrounds at text scroll points
+- The only acceptable "container" is generous padding on the section itself
 
-### Component Inventory
-List all unique components identified:
-- Navigation (type: sticky/fixed/relative)
-- Hero section (layout pattern)
-- Cards/tiles (grid arrangement)
-- CTAs (button styles)
-- Footer structure
+### Color Zones
+- Background color must shift between sections (light → dark → accent → light)
+- Define color zones in CSS variables: `--bg-light`, `--bg-dark`, `--bg-accent`
+- Text color inverts automatically: `--text-on-light`, `--text-on-dark`
+- Transitions happen via GSAP, not CSS transitions
 
-## Step 3: Plan Animation Strategy
+### Layout Variety
+Every scroll-driven page needs at least 3 different layout patterns:
+1. **Centered** — hero sections, CTAs
+2. **Left-aligned** — feature descriptions with product on right
+3. **Right-aligned** — alternate features
+4. **Full-width** — horizontal marquee text, stats rows
+5. **Split** — text on one side, supporting visual on the other
 
-Based on the design's aesthetic, select the appropriate animation approach.
-Read `references/animation-patterns.md` for the full animation library.
+Never use the same layout for consecutive sections.
 
-### Animation Selection Matrix
+### Animation Choreography
+- Every section must use a DIFFERENT entrance animation (fade-up, slide-left, slide-right, scale-up, clip-path reveal)
+- Elements within a section enter with staggered delays (0.08-0.12s between items)
+- Sequence: label first → heading → body text → CTA/button
+- At least one section must pin (stay fixed) while its contents animate internally
+- At least one oversized text element must move horizontally on scroll
 
-| Design Aesthetic | Recommended Approach | Key Techniques |
-|-----------------|---------------------|----------------|
-| Institutional/Corporate | Subtle reveals | Fade-up on scroll, staggered text |
-| Luxury/Premium | Kinetic minimalism | Parallax, smooth scroll, letter animations |
-| Tech/SaaS | Dynamic interactions | Hover states, micro-animations, counters |
-| Creative/Portfolio | Bold motion | Page transitions, 3D transforms, morphing |
-| Editorial/Magazine | Typography-led | Text reveals, pull quotes, reading progress |
-
-### Default Animation Stack
-Unless the design suggests otherwise, implement:
-1. **Page load**: Staggered fade-in of hero elements (0.6s, ease-out)
-2. **Scroll reveals**: Elements animate in as they enter viewport
-3. **Hover states**: Subtle scale/color transitions on interactive elements
-4. **Navigation**: Smooth scroll with active state tracking
-
-## Step 4: Build Production Code
-
-### Technology Decisions
-
-**Single-page / Landing page:**
-- HTML + CSS + vanilla JS + GSAP (via CDN)
-- Output as single `.html` artifact
-
-**Multi-component / App:**
-- React (`.jsx`) with Tailwind CSS
-- GSAP via import or CDN
-
-**WordPress integration:**
-- Generate clean HTML/CSS that can be embedded
-- Provide separate CSS file if needed
-
-### Implementation Checklist
-
-Before writing code, verify:
-- [ ] All fonts loaded (Google Fonts CDN or system fonts)
-- [ ] Color variables defined as CSS custom properties
-- [ ] Responsive breakpoints planned (mobile-first)
-- [ ] GSAP CDN included if animations needed
-- [ ] ScrollTrigger plugin registered if scroll animations used
-- [ ] Images referenced with proper paths or placeholders
-
-### Code Quality Standards
-
-**CSS Architecture:**
-```css
-:root {
-  /* Colors extracted from Figma */
-  --color-bg: #0a0a0a;
-  --color-text: #ffffff;
-  --color-accent: #c8a050;
-  /* Typography */
-  --font-display: 'Bank Gothic', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  /* Spacing */
-  --space-section: clamp(80px, 10vw, 160px);
-}
-```
-
-**GSAP Initialization Pattern:**
-```javascript
-// Register plugins
-gsap.registerPlugin(ScrollTrigger);
-
-// Batch scroll reveals
-gsap.utils.toArray('.reveal').forEach(el => {
-  gsap.from(el, {
-    y: 40,
-    opacity: 0,
-    duration: 0.8,
-    ease: 'power2.out',
-    scrollTrigger: {
-      trigger: el,
-      start: 'top 85%',
-      toggleActions: 'play none none none'
-    }
-  });
-});
-```
-
-**Responsive Pattern:**
-```css
-/* Mobile-first, then scale up */
-.hero-title {
-  font-size: clamp(2rem, 5vw, 4.5rem);
-  line-height: 1.1;
-}
-```
-
-## Step 5: Refine and Compare
-
-After initial build:
-1. Take a screenshot of the Figma design (`Figma:get_screenshot`)
-2. Visually compare against your implementation
-3. Check for:
-   - Font matching (family, size, weight, spacing)
-   - Color accuracy (compare hex values)
-   - Spacing consistency (padding, margins)
-   - Layout alignment (grid, flex behavior)
-   - Responsive behavior at breakpoints
-4. Iterate until the implementation matches the design
-
-## Special Workflows
-
-### Figma URL Extraction
-When user pastes a Figma URL:
-1. Parse the URL to extract `fileKey` and `node-id`
-2. Convert `node-id` format: `1-2` in URL becomes `1:2` as nodeId
-3. Use the nodeId with all Figma tools
-
-### Design System Generation
-When user asks to create design system rules:
-1. Use `Figma:create_design_system_rules` to generate coding guidelines
-2. Combine with extracted variables for a complete design system
-3. Output as a reference document or CSS variables file
-
-### Component Mapping
-When user wants to connect Figma to existing code:
-1. Use `Figma:get_code_connect_map` to see existing mappings
-2. Use `Figma:add_code_connect_map` to create new mappings
-3. Document the component library with Figma ↔ Code references
-
-### Multi-Page Site from Figma
-When the design has multiple pages/frames:
-1. Use `Figma:get_metadata` on the page node to see all frames
-2. Extract each frame individually with `Figma:get_design_context`
-3. Identify shared components (nav, footer, typography)
-4. Build shared CSS first, then page-specific layouts
-5. Ensure consistent animations across pages
-
-## Animation Reference
-
-For detailed animation patterns, recipes, and GSAP configurations:
-→ Read `references/animation-patterns.md`
-
-This reference includes:
-- 20+ scroll animation recipes
-- Typography animation techniques
-- Parallax implementation patterns
-- Page transition effects
-- Performance optimization tips
-
-## Institutional Finance Aesthetic
-
-For premium institutional websites (private equity, venture capital, advisory):
-→ Read `references/institutional-finance.md`
-
-This reference covers:
-- Approved color palettes (abyssal blue, steel grey, etc.)
-- Typography pairings (Bank Gothic, Novecento Sans Wide)
-- Layout patterns from top PE/VC firms
-- Animation restraint guidelines
-- Trust-building design patterns
-
-## Good vs Bad Example
-
-User shares a Figma URL for a dark-themed landing page hero section.
-
-❌ **Bad (ignores Figma, generic output):**
-> Here's a basic hero section with some animations. I used default colors and Inter font.
-
-✅ **Good (Figma-faithful, tokens extracted, purposeful animation):**
-> **Design Brief extracted from Figma:**
-> - Font: PP Neue Montreal (display), Satoshi (body)
-> - Palette: `--color-bg: #0c0c14`, `--color-text: #f0ece4`, `--color-accent: #c9a96e`
-> - Layout: 1280px max-width, centered hero with 160px top padding
->
-> ```html
-> <section class="hero" style="background: var(--color-bg); padding: clamp(80px, 10vw, 160px) var(--space-lg);">
->   <h1 class="hero-title reveal" style="font-family: 'PP Neue Montreal'; font-size: clamp(3rem, 7vw, 6rem); color: var(--color-text);">
->     Your Statement Here
->   </h1>
-> </section>
-> ```
-> Colors, fonts, and spacing match the Figma design exactly. Scroll reveal animation added with 0.8s fade-up.
-
-## Common Pitfalls
-
-1. **Don't over-animate**: Institutional sites need restraint. 2-3 animation types max.
-2. **Don't ignore mobile**: Always test responsive. GSAP ScrollTrigger needs `matchMedia` for mobile.
-3. **Don't skip font loading**: Use `font-display: swap` and preload critical fonts.
-4. **Don't hardcode colors**: Always use CSS variables extracted from Figma tokens.
-5. **Don't forget performance**: Use `will-change` sparingly, prefer `transform` and `opacity` for animations.
-6. **Don't rebuild mapped components**: Check Code Connect before building from scratch.
+### Stats & Numbers
+- Display stats at **4rem+** font size
+- Numbers MUST count up via GSAP (never appear statically)
+- Use a suffix element for units (x, M, %, etc.) at a smaller size
+- Labels below in small caps or uppercase muted text
