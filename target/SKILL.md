@@ -1,313 +1,93 @@
 ---
-name: notion-meeting-intelligence
-description: >
-  Prepares meeting materials by gathering context from Notion, enriching with Claude
-  research, and creating both an internal pre-read and external agenda saved to Notion.
-  Use this skill whenever the user says "prep for my meeting", "I have a meeting with X",
-  "meeting tomorrow", "prepare agenda", "meeting prep", "pre-read for the meeting",
-  "get ready for my call with", "set up meeting docs", or describes an upcoming meeting
-  they want to prepare for. Also trigger when asked to create meeting notes, agendas,
-  or pre-read documents in Notion.
-  Do NOT trigger for: general Notion page creation without meeting context (use
-  notion-knowledge-capture), research documentation (use notion-research-documentation),
-  or converting specs to tasks (use notion-spec-to-implementation).
+name: notion-research-documentation
+description: Searches across your Notion workspace, synthesizes findings from multiple pages, and creates comprehensive research documentation saved as new Notion pages. Turns scattered information into structured reports with proper citations and actionable insights.
 ---
 
-# Meeting Intelligence
+# Research & Documentation
 
-Prepares you for meetings by gathering context from Notion, enriching it with Claude research, and creating comprehensive meeting materials. Generates both an internal pre-read for attendees and an external-facing agenda for the meeting itself.
+Enables comprehensive research workflows: search for information across your Notion workspace, fetch and analyze relevant pages, synthesize findings, and create well-structured documentation.
 
 ## Quick Start
 
-When asked to prep for a meeting:
+When asked to research and document a topic:
 
-1. **Gather Notion context**: Use `Notion:notion-search` to find related pages
-2. **Fetch details**: Use `Notion:notion-fetch` to read relevant content
-3. **Enrich with research**: Use Claude's knowledge to add context, industry insights, or best practices
-4. **Create internal pre-read**: Use `Notion:notion-create-pages` for background context document (for attendees)
-5. **Create external agenda**: Use `Notion:notion-create-pages` for meeting agenda (shared with all participants)
-6. **Link resources**: Connect both docs to related projects and each other
+1. **Search for relevant content**: Use `Notion:notion-search` to find pages
+2. **Fetch detailed information**: Use `Notion:notion-fetch` to read full page content
+3. **Synthesize findings**: Analyze and combine information from multiple sources
+4. **Create structured output**: Use `Notion:notion-create-pages` to write documentation
 
-## Meeting Prep Workflow
+## Research Workflow
 
-### Step 1: Understand meeting context
+### Step 1: Search for relevant information
 
 ```
-Collect meeting details:
-- Meeting topic/title
-- Attendees (internal team + external participants)
-- Meeting purpose (decision, brainstorm, status update, customer demo, etc.)
-- Meeting type (internal only vs. external participants)
-- Related project/initiative
-- Specific topics to cover
+Use Notion:notion-search with the research topic
+Filter by teamspace if scope is known
+Review search results to identify most relevant pages
 ```
 
-### Step 2: Search for Notion context
+### Step 2: Fetch page content
 
 ```
-Use Notion:notion-search to find:
-- Project pages related to meeting topic
-- Previous meeting notes
-- Specifications or design docs
-- Related tasks or issues
-- Recent updates or reports
-- Customer/partner information (if applicable)
-
-Search strategies:
-- Topic-based: "mobile app redesign"
-- Project-scoped: search within project teamspace
-- Attendee-created: filter by created_by_user_ids
-- Recent updates: use created_date_range filters
+Use Notion:notion-fetch for each relevant page URL
+Collect content from all relevant sources
+Note key findings, quotes, and data points
 ```
 
-### Step 3: Fetch and analyze Notion content
+### Step 3: Synthesize findings
 
-```
-For each relevant page:
-1. Fetch with Notion:notion-fetch
-2. Extract key information:
-   - Project status and timeline
-   - Recent decisions and updates
-   - Open questions or blockers
-   - Relevant metrics or data
-   - Action items from previous meetings
-3. Note gaps in information
-```
+Analyze the collected information:
+- Identify key themes and patterns
+- Connect related concepts across sources
+- Note gaps or conflicting information
+- Organize findings logically
 
-### Step 4: Enrich with Claude research
+### Step 4: Create structured documentation
 
-```
-Beyond Notion context, add value through:
+Use the appropriate documentation template (see [reference/format-selection-guide.md](reference/format-selection-guide.md)) to structure output:
+- Clear title and executive summary
+- Well-organized sections with headings
+- Citations linking back to source pages
+- Actionable conclusions or next steps
 
-For technical meetings:
-- Explain complex concepts for broader audience
-- Summarize industry best practices
-- Provide competitive context
-- Suggest discussion frameworks
+## Output Formats
 
-For customer meetings:
-- Research company background (if public info)
-- Industry trends relevant to discussion
-- Common pain points in their sector
-- Best practices for similar customers
+Choose the appropriate format based on request:
 
-For decision meetings:
-- Decision-making frameworks
-- Risk analysis patterns
-- Trade-off considerations
-- Implementation best practices
-
-Note: Use general knowledge only - don't fabricate specific facts
-```
-
-### Step 5: Create internal pre-read
-
-```
-Use Notion:notion-create-pages for internal doc:
-
-Title: "[Meeting Topic] - Pre-Read (Internal)"
-
-Content structure:
-- **Meeting Overview**: Date, time, attendees, purpose
-- **Background Context**: 
-  - What this meeting is about (2-3 sentences)
-  - Why it matters (business context)
-  - Links to related Notion pages
-- **Current Status**: 
-  - Where we are now (from Notion content)
-  - Recent updates and progress
-  - Key metrics or data
-- **Context & Insights** (from Claude research):
-  - Industry context or best practices
-  - Relevant considerations
-  - Potential approaches to discuss
-- **Key Discussion Points**:
-  - Topics that need airtime
-  - Open questions to resolve
-  - Decisions required
-- **What We Need from This Meeting**:
-  - Expected outcomes
-  - Decisions to make
-  - Next steps to define
-
-Audience: Internal attendees only
-Purpose: Give team full context and alignment before meeting
-```
-
-### Step 6: Create external agenda
-
-```
-Use Notion:notion-create-pages for meeting doc:
-
-Title: "[Meeting Topic] - Agenda"
-
-Content structure:
-- **Meeting Details**: Date, time, attendees
-- **Objective**: Clear meeting goal (1-2 sentences)
-- **Agenda Items** (with time allocations):
-  1. Topic 1 (10 min)
-  2. Topic 2 (20 min)
-  3. Topic 3 (15 min)
-- **Discussion Topics**: 
-  - Key items to cover
-  - Questions to answer
-- **Decisions Needed**: 
-  - Clear decision points
-- **Action Items**: 
-  - (To be filled during meeting)
-- **Related Resources**:
-  - Links to relevant pages
-  - Link to pre-read document
-
-Audience: All participants (internal + external)
-Purpose: Structure the meeting, keep it on track
-Tone: Professional, focused, clear
-```
-
-See [reference/template-selection-guide.md](reference/template-selection-guide.md) for full templates.
-
-### Step 7: Link documents
-
-```
-1. Link pre-read to agenda:
-   - Add mention in agenda: "See <mention-page>Pre-Read</mention-page> for background"
-
-2. Link both to project:
-   - Update project page with meeting links
-   - Add to "Meetings" section
-
-3. Cross-reference:
-   - Agenda mentions pre-read for internal attendees
-   - Pre-read mentions agenda for meeting structure
-```
-
-## Document Types
-
-### Internal Pre-Read (for team)
-
-More comprehensive, internal context:
-- Full background and history
-- Internal metrics and data
-- Honest assessment of challenges
-- Strategic considerations
-- What we need to achieve
-- Internal discussion points
-
-**When to create**: Always for important meetings with internal team
-
-### External Agenda (for all participants)
-
-Clean, professional, focused:
-- Clear objectives
-- Structured agenda with times
-- Discussion topics
-- Decision items
-- Professional tone
-
-**When to create**: Every meeting
-
-### Agenda Types by Meeting Purpose
-
-**Decision Meeting**: Meeting Details → Objective → Options (Pros/Cons) → Recommendation → Discussion → Decision → Action Items
-
-**Status Update**: Meeting Details → Project Status → Progress → Upcoming Work → Blockers → Discussion → Action Items
-
-**Customer/External**: Meeting Details → Objective → Agenda Items (timed) → Discussion Topics → Next Steps
-
-**Brainstorming**: Meeting Details → Objective → Constraints → Ideas → Discussion → Next Steps
-
-See [reference/template-selection-guide.md](reference/template-selection-guide.md) for complete templates.
-
-## Research Enrichment Patterns
-
-Beyond Notion content, add value through Claude's capabilities:
-
-**Technical Context**: Explain technologies, architectures, or approaches. Provide industry standard practices. Compare common solutions. Suggest evaluation criteria.
-
-**Business Context**: Industry trends affecting topic. Competitive landscape insights. Common challenges in space. ROI considerations.
-
-**Decision Support**: Decision-making frameworks (e.g., RICE, cost-benefit). Risk assessment patterns. Trade-off analysis approaches. Success criteria suggestions.
-
-**Customer Context** (for external meetings): Industry-specific challenges. Common pain points. Best practices from similar companies. Value proposition framing.
-
-**Process Guidance**: Meeting facilitation techniques. Discussion frameworks. Retrospective patterns. Brainstorming structures.
-
-Note: Use general knowledge and analytical capabilities. Don't fabricate specific facts. Clearly distinguish Notion facts from Claude insights.
-
-## Meeting Context Sources
-
-**Project Pages**: Status, goals, team, timelines (most important)
-**Previous Meeting Notes**: Historical discussions, action items, decisions (recurring meetings)
-**Task/Issue Database**: Current status, blockers, completed/upcoming work (project meetings)
-**Specifications/Designs**: Requirements, decisions, approach, open questions (technical meetings)
-**Reports/Dashboards**: Metrics, KPIs, performance data, trends (executive meetings)
-
-## Linking Meetings to Projects
-
-**Forward Link**: Add meeting to project page's "Meetings" section
-**Backward Link**: Include "Related Project" section in agenda with project mention
-**Maintain bidirectional** links for easy navigation
-
-## Meeting Series Management
-
-**Recurring Meetings**: Create series parent page with schedule, meeting notes list, standing agenda, and action items tracker. Link individual meetings to parent.
-
-**Meeting Database**: For organizations, use database with properties: Meeting Title, Date, Type (Decision/Status/Brainstorm), Project, Attendees, Status (Scheduled/Completed)
-
-## Post-Meeting Actions
-
-Update agenda with:
-
-**Decisions**: List each decision with rationale and owner
-**Action Items**: Checkbox list with owner and due date (consider creating tasks in database)
-**Key Outcomes**: Bullet list of main outcomes
-
-## Meeting Prep Timing
-
-**Day-Before** (next-day meetings): Gather context → create agenda → share with attendees → allow review time
-**Hour-Before** (last-minute): Quick context → brief pre-read → basic agenda → essentials only
-**Week-Before** (major meetings): Comprehensive research → detailed pre-read → structured agenda → pre-meeting reviews
+**Research Summary**: See [reference/research-summary-format.md](reference/research-summary-format.md)
+**Comprehensive Report**: See [reference/comprehensive-report-format.md](reference/comprehensive-report-format.md)
+**Quick Brief**: See [reference/quick-brief-format.md](reference/quick-brief-format.md)
 
 ## Best Practices
 
-1. **Create both documents**: Internal pre-read + external agenda for important meetings
-2. **Distinguish sources**: Label what's from Notion vs. Claude research
-3. **Start with search**: Cast wide net in Notion, then narrow
-4. **Keep pre-read concise**: 2-3 pages maximum, even with research
-5. **Professional external docs**: Agenda should be polished and focused
-6. **Enrich thoughtfully**: Claude research should add real value, not fluff
-7. **Link documents**: Pre-read mentions agenda, agenda mentions pre-read
-8. **Include metrics**: Data from Notion helps ground discussions
-9. **Share appropriately**: Pre-read to internal team, agenda to all participants
-10. **Share early**: Give attendees time to review (24hr+ for important meetings)
-11. **Update post-meeting**: Capture decisions and actions in agenda
+1. **Cast a wide net first**: Start with broad searches, then narrow down
+2. **Cite sources**: Always link back to source pages using mentions
+3. **Verify recency**: Check page last-edited dates for current information
+4. **Cross-reference**: Validate findings across multiple sources
+5. **Structure clearly**: Use headings, bullets, and formatting for readability
+
+## Page Placement
+
+By default, create research documents as standalone pages. If the user specifies:
+- A parent page → use `page_id` parent
+- A database → fetch the database first, then use appropriate `data_source_id`
+- A teamspace → create in that context
 
 ## Advanced Features
 
-**Meeting templates**: See [reference/template-selection-guide.md](reference/template-selection-guide.md) for comprehensive template library
-
-## Good/Bad Example: Pre-Read Background Section
-
-> ✅ **Background Context:** "Belveo's brand platform has been in development for 6 months across 12 versions. V12 was validated by the founder on March 5th. The remaining work is integrating the manifesto V2 copy. This meeting is to align on final manifesto wording before designer handoff scheduled for March 25th. See [Belveo Brand Platform](notion-link) for full history."
-
-> ❌ **Background Context:** "This meeting is about the brand platform. We need to discuss next steps and align on priorities. The project has been ongoing and there are several outstanding items to address."
-
----
+**Search filtering**: See [reference/advanced-search.md](reference/advanced-search.md)
+**Citation styles**: See [reference/citations.md](reference/citations.md)
 
 ## Common Issues
 
-**"Too much context"**: Split into pre-read (internal, comprehensive) and agenda (external, focused)
-**"Can't find relevant pages"**: Broaden search, try different terms, ask user for page URLs
-**"Meeting purpose unclear"**: Ask user to clarify before proceeding
-**"No recent updates"**: Note that in pre-read, focus on historical context and strategic considerations
-**"External meeting - no internal context"**: Create simpler structure with just agenda, skip internal pre-read or keep it minimal
-**"Claude research too generic"**: Focus on specific insights relevant to the actual meeting topic, not general platitudes
+**"No results found"**: Try broader search terms or different teamspaces
+**"Too many results"**: Add filters or search within specific pages
+**"Can't access page"**: User may lack permissions, ask them to verify access
 
 ## Examples
 
-See [examples/](examples/) for complete workflows:
-- [examples/project-decision.md](examples/project-decision.md) - Decision meeting prep with pre-read
-- [examples/sprint-planning.md](examples/sprint-planning.md) - Sprint planning meeting
-- [examples/executive-review.md](examples/executive-review.md) - Executive review prep
-- [examples/customer-meeting.md](examples/customer-meeting.md) - External meeting with customer (pre-read + agenda)
+See [examples/](examples/) for complete workflow demonstrations:
+- [examples/market-research.md](examples/market-research.md) - Researching market trends
+- [examples/technical-investigation.md](examples/technical-investigation.md) - Technical deep-dive
+- [examples/competitor-analysis.md](examples/competitor-analysis.md) - Multi-source synthesis
 
