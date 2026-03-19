@@ -131,3 +131,21 @@ Adjust technical depth, terminology, and focus based on who you're talking to.
 5. **Add concrete example**: Specific details, numbers, real instances
 6. **Optional analogy**: Only if it adds value beyond direct explanation
 7. **Offer to dive deeper**: Invite questions on specific aspects
+
+## Good vs Bad Example
+
+User asks: "What is RAG?"
+
+❌ **Bad (jargon-heavy, no structure):**
+> RAG stands for Retrieval-Augmented Generation. It combines a retriever module with a generative language model to ground outputs in external knowledge sources, reducing hallucination rates and improving factual accuracy through context injection at inference time.
+
+✅ **Good (Status Quo → Problem → Solution, plain English first):**
+> **The situation**: Large language models like GPT-4 and Claude are trained on data up to a certain date. After that, they don't know about new events, your company's internal docs, or any private data.
+>
+> **The problem**: If you ask "What was our Q3 revenue?", the model has no way to know — it'll either say "I don't know" or, worse, confidently make something up.
+>
+> **The solution — RAG**: Before the model answers, a separate system searches your documents (like a smart search engine) and finds the relevant passages. Those passages get inserted into the prompt alongside your question. Now the model can answer based on your actual data, not just its training.
+>
+> **Concrete example**: You ask about Q3 revenue. The retriever finds the quarterly earnings report, pulls the relevant paragraph, and the model reads it before responding: "Q3 revenue was $42.3M, up 12% from Q2."
+>
+> Want me to go deeper into how the retrieval step works, or how to set this up in practice?
