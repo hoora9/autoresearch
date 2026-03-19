@@ -11,6 +11,10 @@ description: >
   mentions Cowork setup, agent orchestration, hook design, skill stacking, plugin architecture,
   or MCP server coordination. This skill analyzes what they describe and produces a complete
   architectural blueprint with visual diagrams, step-by-step process manual, and Gantt chart.
+  Do NOT trigger for: interactive drag-and-drop workflow diagrams (use visual-workflow-builder),
+  step-by-step setup manuals without architectural analysis (use workflow-to-manual-skill or
+  prepare-workflow), Excalidraw hand-drawn diagrams (use excalidraw-diagram), or Mermaid-only
+  diagram rendering without the full blueprint process (use Mermaid Chart MCP directly).
 ---
 
 # Architecture — Workflow Blueprint Planner
@@ -156,7 +160,24 @@ workflow architecture. This should look and feel like a professional algorithm f
 - Keep it readable — use subgraphs for stages/phases
 - Add a legend
 
-See `references/output-specs.md` for Mermaid syntax patterns and examples.
+**Minimal example (3-step flow with decision):**
+```mermaid
+flowchart LR
+    subgraph Research
+        A([🟢 Trigger: Schedule]) --> B[⚙️ Claude: Research topic]
+    end
+    subgraph Review
+        B --> C{👤 Human: Approve?}
+        C -->|Yes ✓| D[📤 Post to LinkedIn]
+        C -->|No ✗| B
+    end
+    style A fill:#4CAF50,color:#fff
+    style B fill:#2196F3,color:#fff
+    style C fill:#FF9800,color:#fff
+    style D fill:#9C27B0,color:#fff
+```
+
+See `references/output-specs.md` for more complex Mermaid patterns.
 
 ### Deliverable 2: Step-by-Step Process Manual
 
