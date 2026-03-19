@@ -1,109 +1,151 @@
 ---
-name: frontend-design
-description: >
-  Create distinctive, production-grade frontend interfaces with high design quality that avoid generic AI aesthetics. Use when the user says: 'build me a landing page', 'create a component', 'design a web page', 'build a UI', 'make a website', 'create a dashboard', 'build a form', or asks to build any web interface, component, page, or application from scratch (without a Figma reference).
-  Do NOT trigger for: Figma-to-code conversions (use figma-designer), scroll-driven GSAP animation sites (use kinetic-minimalism), video-to-website conversions (use video-to-website), 3D/WebGL scenes (use webgl-3d-dev), or CodePen exploration (use codepen).
-license: Complete terms in LICENSE.txt
+name: web-coding-assistant
+description: Design team with web development coding skills
 ---
 
-This skill guides creation of distinctive, production-grade frontend interfaces that avoid generic "AI slop" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.
+Depending upon the brief of the website - consult the web designers in the team to come up with the full code  or snippets to build the website to make it truly interactive and animated, with amazing design.    Let me first read the relevant skill files, then create a polished markdown document with the advisor personas.I'll create the markdown file directly with all the advisor personas based on my research.Hmm, it seems the file creation tools aren't available in this session. Let me try the present_files approach differently — I'll output this as a rendered markdown artifact instead.I don't have access to the file creation tools in this particular session. Let me write it out here as a complete markdown document you can copy — or if you'd like, I can start a new conversation with the computer tools enabled to generate the downloadable file. Here's the full content:
 
-The user provides frontend requirements: a component, page, application, or interface to build. They may include context about the purpose, audience, or technical constraints.
+---
 
-## Design Thinking
+# Design & Motion Advisory Board
 
-Before coding, understand the context and commit to a BOLD aesthetic direction:
-- **Purpose**: What problem does this interface solve? Who uses it?
-- **Tone**: Pick an extreme: brutally minimal, maximalist chaos, retro-futuristic, organic/natural, luxury/refined, playful/toy-like, editorial/magazine, brutalist/raw, art deco/geometric, soft/pastel, industrial/utilitarian, etc. There are so many flavors to choose from. Use these for inspiration but design one that is true to the aesthetic direction.
-- **Constraints**: Technical requirements (framework, performance, accessibility).
-- **Differentiation**: What makes this UNFORGETTABLE? What's the one thing someone will remember?
+> A curated team of world-class advisors in motion graphics, WebGL, GSAP, and creative technology.
 
-**CRITICAL**: Choose a clear conceptual direction and execute it with precision. Bold maximalism and refined minimalism both work - the key is intentionality, not intensity.
+---
 
-Then implement working code (HTML/CSS/JS, React, Vue, etc.) that is:
-- Production-grade and functional
-- Visually striking and memorable
-- Cohesive with a clear aesthetic point-of-view
-- Meticulously refined in every detail
+## 1. Bruno Simon
 
-## Frontend Aesthetics Guidelines
+**Title:** Creative Developer & WebGL Educator
+**Location:** Paris, France
+**Specialty:** Three.js, WebGL, Interactive 3D Web Experiences
 
-Focus on:
-- **Typography**: Choose fonts that are beautiful, unique, and interesting. Avoid generic fonts like Arial and Inter; opt instead for distinctive choices that elevate the frontend's aesthetics; unexpected, characterful font choices. Pair a distinctive display font with a refined body font.
-- **Color & Theme**: Commit to a cohesive aesthetic. Use CSS variables for consistency. Dominant colors with sharp accents outperform timid, evenly-distributed palettes.
-- **Motion**: Use animations for effects and micro-interactions. Prioritize CSS-only solutions for HTML. Use Motion library for React when available. Focus on high-impact moments: one well-orchestrated page load with staggered reveals (animation-delay) creates more delight than scattered micro-interactions. Use scroll-triggering and hover states that surprise.
-- **Spatial Composition**: Unexpected layouts. Asymmetry. Overlap. Diagonal flow. Grid-breaking elements. Generous negative space OR controlled density.
-- **Backgrounds & Visual Details**: Create atmosphere and depth rather than defaulting to solid colors. Add contextual effects and textures that match the overall aesthetic. Apply creative forms like gradient meshes, noise textures, geometric patterns, layered transparencies, dramatic shadows, decorative borders, custom cursors, and grain overlays.
+**Background:** French creative developer, formerly Lead Developer at Immersive Garden. His portfolio site — where users drive a 3D car around an interactive landscape — is a benchmark for what's possible with Three.js. Created Three.js Journey, which has trained thousands of developers worldwide.
 
-NEVER use generic AI-generated aesthetics like overused font families (Inter, Roboto, Arial, system fonts), cliched color schemes (particularly purple gradients on white backgrounds), predictable layouts and component patterns, and cookie-cutter design that lacks context-specific character.
+**Core Skills:** Three.js & WebGL (expert), Custom shaders (GLSL), Physics engines (Cannon.js), Procedural world generation, Performance optimization for 3D web
 
-Interpret creatively and make unexpected choices that feel genuinely designed for the context. No design should be the same. Vary between light and dark themes, different fonts, different aesthetics. NEVER converge on common choices (Space Grotesk, for example) across generations.
+**Key Projects:** bruno-simon.com (award-winning 3D portfolio), Three.js Journey (education platform), Infinite World (procedural WebGL landscape), WebGL Black Hole (gravitational lensing simulation)
 
-**IMPORTANT**: Match implementation complexity to the aesthetic vision. Maximalist designs need elaborate code with extensive animations and effects. Minimalist or refined designs need restraint, precision, and careful attention to spacing, typography, and subtle details. Elegance comes from executing the vision well.
+**Consult for:** Three.js architecture, 3D web performance, shader development, pushing browser rendering limits
 
-Remember: Claude is capable of extraordinary creative work. Don't hold back, show what can truly be created when thinking outside the box and committing fully to a distinctive vision.
+**Links:** [Portfolio](https://bruno-simon.com) · [Three.js Journey](https://threejs-journey.com) · [GitHub](https://github.com/brunosimon)
 
-## Scroll-Driven Website Design Guidelines
+---
 
-**Only apply this section** when building a scroll-driven animated website (e.g., used alongside `video-to-website` or when the user explicitly asks for scroll-driven design). For standard components/pages, skip to the Self-Check.
+## 2. Matt DesLauriers
 
-### Typography as Design
-- Hero headings: **6rem minimum**, tight line-height (0.9-1.0), heavy weight (700-800)
-- Section headings: **3rem minimum**, confident weight (600-700)
-- Horizontal marquee text: **10-15vw**, uppercase, letterspaced
-- Section labels: small (0.7rem), uppercase, letterspaced (0.15em+), muted color — like "001 / Features"
-- Text hierarchy replaces card containers. Size, weight, and color ARE the structure
+**Title:** Artist & Creative Coder
+**Location:** UK (Canadian-born)
+**Specialty:** Generative Art, WebGL, Creative Coding, Shaders
 
-### No Cards, No Boxes
-- **NEVER** use glassmorphism cards, frosted glass, or visible containers around text on scroll-driven sites
-- Text sits directly on the background — clean, confident, editorial
-- Readability comes from: font weight (600+), text-shadow if needed, and ensuring video frames have clean backgrounds at text scroll points
-- The only acceptable "container" is generous padding on the section itself
+**Background:** Artist and creative coder spanning digital installations, 3D web experiences, generative art, and data visualizations. Studied Film & Media. Teaches on Frontend Masters. 637+ open-source repositories in the creative coding ecosystem.
 
-### Color Zones
-- Background color must shift between sections (light → dark → accent → light)
-- Define color zones in CSS variables: `--bg-light`, `--bg-dark`, `--bg-accent`
-- Text color inverts automatically: `--text-on-light`, `--text-on-dark`
-- Transitions happen via GSAP, not CSS transitions
+**Core Skills:** WebGL & custom shaders (GLSL), Generative/algorithmic art, Node.js Canvas rendering, WebAudio integration, Three.js & custom rendering pipelines, Open-source creative coding tooling
 
-### Layout Variety
-Every scroll-driven page needs at least 3 different layout patterns:
-1. **Centered** — hero sections, CTAs
-2. **Left-aligned** — feature descriptions with product on right
-3. **Right-aligned** — alternate features
-4. **Full-width** — horizontal marquee text, stats rows
-5. **Split** — text on one side, supporting visual on the other
+**Key Projects:** Audiograph (WebGL audio-reactive experience), Leaf Notes (interactive web toy), Color Wander (generative artwork), Frontend Masters WebGL & Shaders course
 
-Never use the same layout for consecutive sections.
+**Consult for:** Generative design systems, shader artistry, blending fine art with code, cinematic visual quality in the browser
 
-### Animation Choreography
-- Every section must use a DIFFERENT entrance animation (fade-up, slide-left, slide-right, scale-up, clip-path reveal)
-- Elements within a section enter with staggered delays (0.08-0.12s between items)
-- Sequence: label first → heading → body text → CTA/button
-- At least one section must pin (stay fixed) while its contents animate internally
-- At least one oversized text element must move horizontally on scroll
+**Links:** [Portfolio](https://www.mattdesl.com) · [Blog](https://mattdesl.svbtle.com) · [GitHub](https://github.com/mattdesl)
 
-### Stats & Numbers
-- Display stats at **4rem+** font size
-- Numbers MUST count up via GSAP (never appear statically)
-- Use a suffix element for units (x, M, %, etc.) at a smaller size
-- Labels below in small caps or uppercase muted text
+---
 
-## Good vs Bad Example
+## 3. Guillaume Combeaud
 
-User asks: "Build me a pricing page for a SaaS product."
+**Title:** Freelance 3D Motion Designer & Director
+**Location:** Montreal, Canada
+**Specialty:** 3D Motion Design, AI-Driven Creativity, Brand Animation
 
-❌ **Bad (generic AI slop):**
-> Uses Inter font, purple-to-blue gradient background, three identical white cards with rounded corners and drop shadows, generic "Basic / Pro / Enterprise" labels. Looks like every AI-generated pricing page.
+**Background:** 17+ years across fashion, music, entertainment, and live events. Clients include Adidas, The North Face, Fender, Coca-Cola, Budweiser, and Ubisoft. Formerly Senior Motion Designer at SHED studio, Montreal.
 
-✅ **Good (distinctive, intentional):**
-> Commits to an editorial/magazine aesthetic: dark charcoal background (`#1a1a1a`), PP Neue Montreal for headings, Instrument Serif for plan names (creating tension between modern and classic). Plans are laid out in an asymmetric grid — the recommended plan is 1.5x wider and slightly overlapped. Pricing numbers at 5rem with a thin monospace font (JetBrains Mono). Hover states lift cards with a subtle gold underline reveal. The page has a single accent color (warm gold `#c9a96e`) used only on the CTA buttons and the recommended badge. No gradients. No generic icons.
+**Core Skills:** Cinema 4D & Octane Render, X-Particles, After Effects, Motion capture cleanup (QuickMagic + Blender), AI-assisted motion design workflows, Creative direction for brand campaigns
 
-## Self-Check Before Delivering
+**Key Projects:** The North Face commercial (with SHED), Plum (Mathematic Studio × Sid Lee), Ubisoft Anvil Engine logo animation, Domestika 3D course
 
-- [ ] Would a designer look at this and think "a human designed this"? (If not, start over)
-- [ ] Is the font choice distinctive and intentional? (Not Inter, Roboto, Arial, or system fonts)
-- [ ] Does the color palette have a clear dominant + accent structure? (Not evenly distributed)
-- [ ] Is there at least one spatial surprise? (Asymmetry, overlap, grid break, unexpected scale)
-- [ ] Are animations purposeful, not decorative? (Each one serves hierarchy or delight)
-- [ ] Does the code actually work? (Test it — production-grade means functional)
+**Consult for:** Brand-level motion strategy, commercial animation direction, integrating AI into motion workflows, cinematic 3D for marketing
+
+**Links:** [Portfolio](https://www.guillaumecombeaud.com) · [Behance](https://www.behance.net/guillaumecombeaud) · [Vimeo](https://vimeo.com/guillaumecombeaud)
+
+---
+
+## 4. Active Theory (Studio)
+
+**Title:** Creative Digital Experience Studio
+**Location:** Venice Beach, CA & Amsterdam, NL
+**Specialty:** Immersive WebGL, Custom Frameworks, VR/AR Web
+
+**Background:** Founded 2012. Award-winning WebGL experiences for Google, NASA, Spotify, and Halo. Built Hydra, a proprietary JavaScript framework for immersive 3D across web, mobile, and VR. Multiple Webby Awards.
+
+**Core Skills:** Custom WebGL framework (Hydra), State-based functional JavaScript, Real-time networked experiences, Cross-platform delivery (web → native → VR), WebGL + AI rendering, Large-scale digital installations
+
+**Key Projects:** activetheory.net (networked interactions), Google I/O experiences, Halo (WebGL particle helmets), NASA campaigns, AT Lab (20+ experimental demos)
+
+**Consult for:** Scaling WebGL for enterprise, custom rendering frameworks, cross-platform 3D delivery, production pipelines
+
+**Links:** [Portfolio](https://activetheory.net) · [AT Lab](https://atlab.io) · [LinkedIn](https://www.linkedin.com/company/active-theory)
+
+---
+
+## 5. Codrops / Tympanus
+
+**Title:** Creative Web Development Lab & Community
+**Location:** Global (Online)
+**Specialty:** GSAP, Scroll Animations, WebGL Shaders, UI Animation Patterns
+
+**Background:** One of the most influential resources in creative web development for over a decade. Publishes cutting-edge tutorials combining GSAP, Three.js, WebGL shaders, Barba.js, and modern frameworks like Astro. Sets the standard for state-of-the-art web animation.
+
+**Core Skills:** GSAP ScrollTrigger & timeline orchestration, WebGL shader effects (displacement, morphing, transitions), Page transitions (Barba.js), CSS/SVG animation patterns, Three.js + scroll-based narratives, Cross-browser animation compatibility
+
+**Key Contributions:** Scroll-Revealed WebGL Gallery (GSAP + Three.js + Astro + Barba.js, 2026), Hundreds of open-source demos, Playground experiments pushing browser capabilities
+
+**Consult for:** GSAP best practices, scroll-driven WebGL techniques, cutting-edge animation patterns, staying current with creative web trends
+
+**Links:** [Codrops](https://tympanus.net/codrops/) · [GitHub](https://github.com/codrops) · [Playground](https://tympanus.net/Playground/)
+
+---
+
+## Quick Reference
+
+| Advisor | Consult For |
+|---|---|
+| **Bruno Simon** | Three.js architecture, 3D interactivity, WebGL performance |
+| **Matt DesLauriers** | Generative art, shaders, creative coding philosophy |
+| **Guillaume Combeaud** | Brand motion strategy, commercial 3D, AI workflows |
+| **Active Theory** | Enterprise WebGL, custom frameworks, cross-platform delivery |
+| **Codrops** | GSAP patterns, scroll animation, experimental techniques |
+
+---
+## CodePen Exploration & Code Sourcing
+
+### Purpose
+Before finalizing design decisions, explore CodePen to discover what's possible — find inspiration, evaluate interactive effects, and source production-ready code snippets for the website build.
+
+### Browsing Workflow
+
+#### 1. Explore Trending Pens
+When looking for inspiration or evaluating what's possible:
+- Use `web_fetch` to browse https://codepen.io/trending
+- Review the trending pens for relevant UI patterns, animations, interactions, and layouts
+- Identify pens that align with the project's visual direction and technical requirements
+
+#### 2. Search for Specific Effects or Components
+When the design team has a specific need (e.g., "scroll animation", "parallax hero", "glassmorphism card"):
+- Use `web_fetch` to search: `https://codepen.io/search/pens?q={search_term}`
+- Try multiple search terms to find the best options
+- Example searches: "GSAP scroll animation", "3D card hover", "text reveal animation", "parallax section", "liquid gradient background"
+
+#### 3. Browse Our Saved Pens
+Check the team's existing collection first:
+- Use `web_fetch` to browse https://codepen.io/your-work
+- Review previously saved or created pens that may already solve the current need
+
+#### 4. Extract Code from a Pen
+Once a promising pen is found:
+- Fetch the individual pen page to extract the HTML, CSS, and JavaScript
+- Document the pen's URL for attribution
+- Assess whether the code can be used as-is or needs adaptation for the project stack
+
+### How to Use in the Design Process
+
+1. **Discovery phase**: Browse trending and search broadly before committing to a design direction — present options to the team with links and descriptions
+2. **Validation phase**: When the team suggests an effect or interaction (e.g., "we want a kinetic text hero"), search CodePen to find working examples and assess feasibility
+3. **Implementation phase**: Once a pen is selected, extract the code and adapt it to the project's tech stack, design system, and responsive requirements
