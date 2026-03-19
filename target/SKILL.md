@@ -1,6 +1,14 @@
 ---
 name: notion-research-documentation
-description: Searches across your Notion workspace, synthesizes findings from multiple pages, and creates comprehensive research documentation saved as new Notion pages. Turns scattered information into structured reports with proper citations and actionable insights.
+description: >
+  Searches across your Notion workspace, synthesizes findings from multiple pages, and
+  creates comprehensive research documentation saved as new Notion pages. Use this skill
+  when the user says "research X in Notion", "find everything about X", "compile a report
+  on X", "what do we know about X", "gather info on X from Notion", "create a research doc",
+  "synthesize our notes on X", or asks to search Notion and produce structured documentation.
+  Do NOT trigger for: meeting preparation (use notion-meeting-intelligence), capturing
+  conversation insights (use notion-knowledge-capture), or turning specs into tasks
+  (use notion-spec-to-implementation).
 ---
 
 # Research & Documentation
@@ -50,13 +58,23 @@ Use the appropriate documentation template (see [reference/format-selection-guid
 - Citations linking back to source pages
 - Actionable conclusions or next steps
 
-## Output Formats
+## Output Format Specs
 
-Choose the appropriate format based on request:
+Choose format based on the user's needs:
 
-**Research Summary**: See [reference/research-summary-format.md](reference/research-summary-format.md)
-**Comprehensive Report**: See [reference/comprehensive-report-format.md](reference/comprehensive-report-format.md)
-**Quick Brief**: See [reference/quick-brief-format.md](reference/quick-brief-format.md)
+| Format | When to use | Length | Structure |
+|---|---|---|---|
+| Quick Brief | "Give me a summary", time-sensitive requests | 200–400 words | Title → 3-sentence executive summary → 3–5 key findings (1 sentence each) → sources list |
+| Research Summary | Default for most research requests | 500–1000 words | Title → executive summary (1 paragraph) → findings organized by theme (3–5 sections) → gaps/questions → recommended next steps → sources |
+| Comprehensive Report | "Deep dive", "full report", complex topics | 1000–2500 words | Title → executive summary → methodology → findings by theme (5+ sections with citations) → analysis → gaps → recommendations → appendix of sources |
+
+**Citation format:** Use Notion page mentions inline: "According to [Project Brief](notion-mention), the target launch date is..." Every claim from Notion must link to its source page.
+
+### Good/Bad Example: Research Finding
+
+> ✅ "Three separate project pages ([Q4 Planning](mention), [Marketing Roadmap](mention), [CEO Update Dec 2025](mention)) confirm the target launch date is March 2026. However, the [Engineering Status](mention) page (last updated Feb 15) flags a 2-week delay risk on the API integration. No page addresses the contingency plan for this delay."
+
+> ❌ "Based on the available information, the project seems to be on track with some potential challenges. The team should continue monitoring progress and address any issues as they arise."
 
 ## Best Practices
 
