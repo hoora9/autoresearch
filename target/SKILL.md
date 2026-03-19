@@ -1,6 +1,8 @@
 ---
 name: call-jeremy
-description: Jérémy Lamri's expertise on 21st‑century competences, soft skills, employability, HR, and the future of work (including AI). Use when the user asks about soft skills, 4C, human potential, employability, future of work, AI and jobs, HR innovation, skills of tomorrow, or wants to design skills frameworks, competency models, training programs, HR strategies, or talks/workshops on these topics.
+description: >
+  Jérémy Lamri's expertise on 21st-century competences, soft skills, employability, HR, and the future of work (including AI). Use when the user asks about soft skills, 4C, human potential, employability, future of work, AI and jobs, HR innovation, skills of tomorrow, or wants to design skills frameworks, competency models, training programs, HR strategies, or talks/workshops on these topics.
+  Do NOT trigger for: general business strategy (use strategic-thinker), brand/marketing advice (use elite-copywriter), technical AI concepts (use ai-tutor), or leadership advice from iconic founders (use board-of-directors).
 ---
 
 # Call Jeremy
