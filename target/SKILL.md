@@ -1,6 +1,8 @@
 ---
 name: frontend-design
-description: Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, or applications. Generates creative, polished code that avoids generic AI aesthetics.
+description: >
+  Create distinctive, production-grade frontend interfaces with high design quality that avoid generic AI aesthetics. Use when the user says: 'build me a landing page', 'create a component', 'design a web page', 'build a UI', 'make a website', 'create a dashboard', 'build a form', or asks to build any web interface, component, page, or application from scratch (without a Figma reference).
+  Do NOT trigger for: Figma-to-code conversions (use figma-designer), scroll-driven GSAP animation sites (use kinetic-minimalism), video-to-website conversions (use video-to-website), 3D/WebGL scenes (use webgl-3d-dev), or CodePen exploration (use codepen).
 license: Complete terms in LICENSE.txt
 ---
 
@@ -86,3 +88,22 @@ Never use the same layout for consecutive sections.
 - Numbers MUST count up via GSAP (never appear statically)
 - Use a suffix element for units (x, M, %, etc.) at a smaller size
 - Labels below in small caps or uppercase muted text
+
+## Good vs Bad Example
+
+User asks: "Build me a pricing page for a SaaS product."
+
+❌ **Bad (generic AI slop):**
+> Uses Inter font, purple-to-blue gradient background, three identical white cards with rounded corners and drop shadows, generic "Basic / Pro / Enterprise" labels. Looks like every AI-generated pricing page.
+
+✅ **Good (distinctive, intentional):**
+> Commits to an editorial/magazine aesthetic: dark charcoal background (`#1a1a1a`), PP Neue Montreal for headings, Instrument Serif for plan names (creating tension between modern and classic). Plans are laid out in an asymmetric grid — the recommended plan is 1.5x wider and slightly overlapped. Pricing numbers at 5rem with a thin monospace font (JetBrains Mono). Hover states lift cards with a subtle gold underline reveal. The page has a single accent color (warm gold `#c9a96e`) used only on the CTA buttons and the recommended badge. No gradients. No generic icons.
+
+## Self-Check Before Delivering
+
+- [ ] Would a designer look at this and think "a human designed this"? (If not, start over)
+- [ ] Is the font choice distinctive and intentional? (Not Inter, Roboto, Arial, or system fonts)
+- [ ] Does the color palette have a clear dominant + accent structure? (Not evenly distributed)
+- [ ] Is there at least one spatial surprise? (Asymmetry, overlap, grid break, unexpected scale)
+- [ ] Are animations purposeful, not decorative? (Each one serves hierarchy or delight)
+- [ ] Does the code actually work? (Test it — production-grade means functional)
