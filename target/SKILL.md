@@ -112,10 +112,37 @@ List stakeholders, define criteria, score 1-10, identify top 5-10, build persona
 | Notion | Project tracking | All |
 | Canva | Visual brand elements | 7-8 |
 
+## Output Format Specs
+
+### Mission statement (Phase 2 output)
+Generate exactly 5 proposals. Each mission statement has 6 components woven into 1–3 sentences (40–80 words). Use active verbs, no jargon.
+
+> ✅ "Nous connectons les talents émergents aux entreprises qui osent grandir, en combinant stratégie de marque et accompagnement terrain, pour que chaque startup construise une identité aussi forte que son ambition."
+> ❌ "Notre mission est de fournir des solutions holistiques de branding à destination des entreprises innovantes dans un écosystème en constante évolution."
+
+### "Who We Are" versions (Phase 3 output)
+Produce 3 variations per length (9 total):
+- **Short:** 1 sentence (15–25 words). The identity word must appear.
+- **Medium:** 1 paragraph (50–80 words). Weaves identity word + 2–3 benefits + 1 proof.
+- **Long:** 3–4 paragraphs (150–250 words). Full narrative with identity word, all benefits, all proofs.
+
+### Persona card (Phase 5 output)
+Each persona card follows this structure:
+- **Name + role** (fictional but realistic)
+- **10 characteristics** (one sentence each, grounded in the client's market — not generic)
+- **Key message** (1 sentence the brand says to this persona)
+- **3 arguments + 3 proofs** per message (each 1 sentence)
+
+> ✅ Persona characteristic: "Sophie consulte 3 podcasts business par semaine et suit 12 newsletters sectorielles — elle ne prend aucune décision d'achat sans avoir comparé au moins 4 alternatives."
+> ❌ Persona characteristic: "Cette persona s'informe via différents canaux digitaux et prend des décisions réfléchies."
+
+### Cluster + Vote output (Inner Loop)
+After clustering: markdown table with columns `Cluster Name | Ideas (comma-separated) | Count`. After voting: ranked list with `Rank | Idea | Votes`, top 10 only, descending.
+
 ## Quality Standards
 
-- Strategy: Top-tier global consultancy level
-- Copy: Every word earns its place — no fluff, no cliches
-- Presentations: Georgia titles, Calibri body, exact hex colors, premium visual identity
-- Language: French by default. Switch seamlessly French/English.
+- Strategy: Grounded in the client's specific market, competitors, and data — never generic frameworks applied without context.
+- Copy: Every word earns its place — no fluff, no cliches. Use mg-tone-of-voice for Michel's personal voice.
+- Presentations: Georgia titles, Calibri body, exact hex colors from client brand guidelines, premium visual identity.
+- Language: French by default. Switch to English when Michel specifies or audience is international.
 - With Michel: Direct, concise, execute first. Explain only if asked.
