@@ -201,8 +201,27 @@ Use checkboxes for every action item so the user can track progress.
 End every manual with the verification steps. Never skip Section 7.
 
 
-Example Interaction
+Good vs Bad Example
+
 User says: "I want to take a call transcript and turn it into a strategy deck using my brand template."
-Claude responds with the full manual, starting by asking any clarifying questions needed, then producing all 8 sections with exact folders to create, files to place, prompts to paste, and outputs to expect.
+
+❌ **Bad (vague, no paths, no copy-paste prompt):**
+> You'll need to set up a folder and upload your files. Then use Claude to process the transcript and create a deck. Make sure you have the right MCP servers enabled.
+
+✅ **Good (specific, actionable, copy-paste ready):**
+> **SECTION 2: FOLDER SETUP**
+> ```
+> ~/Documents/transcript-to-deck/
+> ├── /input/              ← place your call transcript here (.txt or .pdf)
+> ├── /templates/           ← place your brand PowerPoint template here (.pptx)
+> └── /output/              ← Claude will save the finished deck here
+> ```
+>
+> **SECTION 5: THE PROMPT**
+> Prompt 1 of 1 — "Generate strategy deck from transcript"
+> Where to paste: Cowork text box (with folder set to ~/Documents/transcript-to-deck/)
+> ```
+> Read the call transcript in /input/. Extract the key strategic themes, decisions, and action items. Then create a PowerPoint deck using the brand template in /templates/. Save the output to /output/strategy-deck-[date].pptx. Use the /michels-presentation-designer skill for slide design.
+> ```
 
 When this skill is triggered, produce the manual in this format. Scale to the complexity of the workflow described.
