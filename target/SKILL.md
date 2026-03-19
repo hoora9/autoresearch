@@ -1,158 +1,244 @@
 ---
-name: visual-workflow-builder
+name: architecture
 description: >
-  Generates interactive visual workflow diagrams from plain text descriptions — like Make.com, but inside Claude.
-  Produces two outputs: (1) an interactive builder artifact where nodes can be dragged, connected, and edited,
-  and (2) a polished client-facing presenter with step descriptions, tool badges, and annotations.
-  Use this skill whenever the user describes a workflow, automation, process, or sequence of steps and wants
-  it visualised. Trigger when the user says things like: "build me a workflow diagram", "show this as a flow",
-  "make a visual of my automation", "diagram this process", "client-ready workflow", "Make.com-style flow",
-  "visual workflow", "show the steps visually", or whenever they describe a multi-step process and want
-  something to show a client or team. Also trigger when the user wants to update or add nodes to an existing
-  workflow diagram built with this skill.
-  Do NOT trigger for: simple text-based architecture plans (use architecture), Excalidraw hand-drawn
-  diagrams without interactive nodes (use excalidraw-diagram), step-by-step manual/checklist creation
-  (use workflow-to-manual-skill or prepare-workflow), or Mermaid diagram generation.
+  Workflow architecture planner for Claude Cowork, agents, hooks, skills, and MCP integrations.
+  Use this skill whenever the user describes ANY workflow, process, automation, pipeline, or
+  multi-step task they want to build, optimize, or document — even if they don't use the word
+  "architecture." Trigger when they say things like "I want to automate...", "here's my process...",
+  "how should I set this up...", "build me a workflow...", "I need a pipeline for...",
+  "help me plan how to...", "what's the best way to orchestrate...", or describe any sequence
+  of steps involving people, tools, AI agents, or Claude products. Also trigger when someone
+  mentions Cowork setup, agent orchestration, hook design, skill stacking, plugin architecture,
+  or MCP server coordination. This skill analyzes what they describe and produces a complete
+  architectural blueprint with visual diagrams, step-by-step process manual, and Gantt chart.
 ---
 
-# Visual Workflow Builder
+# Architecture — Workflow Blueprint Planner
 
-Generates two React artifacts from a plain text workflow description:
+You are a workflow architect. Your job is to take any description of work — however messy,
+incomplete, or conversational — and transform it into a complete, actionable architectural
+blueprint that anyone can follow to build and run the workflow.
 
-1. **Interactive Builder** — draggable nodes, clickable port connections, zoom/pan, double-click to edit labels
-2. **Client Presenter** — read-only, annotated, scroll-through, with tool badges and step descriptions
+## How This Skill Works
 
----
-
-## Step 1 — Parse the Workflow
-
-The user may describe their workflow in plain terms like:
-
-```
-RESEARCH → DRAFT → HUMAN REVIEWS → APPROVE → SCHEDULE → POST
-```
-
-Or as a paragraph, bullet list, or conversation. Your job is to extract the structure:
-
-```
-WORKFLOW_NAME: (e.g. "LinkedIn Post Automation")
-NODES: list of steps, each with:
-  - id, label (short, 2 lines max), type, tool (optional), description (1 sentence)
-EDGES: connections between nodes, each with:
-  - from → to, optional label (e.g. "Yes ✓", "No ✗", "retry")
-```
-
-### Mapping plain language to node types
-
-| Plain term | Node type | Why |
-|---|---|---|
-| "Schedule", "Trigger", "Every week", "When X happens" | `trigger` | Initiates the flow |
-| "Research", "Draft", "Generate", "Save", "Send", "Post" | `action` | A task being done |
-| "Human reviews", "Approve?", "Check", "If X then Y" | `decision` | A branch point |
-| "Filter", "Only if", "Condition", "Transform" | `filter` | A gate/condition |
-| "Post", "Publish", "Deliver", "Done", "Result" | `output` | End of the flow |
-
-### Example: parsing the LinkedIn workflow
-
-Input: `RESEARCH → DRAFT → HUMAN REVIEWS → APPROVE → SCHEDULE → POST`
-
-Parsed nodes:
-```js
-{ id:"n1", type:"trigger",  label:"Weekly\nSchedule",    tool:"Make.com" }
-{ id:"n2", type:"action",   label:"Deep Research\nSkill", tool:"Claude"   }
-{ id:"n3", type:"action",   label:"Draft LinkedIn\nPost", tool:"Claude"   }
-{ id:"n4", type:"action",   label:"Save to\nNotion",      tool:"Notion"   }
-{ id:"n5", type:"decision", label:"Approved?",            tool:null       }
-{ id:"n6", type:"output",   label:"Post to\nLinkedIn",    tool:"LinkedIn" }
-{ id:"n7", type:"filter",   label:"Revise Draft",         tool:null       }
-```
-
-Parsed edges:
-```js
-n1→n2, n2→n3, n3→n4, n4→n5
-n5→n6 (label: "Yes ✓")
-n5→n7 (label: "No ✗")
-n7→n3 (label: "retry")
-```
+The user describes what they want to accomplish. They might be vague ("I want to automate
+my marketing pipeline") or detailed ("here's my 12-step research process with three parallel
+agent tracks"). Either way, you run their description through a structured analysis framework,
+ask clarifying questions where needed, and produce three deliverables.
 
 ---
 
-## Step 2 — Generate Artifacts
+## Phase 1: Intake & Analysis
 
-Generate **both** artifacts in sequence. Tell the user what you're building before each one.
+When the user describes their workflow, extract and organize information across these dimensions.
+If information is missing, infer reasonable defaults AND flag your assumptions for the user to
+confirm or correct.
 
-### Artifact 1: Interactive Builder
+### 1.1 The Analysis Framework
 
-Use the BUILDER template from `references/builder-template.md`.
+Run every workflow description through ALL of these lenses:
 
-Key customisations to make:
-- Replace `INIT_NODES` with parsed nodes (set x/y positions in a sensible left-to-right or top-to-bottom layout)
-- Replace `INIT_EDGES` with parsed edges
-- Set `WORKFLOW_TITLE` to the workflow name
-- Position nodes so the flow reads naturally (left to right for linear, branching below for decisions)
+**CORE DIMENSIONS:**
 
-**Layout guide:**
-- Start node: x=100, y=center
-- Each subsequent step: x += 230
-- Decision branches: main path continues right, alternate path goes y += 180
-- Keep y between 150–450 for single-path flows
+| Dimension | What to Extract | Questions to Ask If Missing |
+|-----------|----------------|----------------------------|
+| **Triggers & Events** | What initiates this workflow? (schedule, human action, webhook, file drop, chat command) | "What kicks this off? Is it manual or automatic?" |
+| **Linear Steps** | Sequential actions that must happen in order | "Walk me through what happens first, second, third..." |
+| **Conditional Logic** | Decision points, if/then branches, routing rules | "Are there points where the path changes based on a result?" |
+| **Parallel Tracks** | Steps that can run simultaneously | "Can any of these steps happen at the same time?" |
+| **People & Roles** | Who does what, approval authority, escalation paths | "Who's involved? Who has final sign-off?" |
+| **Tools & Services** | Software, MCPs, APIs, Claude products, external services | "What tools are you using or want to use?" |
+| **Interactions** | Handoffs between people, between tools, between people and tools | "Where does work pass from one person/system to another?" |
+| **Dependencies** | What must finish before the next step can start | "What's blocking what? Are there hard prerequisites?" |
+| **Timing** | Duration estimates, deadlines, SLAs, parallelism opportunities | "How long does each step take? Any hard deadlines?" |
+| **Error Handling** | What happens when something fails, retry logic, fallback paths | "What could go wrong? What do you do when it does?" |
+| **Data Flow** | What information moves between steps, formats, transformations | "What data goes in and comes out of each step?" |
+| **Handoffs** | When control passes from one person or tool to another | "Where do you hand things off? Any approval gates?" |
 
-### Artifact 2: Client Presenter
+**ADVANCED DIMENSIONS (always check, surface when relevant):**
 
-Use the PRESENTER template from `references/presenter-template.md`.
+| Dimension | What to Extract |
+|-----------|----------------|
+| **Feedback Loops** | Where does output circle back as input? Review cycles, iteration rounds |
+| **Verification & QA** | Quality gates, checkpoints, validation steps before proceeding |
+| **Versioning** | How are drafts, iterations, and file versions tracked? |
+| **LLM / AI Agents** | Which models, what roles do they play, context management, prompt chains |
+| **State Management** | Where does the workflow remember things? (files, spreadsheets, databases, context window) |
+| **Retry & Recovery** | Auto-retry vs. human intervention, graceful degradation |
+| **Cost & Resources** | API costs, token limits, rate limits, compute constraints |
+| **Scalability** | Does it work for 1 item or 1,000? Batch vs. single processing |
+| **Human-in-the-Loop** | Explicit moments requiring human review, approval, or intervention |
+| **Output Artifacts** | Complete manifest of everything the workflow produces |
+| **Security & Permissions** | Who can access what, API key management, data sensitivity |
+| **Monitoring & Logging** | How do you know if it's working? Alerts, progress tracking |
 
-Key customisations:
-- `WORKFLOW_TITLE` and `WORKFLOW_SUBTITLE` (e.g. "7-step automation · Human-in-the-loop")
-- `STEPS_DATA` array — one entry per node, with: icon, color, title, tool badge, description, duration (optional)
-- Include a summary header: total steps, tools used, human touchpoints
-- Flow diagram at top (simplified SVG), then scrollable step cards below
+### 1.2 Claude Ecosystem Mapping
+
+For every workflow, identify which Claude products and capabilities are involved:
+
+- **Claude Chat (Projects)** — Persistent context, project instructions, uploaded files
+- **Claude Cowork** — Local folder access, sub-agents, parallel task execution, skill/plugin invocation
+- **Claude Code** — Terminal access, code execution, git operations, skill creation
+- **Claude in Chrome** — Browser automation, web scraping, live page interaction
+- **Skills** — Reusable capability packages (custom or official)
+- **Plugins** — Bundled collections of skills + commands + hooks
+- **MCP Servers** — External service connectors (Notion, Canva, Supabase, etc.)
+- **Hooks** — Event-driven triggers that fire automatically
+- **Agents / Sub-agents** — Autonomous workers that execute tasks in parallel
+
+Map each step to the appropriate product/capability and note any gaps where the user
+may need to set up or install something.
+
+### 1.3 Clarification Protocol
+
+After your first-pass analysis, present:
+1. A summary of what you understood
+2. Your assumptions (marked clearly)
+3. Specific questions for anything critical that's missing
+
+Keep clarification to ONE round if possible. Don't interrogate — make smart inferences
+and flag them.
 
 ---
 
-### Presenter step-card format
+## Phase 2: Architecture Design
 
-Each step card in the presenter follows this structure:
+Once you have enough information, design the architecture. This is the thinking phase
+before you produce deliverables.
+
+### 2.1 Decomposition
+
+Break the workflow into:
+- **Stages** — Major phases (e.g., "Research", "Production", "Review", "Delivery")
+- **Steps** — Individual actions within stages
+- **Sub-steps** — Granular tasks within steps (if needed)
+
+### 2.2 Flow Design
+
+Map the execution flow:
+- Entry point (trigger)
+- Sequential paths
+- Parallel tracks (what can run simultaneously)
+- Decision branches (conditional routing)
+- Merge points (where parallel tracks reconverge)
+- Feedback loops (where output feeds back as input)
+- Exit points (completion criteria)
+- Error/exception paths
+
+### 2.3 Integration Architecture
+
+For each step, define:
+- **Actor**: Who or what performs it (human, Claude agent, MCP, script)
+- **Input**: What it needs to start
+- **Action**: What it does
+- **Output**: What it produces
+- **Destination**: Where the output goes next
+- **Failure mode**: What happens if it fails
+
+---
+
+## Phase 3: Deliverables
+
+Produce THREE outputs. Always produce all three. Read `references/output-specs.md`
+for detailed formatting and rendering guidance before generating outputs.
+
+### Deliverable 1: Visual Architecture Diagram (Flowchart)
+
+Create a **Mermaid flowchart** saved as a `.mermaid` file that visualizes the complete
+workflow architecture. This should look and feel like a professional algorithm flowchart.
+
+**Requirements:**
+- Use standard flowchart shapes: rectangles (process), diamonds (decision), parallelograms (I/O), rounded rectangles (start/end), stadium shapes (sub-processes)
+- Color-code by actor type (human = blue, Claude agent = green, MCP/tool = orange, external = gray)
+- Show all parallel tracks, branches, merge points, and feedback loops
+- Label every connection with what data/artifact flows between steps
+- Include error paths and recovery routes
+- Keep it readable — use subgraphs for stages/phases
+- Add a legend
+
+See `references/output-specs.md` for Mermaid syntax patterns and examples.
+
+### Deliverable 2: Step-by-Step Process Manual
+
+Create a comprehensive **Markdown document** that anyone could follow to set up and
+execute this workflow from scratch.
+
+**Structure:**
+
+```markdown
+# [Workflow Name] — Process Manual
+
+## Overview
+Brief description, purpose, expected outcomes
+
+## Prerequisites
+- Tools to install / enable
+- Accounts needed
+- Files to prepare
+- MCP servers to connect
+- Skills/plugins to install
+
+## Folder Structure
+Exactly what folders and files to create, with a tree diagram
+
+## Setup Instructions
+Step-by-step setup (one-time configuration)
+
+## Execution Guide
+
+### Stage 1: [Name]
+#### Step 1.1: [Action]
+- **Actor:** Who/what does this
+- **Input:** What's needed
+- **Action:** Exactly what to do (include prompts if applicable)
+- **Output:** What this produces
+- **Success criteria:** How to know it worked
+- **If it fails:** What to do
+
+### Stage 2: [Name]
+[repeat pattern]
+
+## Prompts Reference
+All prompts used in the workflow, ready to copy-paste
+
+## Error Recovery Guide
+Common failures and how to fix them
+
+## Output Manifest
+Complete list of everything the workflow produces
 ```
-┌─────────────────────────────────────┐
-│ [Icon]  Step N: [Title]      [Tool] │
-│                                     │
-│ [1-sentence description of action]  │
-│                                     │
-│ ⏱ Duration (optional)  → Next step │
-└─────────────────────────────────────┘
-```
 
-- **Icon:** Emoji matching the node type (⚡ trigger, ⚙️ action, 🔀 decision, 🔍 filter, 📤 output)
-- **Tool badge:** Colored pill with tool name (e.g., `Claude`, `Notion`, `Make.com`). Omit if no tool.
-- **Description:** One sentence, active voice, explaining what happens at this step.
-- **Duration:** Optional. Include only if the user specified timing.
-- **Summary header** at top of presenter: "N steps · M tools · K human touchpoints"
+### Deliverable 3: Gantt Chart
+
+Create a **Mermaid Gantt chart** saved as a `.mermaid` file showing:
+- All stages and steps on a timeline
+- Dependencies (what blocks what)
+- Parallel tracks shown as concurrent bars
+- Milestones and checkpoints
+- Estimated durations
+- Critical path highlighted
+
+See `references/output-specs.md` for Gantt syntax and examples.
 
 ---
 
-## Step 3 — Offer Next Steps
+## Interaction Style
 
-After generating both artifacts, offer:
-- "Want me to **export this to Excalidraw** for a hand-drawn shareable version?"
-- "Want me to **save this to Notion** as a workflow doc?"
-- "Want to **add more steps** or adjust any node?"
-- "Want the **skill file** packaged for reuse?"
+- Be direct and architectural in tone. Think systems engineer, not chatbot.
+- Use concrete language, not abstract jargon.
+- When you make assumptions, say so clearly: "I'm assuming X — correct me if wrong."
+- If the workflow is simple (under 5 steps, no parallelism), you can simplify the outputs
+  but still produce all three deliverables.
+- If the workflow is complex, take space. A thorough blueprint saves hours of debugging later.
+- Always map to specific Claude products and features — don't be generic.
 
----
+## Quick Reference
 
-## Edge Cases
+For detailed output formatting, Mermaid syntax, and rendering examples:
+→ Read `references/output-specs.md`
 
-- **2–3 nodes only:** Still generate both artifacts. Use a compact horizontal layout (x spacing = 200).
-- **No tools specified:** Omit tool badges. Use generic icons (gear for action, diamond for decision).
-- **Parallel paths:** If the user describes steps that happen simultaneously, stack them vertically at the same x position and connect from a single source node.
-- **Updates to existing diagram:** When the user says "add a step" or "change X", modify only the affected nodes/edges. Re-render both artifacts with changes highlighted.
-- **Very large workflows (15+ nodes):** Switch to top-to-bottom layout. Group related nodes into labeled swimlanes if the user describes different teams or systems.
+For analysis checklist and dimension deep-dives:
+→ Read `references/analysis-checklist.md`
 
----
-
-## Reference Files
-
-- `references/builder-template.md` — Full React code for the interactive builder
-- `references/presenter-template.md` — Full React code for the client presenter
-
-**Important:** Read the relevant template file before generating each artifact. These templates contain the full React component code that you customize with the parsed workflow data.
+For Claude ecosystem product reference:
+→ Read `references/claude-ecosystem.md`
