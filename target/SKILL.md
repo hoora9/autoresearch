@@ -1,91 +1,261 @@
 ---
-name: web-coding-assistant
+name: webgl-3d-dev
 description: >
-  A creative web development advisory team with specialists in motion graphics, WebGL, GSAP, and interactive design, plus CodePen code sourcing. Use when the user says: 'consult the design team', 'what would Bruno Simon do', 'find me a CodePen for this effect', 'help me build an interactive website', 'creative web development', or asks for expert-level advice on combining animation, 3D, and design in web builds. This skill provides advisor personas to consult and a CodePen research workflow.
-  Do NOT trigger for: general frontend UI without animation (use frontend-design), Figma-to-code (use figma-designer), pure 3D/WebGL learning (use webgl-3d-dev), scroll-driven kinetic sites (use kinetic-minimalism), or GSAP API reference (use gsap-cheat-sheet-skills).
+  Comprehensive guide for WebGL and 3D web development skills. Use this skill whenever the user asks about
+  learning or building with WebGL, Three.js, React Three Fiber, GLSL shaders, 3D modeling for the web,
+  Blender-to-web pipelines, or real-time 3D graphics in the browser. Also trigger when the user mentions
+  GPU programming, shader writing, 3D asset optimization, glTF workflows, procedural generation, WebGPU,
+  or wants to create interactive 3D experiences, product configurators, data visualizations in 3D,
+  immersive web experiences, or portfolios with 3D elements. If the user references Three.js, Babylon.js,
+  R3F, or any WebGL-related library, use this skill.
 ---
 
-# Design & Motion Advisory Board
+# WebGL & 3D Web Development Skill Guide
 
-A curated team of world-class advisors in motion graphics, WebGL, GSAP, and creative technology. Consult them when building interactive, animated websites.
-
----
-
-## Advisors
-
-### 1. Bruno Simon — Creative Developer & WebGL Educator
-**Specialty:** Three.js, WebGL, Interactive 3D Web Experiences
-**Consult for:** Three.js architecture, 3D web performance, shader development, pushing browser rendering limits
-**Signature approach:** Full-scene interactive 3D (his portfolio site lets users drive a car around a 3D landscape). Prioritizes playful interaction over passive viewing.
-
-### 2. Matt DesLauriers — Artist & Creative Coder
-**Specialty:** Generative Art, WebGL, Creative Coding, Shaders
-**Consult for:** Generative design systems, shader artistry, blending fine art with code, cinematic visual quality in the browser
-**Signature approach:** Algorithmic beauty — using noise functions, particle systems, and WebAudio to create art-quality experiences.
-
-### 3. Guillaume Combeaud — 3D Motion Designer & Director
-**Specialty:** 3D Motion Design, AI-Driven Creativity, Brand Animation
-**Consult for:** Brand-level motion strategy, commercial animation direction, integrating AI into motion workflows, cinematic 3D for marketing
-**Signature approach:** 17+ years of commercial motion for Adidas, North Face, Fender, Coca-Cola. Thinks in terms of brand narrative, not just technical execution.
-
-### 4. Active Theory — Creative Digital Experience Studio
-**Specialty:** Immersive WebGL, Custom Frameworks, VR/AR Web
-**Consult for:** Scaling WebGL for enterprise, custom rendering frameworks, cross-platform 3D delivery, production pipelines
-**Signature approach:** Built experiences for Google, NASA, Spotify. Uses Hydra (proprietary framework) for immersive 3D across web, mobile, and VR.
-
-### 5. Codrops / Tympanus — Creative Web Development Lab
-**Specialty:** GSAP, Scroll Animations, WebGL Shaders, UI Animation Patterns
-**Consult for:** GSAP best practices, scroll-driven WebGL techniques, cutting-edge animation patterns, staying current with creative web trends
-**Signature approach:** Publishes state-of-the-art tutorials combining GSAP, Three.js, WebGL shaders, and Barba.js. The benchmark for creative web animation.
-
-### Quick Reference
-
-| Advisor | Consult For |
-|---|---|
-| **Bruno Simon** | Three.js architecture, 3D interactivity, WebGL performance |
-| **Matt DesLauriers** | Generative art, shaders, creative coding philosophy |
-| **Guillaume Combeaud** | Brand motion strategy, commercial 3D, AI workflows |
-| **Active Theory** | Enterprise WebGL, custom frameworks, cross-platform delivery |
-| **Codrops** | GSAP patterns, scroll animation, experimental techniques |
+A structured reference for mastering WebGL and 3D web development — from foundational math to production-ready immersive experiences.
 
 ---
 
-## CodePen Exploration & Code Sourcing
+## 1. Core Technical Foundation
 
-### When to Use CodePen
-Before finalizing design decisions, explore CodePen to discover what's possible — find inspiration, evaluate interactive effects, and source production-ready code snippets.
+### 3D Mathematics
+- **Linear algebra**: vectors, matrices (model, view, projection), quaternions for rotation
+- **Coordinate systems**: world space, object space, camera space, clip space, screen space
+- **Transformations**: translation, rotation, scaling, and combining via matrix multiplication
+- **Interpolation**: lerp, slerp, easing functions for smooth animations
 
-### Workflow
+### The Rendering Pipeline
+Understand the full GPU pipeline:
 
-1. **Explore trending**: Fetch `https://codepen.io/trending` to see current UI patterns and animations
-2. **Search for specific effects**: Fetch `https://codepen.io/search/pens?q={search_term}` — try terms like "GSAP scroll animation", "3D card hover", "text reveal animation", "parallax section"
-3. **Check saved pens**: Fetch `https://codepen.io/your-work` for previously saved pens
-4. **Extract code**: Fetch the individual pen page to get HTML, CSS, and JavaScript. Document the URL for attribution.
+```
+Vertex Data → Vertex Shader → Primitive Assembly → Rasterization → Fragment Shader → Framebuffer
+```
 
-### Integration Rules
-- Prefer pens using vanilla JS or GSAP (primary animation library) over framework-specific implementations
-- Document all dependencies before integrating
-- Adapt extracted code to the project's design system, responsive requirements, and tech stack
-
----
-
-## Process
-
-1. **Understand the brief**: What is the website's purpose, audience, and desired feel?
-2. **Consult advisors**: Based on the brief, identify which advisor's expertise applies (e.g., Bruno Simon for 3D interactivity, Codrops for scroll animations)
-3. **Research on CodePen**: Search for relevant effects and patterns to validate feasibility
-4. **Plan the build**: Define the animation strategy, component architecture, and technology stack
-5. **Build**: Generate production code combining advisor-level techniques with CodePen-sourced patterns
-6. **Refine**: Compare output against the brief, iterate on animation timing and visual polish
+Key concepts: draw calls, GPU state management, depth buffering, stencil operations, blending modes.
 
 ---
 
-## Good vs Bad Example
+## 2. WebGL & Shaders
 
-User asks: "Build me an interactive hero section for a creative agency."
+### Raw WebGL
+- Creating and managing WebGL contexts
+- Buffers: vertex buffers, index buffers, uniform buffers
+- Textures: 2D, cubemaps, data textures, texture units
+- Framebuffer objects (FBOs) for off-screen rendering and post-processing
+- Extensions and capability detection
 
-❌ **Bad (generic, no advisor thinking):**
-> Here's a hero with a fade-in title and a gradient background.
+### GLSL (OpenGL Shading Language)
+- **Vertex shaders**: transform geometry, pass varyings
+- **Fragment shaders**: compute pixel color, lighting, effects
+- Uniforms, attributes, varyings
+- Built-in functions: `mix`, `smoothstep`, `clamp`, `dot`, `cross`, `normalize`
+- Precision qualifiers and mobile considerations
 
-✅ **Good (advisor-informed, CodePen-researched):**
-> Taking Bruno Simon's approach to interactive 3D: a WebGL particle field that reacts to cursor movement, with Codrops-style staggered text reveals. Found a relevant CodePen (GSAP character-by-character reveal) and adapted it. The particles use Three.js with custom shaders for a depth-of-field blur effect. Typography uses PP Neue Montreal at 7vw, letter-spacing expands on scroll. Dark palette with a single warm accent on the CTA.
+**Example — basic vertex shader:**
+```glsl
+attribute vec3 position;
+uniform mat4 modelViewMatrix;
+uniform mat4 projectionMatrix;
+
+void main() {
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+```
+
+---
+
+## 3. 3D Frameworks & Libraries
+
+### Three.js (Primary)
+The dominant library for web 3D. Key areas:
+- Scene graph: Scene, Camera, Mesh, Light, Group
+- Geometries: BufferGeometry, instanced geometry
+- Materials: MeshStandardMaterial, ShaderMaterial, RawShaderMaterial
+- Loaders: GLTFLoader, DRACOLoader, KTX2Loader
+- Controls: OrbitControls, FlyControls, custom controls
+- Post-processing: EffectComposer, render passes
+
+### React Three Fiber (R3F)
+Declarative Three.js in React. Key ecosystem:
+- `@react-three/fiber` — core renderer
+- `@react-three/drei` — helpers (Html, Environment, ContactShadows, etc.)
+- `@react-three/postprocessing` — effects
+- `@react-three/rapier` — physics
+
+### Other Frameworks
+- **Babylon.js** — full-featured alternative, strong editor tooling
+- **PlayCanvas** — editor-driven, good for collaborative teams
+- **Spline** — no-code 3D for designers, exportable to web
+
+---
+
+## 4. 3D Modeling & Asset Pipeline
+
+### Blender (Primary Tool)
+- Modeling: box modeling, sculpting, modifiers
+- UV unwrapping and texture baking
+- Rigging and animation for web export
+- glTF export settings and optimization
+
+### Asset Optimization (Critical for Web)
+Transform heavy 3D assets into web-ready formats:
+
+| Technique | Purpose | Tool |
+|-----------|---------|------|
+| Mesh decimation | Reduce polygon count | Blender Decimate modifier |
+| Draco compression | Compress geometry | `gltf-pipeline`, Three.js DRACOLoader |
+| KTX2/Basis textures | GPU-compressed textures | `toktx`, KTX2Loader |
+| Texture atlasing | Reduce draw calls | Blender bake, custom tools |
+| LOD (Level of Detail) | Distance-based quality | Three.js LOD object |
+| glTF/GLB format | Standard web 3D format | Blender, glTF-Transform |
+
+**Target budgets:**
+- Hero model: < 500KB (compressed)
+- Full scene: < 2–5MB total
+- Textures: 1K or 2K max, use KTX2 where possible
+- Draw calls: < 50 for mobile, < 200 for desktop
+
+---
+
+## 5. Performance Optimization
+
+### Rendering Performance
+- **Instanced rendering**: draw thousands of identical objects in one call
+- **Draw call batching**: merge static geometries
+- **Frustum culling**: skip objects outside camera view
+- **Occlusion culling**: skip objects hidden behind others
+- **Texture compression**: KTX2/Basis Universal for GPU-native formats
+
+### Profiling Tools
+- **Spector.js** — WebGL call inspector
+- **Chrome DevTools Performance tab** — frame timing
+- **Three.js renderer.info** — draw calls, triangles, textures in memory
+- **stats.js** — FPS/MS/MB overlay
+
+### Device Adaptation
+Detect GPU capability and adapt quality:
+```javascript
+const gl = renderer.getContext();
+const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+const gpu = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+// Adjust quality tier based on GPU string
+```
+
+---
+
+## 6. Shader Art & Visual Effects
+
+### Post-Processing
+- Bloom, depth of field, SSAO (screen-space ambient occlusion)
+- Color grading, vignette, chromatic aberration
+- Custom passes with ShaderMaterial
+
+### Procedural Techniques
+- **Noise functions**: Perlin, Simplex, Worley — for organic textures, terrain, clouds
+- **Raymarching**: render complex shapes via signed distance fields (SDFs)
+- **Particle systems**: GPU-driven with buffer attributes or compute
+- **Generative geometry**: parametric surfaces, L-systems, fractals
+
+### Inspirational Resources
+- [Shadertoy](https://shadertoy.com) — shader playground and community
+- [The Book of Shaders](https://thebookofshaders.com) — foundational shader guide
+- [Inigo Quilez articles](https://iquilezles.org) — SDF and procedural techniques
+
+---
+
+## 7. Physics & Interaction
+
+### Physics Engines
+- **Rapier** (WASM) — fast, modern, great R3F integration
+- **Cannon.js / cannon-es** — pure JS, good for simple simulations
+- **Ammo.js** — Bullet physics compiled to WASM, heavy but full-featured
+
+### Interaction Patterns
+- **Raycasting**: detect mouse/touch intersection with 3D objects
+- **Drag controls**: TransformControls, DragControls
+- **Spatial data structures**: BVH (bounding volume hierarchy), octrees for fast queries
+- **Custom cursor feedback**: hover states, click animations on 3D objects
+
+---
+
+## 8. Web Fundamentals for 3D
+
+### JavaScript/TypeScript
+- `requestAnimationFrame` render loops
+- Web Workers for offloading heavy computation (mesh generation, physics)
+- SharedArrayBuffer for zero-copy data transfer
+- TypedArrays (Float32Array, Uint16Array) for buffer data
+
+### WebAssembly
+- Use for compute-heavy tasks: physics, pathfinding, mesh processing
+- Rust → WASM is a popular pipeline (wasm-bindgen, wasm-pack)
+
+### Responsive 3D
+- Adapt canvas size, pixel ratio, and quality to device
+- Handle resize events and pixel density (`renderer.setPixelRatio`)
+- Reduce shadow map size, particle count, post-processing on mobile
+
+---
+
+## 9. Emerging Technologies
+
+### WebGPU
+The successor to WebGL with compute shader support:
+- Modern API design (closer to Vulkan/Metal/DX12)
+- Compute shaders for GPU-driven simulations
+- Better performance and lower overhead
+- Three.js WebGPURenderer already in development
+
+### Gaussian Splatting
+Photogrammetry-based 3D on the web:
+- Capture real-world scenes as point clouds
+- Render via splatting for photorealistic results
+- Libraries: `@mkkellogg/gaussiansplat3d`, Luma AI
+
+### AI-Assisted 3D
+- Text-to-3D generation (Meshy, Tripo, Rodin)
+- AI texture generation for 3D models
+- NeRF and 3D Gaussian Splatting from photos
+
+---
+
+## 10. Design Sensibility
+
+Technical skills alone don't create great 3D web experiences. Develop:
+
+- **Lighting**: three-point lighting, HDRI environments, baked vs. real-time
+- **Composition**: camera placement, focal length, rule of thirds in 3D
+- **Camera movement**: smooth easing, parallax, scroll-driven camera paths
+- **Art direction**: consistent materials, color palettes, mood
+- **Motion design**: timing, easing curves, staggered reveals (synergizes with GSAP)
+
+The gap between a tech demo and a premium experience is almost always art direction, not code.
+
+---
+
+## Learning Path (Suggested Progression)
+
+1. **Foundation** → Linear algebra basics + Three.js "Hello Cube"
+2. **Geometry & Materials** → Load glTF models, apply PBR materials, add lights
+3. **Interaction** → Raycasting, OrbitControls, responsive canvas
+4. **Animation** → GSAP + Three.js integration, scroll-driven 3D
+5. **Shaders** → The Book of Shaders → custom ShaderMaterial
+6. **Asset Pipeline** → Blender basics → export → optimize → load
+7. **Performance** → Profiling, instancing, LOD, texture compression
+8. **Advanced** → Post-processing, physics, procedural generation
+9. **Emerging** → WebGPU, Gaussian splatting, compute shaders
+10. **Portfolio** → Build 2–3 showcase projects combining all skills
+
+---
+
+## Key Tools & Resources
+
+| Category | Tools |
+|----------|-------|
+| 3D Library | Three.js, React Three Fiber, Babylon.js |
+| Modeling | Blender, Spline |
+| Shaders | Shadertoy, The Book of Shaders, GLSL Sandbox |
+| Optimization | glTF-Transform, Draco, toktx, Spector.js |
+| Physics | Rapier, Cannon-es, Ammo.js |
+| Profiling | Spector.js, Chrome DevTools, stats.js |
+| Inspiration | Awwwards, Codrops, Three.js examples gallery |
