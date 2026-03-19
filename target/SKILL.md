@@ -1,104 +1,243 @@
 ---
-name: michels-presentation-designer
-description: >
-  Expert PowerPoint presentation design for Michel Gotlib's brand strategy practice.
-  Creates and modifies professional PPTX decks with visual identity coherence, strategic
-  slide structure, and pixel-perfect execution. Use this skill whenever Michel asks to
-  create, modify, harmonize, or review a PowerPoint presentation: "create a deck",
-  "fix the slides", "harmonize the colors", "new presentation", "update the PPTX",
-  "slide structure", "presentation for [client]", "brand platform deck", "media pitch",
-  "proposal presentation", "fix the typography", "make thumbnails", or any request
-  involving .pptx file creation or modification.
-  Do NOT trigger for: brand copy or text content (use elite-copywriter), brand strategy
-  questions (use strategic-thinker), Michel's personal LinkedIn posts (use mg-tone-of-voice),
-  or brand platform workshop facilitation (use brand-platform-workshop). This skill handles
-  the visual container — other skills provide the strategic content that goes inside.
+name: canva-designer
+description: Master Canva design creation, management, and automation via the Canva MCP Server. Use this skill whenever the user mentions Canva, wants to create designs, generate social media graphics, autofill brand templates, export designs as PDF or images, search existing Canva designs, resize designs for multiple platforms, import files into Canva, manage Canva folders and assets, create presentations or docs in Canva, or wants to use Canva's AI design generation including morphing effects. Also trigger when the user says "make me a Canva design", "create a social post", "autofill my template", "export from Canva", "resize for Instagram/LinkedIn/Facebook", "generate a presentation", "morph transition", or references brand kits, Magic Design, or any Canva workflow. This skill covers the full Canva MCP tool suite from design generation to batch operations and advanced creative techniques.
 ---
 
-# Presentation Designer
+# Canva Designer Skill
 
-You are Michel Gotlib's Presentation Designer. Michel is a senior brand strategist (former Head of Marketing Europe at Coca-Cola). You create and modify PowerPoint presentations that meet premium brand consulting standards.
+Create, manage, search, export, and automate Canva designs using the Canva MCP Server. This skill covers the complete Canva MCP tool suite including AI design generation, template autofill, multi-platform resizing, morphing effects, and batch workflows.
 
-**Core principle:** Execute first, explain only if asked. Michel provides direct feedback and expects precise corrections — not lengthy diagnostics.
+## Canva MCP Tools Reference
 
----
+The Canva MCP Server (connected at `https://mcp.canva.com/mcp`) provides these core tools:
 
-## Design process
+| Tool | Purpose |
+|------|---------|
+| `generate-design` | Create new designs using AI prompts (Magic Design) |
+| `search-designs` | Search existing designs — docs, presentations, videos, whiteboards |
+| `get-design` | Get detailed metadata about a specific design |
+| `get-design-pages` | List pages in multi-page designs |
+| `export-design` | Export designs as PDF, PNG, JPG |
+| `autofill-design` | Fill brand templates with dynamic content |
+| `create-design` | Create designs with preset or custom dimensions |
+| `import-design` | Import external files (PDFs, etc.) into Canva |
+| `resize-design` | Resize existing designs for different platforms |
+| `upload-asset` | Upload images/assets to Canva |
+| `create-folder` | Organize designs into folders |
+| `list-folder-items` | Browse folder contents |
+| `move-item` | Move designs between folders |
+| `create-comment` | Add review comments to designs |
+| `reply-to-comment` | Reply to existing design comments |
 
-1. **Clarify the brief.** What type of deck? (brand platform, proposal, media pitch, workshop summary). How many slides? Which client? Get brand guidelines (colors, fonts, logo) if not already known.
-2. **Choose the approach.** New deck from scratch → build slide-by-slide using the slide type specs below. Existing deck modification → use the PowerPoint XML workflow for bulk changes.
-3. **Apply the visual system.** Every deck must follow Michel's visual standards (see below). No exceptions.
-4. **Generate and verify.** Create the PPTX, generate thumbnails for visual verification, deliver.
-5. **Iterate.** Michel will request specific corrections. Apply them precisely. Preserve validated versions before making changes.
+Note: The Canva MCP tool list evolves. If a tool isn't recognized, try describing the action naturally — the MCP server may support it under a different name.
 
----
+## Core Workflows
 
-## Michel's visual standards (mandatory)
+### 1. Generate a Design from Scratch
 
-| Element | Specification |
-|---|---|
-| Title font | Georgia, bold |
-| Body font | Calibri, regular |
-| Title size | 28–36pt |
-| Subtitle size | 20–24pt |
-| Body text | 14–18pt |
-| Caption/footnote | 10–12pt |
-| Title underline | Horizontal line matching exact text width (use PIL/Pillow measurement) |
-| Accent bar | Vertical bar, left side, brand primary color, 4px width |
-| Margins | Consistent across all slides — 1cm minimum from edges |
-| Grid | Align all elements to a consistent grid |
-| Background | White or very light brand color. Dark backgrounds only for section dividers or impact slides. |
-| One idea per slide | Never overcrowd. If content doesn't fit, split into two slides. |
+Use `generate-design` with a detailed prompt. The more specific you are, the better the output.
 
-**Colors:** Use the client's exact hex values. Never approximate. When no brand guidelines exist, default to: primary #1A1A2E, accent #E94560, secondary #16213E, light #F5F5F5.
+**Effective prompt structure:**
+```
+Design type + Purpose + Visual style + Key content + Dimensions
+```
 
----
+**Examples of strong prompts:**
+- "Create a professional Instagram post for a tech startup launch. Use dark navy background with gold accents. Include the headline 'AI That Works For You' and a futuristic abstract graphic. 1080x1080."
+- "Generate a LinkedIn banner for Ocean Peak Capital, a private equity firm. Minimal, institutional aesthetic with deep blue tones. Include the tagline 'Navigating Global Markets' in clean sans-serif typography. 1584x396."
+- "Create a presentation deck for a quarterly investor update. 10 slides with a clean white background, navy text, and subtle geometric accents. Include placeholder charts and data tables."
 
-## Slide type specs
+**Tips for generation:**
+- Specify exact dimensions when you know the platform
+- Reference specific color hex values for brand consistency
+- Mention typography style preferences (serif, sans-serif, display)
+- Include the number of pages/slides for multi-page designs
+- Design generation is async — you'll receive a job ID to track progress
 
-| Slide type | Structure | Key elements |
-|---|---|---|
-| Title slide | Brand name centered, subtitle below, logo bottom-right | Full background image or brand color. No clutter. |
-| Section divider | Section title centered, number or icon top-left | Dark background, large white text. Visual break. |
-| Content slide | Title top, body left (60%), visual right (40%) | Max 3 bullet points, max 15 words each. |
-| Data slide | Title top, chart/graph centered, source footnote | Clean chart style, brand colors only, no 3D effects. |
-| Quote slide | Large quote centered, attribution below | Quotation marks as design element, brand accent color. |
-| Comparison slide | Title top, two columns or before/after layout | Visual symmetry, clear labels. |
-| Process/Timeline | Title top, horizontal or vertical flow | Numbered steps, icons, connecting lines in brand color. |
-| Call to action | Key message centered, contact info below | Strong, simple, one clear next step. |
+### 2. Search and Discover Existing Designs
 
----
+Use `search-designs` to find designs across your Canva account.
 
-## Technical workflow for PowerPoint
+**Search strategies:**
+- Search by name: "Find all designs named 'Q3 Report'"
+- Search by type: "Show me all my presentations"
+- Search by recency: "Find designs from this month"
+- Search by content: "Find designs containing 'product launch'"
 
-**For new decks:** Use python-pptx to build slides programmatically, following the slide type specs above.
+**Combining search with actions:**
+```
+1. Search for designs → get design IDs
+2. Get design details → understand structure
+3. Export, resize, or autofill → transform as needed
+```
 
-**For modifying existing decks (especially bulk changes):**
-1. Unpack PPTX → modify XML directly → repack
-2. Use `/mnt/skills/public/pptx/scripts/office/` tools for the unpack/repack workflow
-3. Color changes → exact hex substitution in XML tags
-4. Font changes → modify typeface attributes in text run properties
-5. Use PIL/Pillow for text width measurement (critical for title underlines)
-6. Generate thumbnails after changes for visual verification
-7. Run clean scripts to prevent orphaned file issues during repack
+### 3. Autofill Brand Templates
 
-**For PDF output:** Use LibreOffice conversion.
+Use `autofill-design` to populate brand templates with dynamic data. This is powerful for scaling branded content.
 
----
+**Autofill workflow:**
+1. Identify the brand template ID (search or get from Canva)
+2. Prepare the data payload (text fields, images, chart data)
+3. Call autofill with the template ID and data
+4. Export the result
 
-## Edge cases
+**Data types supported:**
+- Text fields (headlines, body copy, dates, names)
+- Images (swap placeholder images)
+- Chart data (bar charts, pie charts, line graphs with labeled data)
+- Tables (structured data)
 
-- **150+ slide decks:** Generate thumbnails in batches of 20 for verification. Never deliver without visual check.
-- **No brand guidelines provided:** Ask Michel. If he says "just make it look good", use the default color palette above.
-- **Complex visuals (maps, sophisticated charts):** If programmatic generation doesn't meet quality standards, flag it to Michel and suggest alternatives (screenshot from source, designer handoff) rather than delivering substandard output.
-- **Version control:** When Michel says "validated" or "approved", treat that version as the reference. Name it clearly (e.g., `ClientName_V12_REFERENCE.pptx`). Never modify the reference — create a new version.
+**Example:**
+```
+Autofill the "Monthly Report" template with:
+- Title: "February 2026 Performance Report"
+- Subtitle: "Ocean Peak Capital"
+- Chart data: Revenue Q1: $12.5M, Q2: $14.2M, Q3: $16.8M, Q4: $19.1M
+- Hero image: [uploaded asset ID]
+```
 
----
+Note: Autofill and Brand Templates require Canva Enterprise plan.
 
-## Self-check before delivering
+### 4. Export Designs
 
-1. **Brand consistency:** Are all colors exact hex matches? Are fonts correct throughout (Georgia titles, Calibri body)?
-2. **Typography hierarchy:** Do sizes follow the spec? Is spacing consistent?
-3. **One idea per slide:** Is any slide overcrowded?
-4. **Alignment:** Are all elements on-grid? Check margins, text boxes, images.
-5. **Readability:** Would text be readable at presentation distance (2m+)?
+Use `export-design` to download designs in various formats.
+
+**Supported formats:**
+- **PDF** — Best for documents, presentations, print materials
+- **PNG** — Best for social media, web graphics (supports transparency)
+- **JPG** — Best for photos, smaller file sizes
+
+**Export is async:** You'll receive a job ID. Poll for completion, then get download URLs.
+
+**Quality options:**
+- Standard quality — Default, suitable for web
+- Pro quality — Higher resolution (may fail if design contains unpaid premium elements)
+
+**Batch export pattern:**
+```
+1. Search for designs in a folder
+2. Loop through results
+3. Export each as PDF
+4. Collect download links
+```
+
+### 5. Resize for Multiple Platforms
+
+Use `resize-design` to adapt a single design for different platform dimensions.
+
+**Common resize targets:**
+
+| Platform | Format | Dimensions |
+|----------|--------|------------|
+| Instagram Post | Square | 1080 × 1080 |
+| Instagram Story | Vertical | 1080 × 1920 |
+| Facebook Post | Landscape | 1200 × 630 |
+| Facebook Cover | Wide | 820 × 312 |
+| LinkedIn Post | Landscape | 1200 × 627 |
+| LinkedIn Banner | Wide | 1584 × 396 |
+| Twitter/X Post | Landscape | 1600 × 900 |
+| YouTube Thumbnail | Landscape | 1280 × 720 |
+| Pinterest Pin | Vertical | 1000 × 1500 |
+| TikTok | Vertical | 1080 × 1920 |
+| A4 Print | Portrait | 2480 × 3508 |
+| US Letter | Portrait | 2550 × 3300 |
+| Business Card | Landscape | 1050 × 600 |
+| Presentation | Widescreen | 1920 × 1080 |
+
+**Multi-platform campaign workflow:**
+```
+1. Generate or find the master design
+2. Resize for Instagram (1080×1080)
+3. Resize for LinkedIn (1200×627)
+4. Resize for Facebook Cover (820×312)
+5. Export all variants
+6. Organize into campaign folder
+```
+
+Note: Resize requires a paid Canva plan.
+
+### 6. Import External Files
+
+Use `import-design` to bring external files into Canva.
+
+**Supported imports:**
+- PDF files (converted to editable Canva pages)
+- Files from URLs (no upload needed)
+- Existing designs from other tools
+
+**Use case:** Import a client's PDF brand guidelines, then use elements from it to create new Canva designs.
+
+## Advanced Creative Techniques
+
+For detailed creative workflows including morphing, animations, and visual effects:
+→ Read `references/creative-techniques.md`
+
+This reference covers:
+- Morphing transitions between slides
+- Animation and motion effects
+- Visual consistency techniques
+- Brand kit integration
+- Advanced typography and color strategies
+- Photo editing and enhancement within Canva
+
+## Campaign and Batch Workflows
+
+For multi-design campaigns and automation patterns:
+→ Read `references/campaign-workflows.md`
+
+This reference covers:
+- Social media campaign generation (multi-platform)
+- Batch autofill from data sources
+- Folder organization strategies
+- Team collaboration via comments
+- Content calendar workflows
+- Brand consistency at scale
+
+## Design Prompting Best Practices
+
+### DO:
+- Be specific about dimensions, colors, and typography
+- Reference brand colors by hex code when possible
+- Specify the number of pages/slides for multi-page designs
+- Include the purpose/audience for better AI generation
+- Use Canva's design type presets when available (Instagram Post, Presentation, etc.)
+- Iterate: generate → review → refine prompt → regenerate
+
+### DON'T:
+- Use vague prompts like "make something nice"
+- Forget to specify dimensions (defaults may not match your platform)
+- Skip organizing into folders (makes future searches harder)
+- Assume exported files are final without reviewing in Canva editor
+- Ignore brand kit settings if they exist in the account
+
+## Async Job Handling
+
+Many Canva operations are asynchronous (design generation, export, import, autofill). The pattern is:
+
+```
+1. Initiate the job → receive a job ID
+2. Poll for completion (the MCP server handles this)
+3. Receive the result (design ID, download URLs, etc.)
+```
+
+Generation typically takes a few seconds to a minute depending on complexity. If a job seems stuck, wait and retry — Canva's AI generation queue may have latency.
+
+## Plan-Specific Features
+
+| Feature | Free | Pro/Teams | Enterprise |
+|---------|------|-----------|------------|
+| Generate designs | ✓ (limited) | ✓ | ✓ |
+| Search designs | ✓ | ✓ | ✓ |
+| Export | ✓ | ✓ | ✓ |
+| Resize | ✗ | ✓ | ✓ |
+| Autofill templates | ✗ | ✗ | ✓ |
+| Brand templates | ✗ | ✗ | ✓ |
+| Pro export quality | ✗ | ✓ | ✓ |
+
+## Common Pitfalls
+
+1. **"Pro quality export failed"** — The design contains unpaid premium elements. Switch to standard quality or replace premium elements.
+2. **"Design not found"** — The design may predate the MCP connection. Only designs created or modified after connecting are reliably accessible.
+3. **"Autofill not available"** — Requires Canva Enterprise with brand templates configured.
+4. **Resize distortion** — Canva intelligently re-layouts, but complex designs may need manual adjustment in the editor afterward.
+5. **Rate limits** — Design generation uses Canva's AI and may be subject to usage limits based on account type.
