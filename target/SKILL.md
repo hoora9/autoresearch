@@ -1,110 +1,400 @@
 ---
-name: codepen
-description: >
-  Explore CodePen to find inspiration, evaluate interactive effects, and source production-ready code snippets for web builds. Use when the user says: 'find me a CodePen', 'search CodePen for', 'browse CodePen', 'find a pen for this effect', 'CodePen inspiration', 'look up CodePen examples', or asks to source code from CodePen for a specific UI pattern, animation, or interaction.
-  Do NOT trigger for: building websites from scratch (use frontend-design), GSAP animation reference (use gsap-cheat-sheet-skills), 3D/WebGL development (use webgl-3d-dev), or general web design without CodePen sourcing (use web-coding-assistant).
+name: gsap-cheat-sheet-skills
+description: Quick reference of commonly used GSAP APIs and patterns extracted from the GSAP Cheat Sheet page.[page:1]
 ---
 
-# CodePen Exploration & Code Sourcing
+here are the instructions for Gsap animations -use them when building websites or apps
 
-Explore CodePen to discover what's possible — find inspiration, evaluate interactive effects, and source production-ready code snippets for website builds.
 
----
+## Basics
 
-## Workflow
+### Core tweens
 
-### Step 1: Search CodePen
-
-Use `web_fetch` to search for relevant pens:
-
-| Action | URL |
-|--------|-----|
-| Browse trending | `https://codepen.io/trending` |
-| Search by keyword | `https://codepen.io/search/pens?q={search_term}` |
-| Browse saved pens | `https://codepen.io/your-work` |
-
-**Example search terms:** "GSAP scroll animation", "3D card hover", "text reveal animation", "parallax section", "liquid gradient background", "kinetic typography", "clip-path reveal"
-
-Try multiple search terms — the first query rarely finds the best result.
-
-### Step 2: Evaluate Pens
-
-For each promising pen, assess:
-- **Tech stack match**: Does it use vanilla JS or GSAP (preferred) vs. framework-specific code?
-- **Code quality**: Is it clean, well-structured, and adaptable?
-- **Dependencies**: What external libraries does it require?
-- **Responsiveness**: Does it work on mobile?
-
-### Step 3: Extract and Adapt
-
-1. Fetch the individual pen page to extract HTML, CSS, and JavaScript
-2. Document the pen's URL for attribution
-3. Adapt the code to the project's design system, tech stack, and responsive requirements
-4. Strip out unnecessary dependencies
-
-### Step 4: Present Findings
-
-Report to the user with:
-
+```js
+// "to" tween - animate to provided values
+gsap.to(".selector", {
+  // selector text, Array, or object
+  x: 100,                     // any properties (not limited to CSS)
+  backgroundColor: "red",     // camelCase
+  duration: 1,                // seconds
+  delay: 0.5,                 // seconds
+  ease: "power2.inOut",
+  stagger: 0.1,               // stagger start times
+  paused: true,               // default is false
+  overwrite: "auto",          // default is false
+  repeat: 2,                  // -1 for infinite
+  repeatDelay: 1,             // seconds between repeats
+  repeatRefresh: true,        // invalidates on each repeat
+  yoyo: true,                 // if true: A-B-B-A, if false: A-B-A-B
+  yoyoEase: true,             // or ease like "power2"
+  immediateRender: false,
+  onComplete: () => {
+    console.log("finished");
+  }
+  // other callbacks: onStart, onUpdate, onRepeat, onReverseComplete
+});
 ```
-## CodePen Research: [Topic]
 
-### Pen 1: [Title]
-- **URL**: [link]
-- **What it does**: [brief description]
-- **Tech**: [vanilla JS / GSAP / Three.js / etc.]
-- **Adaptability**: [easy / moderate / needs significant rework]
-- **Recommendation**: [use as-is / adapt / skip]
+```js
+// "from" tween - animate from provided values
+gsap.from(".selector", {
+  // fromVars
+});
+```
 
-### Pen 2: [Title]
-...
+```js
+// "fromTo" tween - define both start and end values
+gsap.fromTo(
+  ".selector",
+  { /* fromVars */ },
+  { /* toVars, including duration/ease/etc. */ }
+);
+```
 
-### Recommendation
-[Which pen best fits the project and why]
+```js
+// Set values immediately (no animation)
+gsap.set(".selector", {
+  // toVars
+});
 ```
 
 ---
 
-## Design Process Integration
+## Timelines
 
-1. **Discovery**: Browse trending and search broadly before committing to a design direction — present options with links and descriptions
-2. **Validation**: When a specific effect is proposed (e.g., "kinetic text hero"), search CodePen for working examples to assess feasibility
-3. **Implementation**: Extract code from the selected pen and adapt it to the project
+### Creating timelines
+
+```js
+// Create a timeline
+let tl = gsap.timeline({
+  delay: 0.5,
+  paused: true,          // default is false
+  repeat: 2,             // -1 for infinite
+  repeatDelay: 1,        // seconds between repeats
+  repeatRefresh: true,   // invalidates on each repeat
+  yoyo: true,            // if true: A-B-B-A
+  defaults: {            // children inherit these defaults
+    duration: 1,
+    ease: "none"
+  },
+  smoothChildTiming: true,
+  autoRemoveChildren: true,
+  onComplete: () => {
+    console.log("finished");
+  }
+  // other callbacks: onStart, onUpdate, onRepeat, onReverseComplete
+});
+```
+
+### Sequencing tweens
+
+```js
+// Sequence multiple tweens
+tl.to(".selector", {
+  duration: 1,
+  x: 50,
+  y: 0
+})
+  .to("#id", {
+    autoAlpha: 0
+  })
+  .to(elem, {
+    duration: 1,
+    backgroundColor: "red"
+  })
+  .to([elem, elem2], {
+    duration: 3,
+    x: 100
+  });
+```
+
+### Position parameter
+
+```js
+tl.to(target, { /* toVars */ }, positionParameter);
+
+// Examples:
+0.7;           // exactly 0.7 seconds into the timeline (absolute)
+"-=0.7";       // overlap with previous by 0.7 sec
+"myLabel";     // insert at "myLabel" position
+"myLabel+=0.2"; // 0.2 seconds after "myLabel"
+"<";           // align with start of most recently-added child
+"<0.2";        // 0.2 seconds after ^
+"-=50%";       // overlap half of inserting animation's duration
+"<25%";        // 25% into the previous animation (from its start)
+```
 
 ---
 
-## Good vs Bad Example
+## Control Methods
 
-User asks: "Find me a CodePen for a scroll-triggered text reveal effect."
+### Tween / timeline control
 
-❌ **Bad (lazy, no evaluation):**
-> Here are some CodePen links about text animation. [dumps 5 URLs with no context]
+```js
+// Retain animation reference to control later
+let anim = gsap.to(".selector", { x: 100 });
+// or: let anim = gsap.timeline({...});
 
-✅ **Good (researched, evaluated, recommended):**
-> ## CodePen Research: Scroll-Triggered Text Reveal
->
-> ### Pen 1: "GSAP SplitText Scroll Reveal"
-> - **URL**: [link from search]
-> - **What it does**: Splits headline into characters, fades each in with staggered Y offset on ScrollTrigger
-> - **Tech**: GSAP 3.12 + SplitText (Club plugin)
-> - **Adaptability**: Easy — just update CSS variables for your font and colors
-> - **Recommendation**: Best match — clean code, uses our primary animation library
->
-> ### Pen 2: "CSS-Only Text Reveal"
-> - **URL**: [link]
-> - **What it does**: Pure CSS animation using clip-path on scroll (Intersection Observer)
-> - **Tech**: Vanilla CSS + minimal JS
-> - **Adaptability**: Easy but less flexible than GSAP approach
-> - **Recommendation**: Good fallback if SplitText Club license isn't available
->
-> ### Recommendation
-> Go with Pen 1 — it uses GSAP (our standard) and the character-level control lets us fine-tune timing per word.
+// Most methods can be used as getters or setters
+anim
+  .play()            // plays forward
+  .pause()
+  .resume()          // respects direction
+  .reverse()
+  .restart()
+  .timeScale(2)      // 2 = double speed, 0.5 = half speed
+  .seek(1.5)         // jump to a time (in seconds) or label
+  .progress(0.5)     // jump to halfway
+  .totalProgress(0.8) // includes repeats
+
+  // Other useful methods (tween and timeline)
+  .kill()            // immediately destroy
+  .isActive()        // true if currently animating
+  .then(() => {})    // Promise
+  .invalidate()      // clear recorded start/end values
+  .eventCallback("onComplete", () => {}); // get/set event callbacks
+```
+
+### Timeline-specific helpers
+
+```js
+anim
+  .add(thing, position)      // add label, tween, timeline, or callback
+  .call(func, params, position) // calls function at given point
+  .getChildren()             // get an Array of the timeline's children
+  .clear()                   // empties the timeline
+  .tweenTo(timeOrLabel, { vars }) // animate playhead linearly to position
+  .tweenFromTo(from, to, { vars }); // same but with start and end
+```
 
 ---
 
-## Rules
+## Eases
 
-- **Always attribute**: Document the pen URL when using code from CodePen
-- **Prefer vanilla JS or GSAP** over framework-specific implementations
-- **Document dependencies** before integrating any pen
-- **Don't just dump links** — evaluate, compare, and recommend
+```js
+// Basic core eases
+ease: "none"; // same as "linear"
+
+"power1", "power2", "power3", "power4", "circ", "expo", "sine";
+// each has .in, .out, and .inOut extensions, e.g. "power1.inOut"
+
+// Expressive core eases
+"elastic", "back", "bounce", "steps(n)";
+
+// In EasePack plugin (not core)
+"rough", "slow", "expoScale(1, 2)";
+
+// Expressive plugin eases
+// CustomEase, CustomWiggle, CustomBounce (via corresponding plugins)
+```
+
+---
+
+## ScrollTrigger
+
+```js
+gsap.to(".selector", {
+  scrollTrigger: {
+    trigger: ".selector",        // selector or element
+    start: "top center",         // [trigger] [scroller] positions
+    end: "20px 80%",             // positions or relative amount: "+=500"
+    scrub: true,                 // or time (in seconds) to catch up
+    pin: true,                   // or selector/element to pin
+    markers: true,               // only during development!
+    toggleActions: "play pause resume reset",
+    // other actions: complete reverse none
+    toggleClass: "active",
+    fastScrollEnd: true,         // or velocity number
+    containerAnimation: tween,   // linear animation
+    id: "my-id",
+    anticipatePin: 1,            // may help avoid jump
+    snap: {
+      snapTo: 1 / 10,            // progress increment or "labels"/fn/Array
+      duration: 0.5,
+      directional: true,
+      ease: "power3",
+      onComplete: callback       // onStart, onInterrupt also available
+    },
+    pinReparent: true,           // moves to documentElement during pin
+    pinSpacing: false,
+    pinType: "transform",        // or "fixed"
+    pinnedContainer: ".selector",
+    preventOverlaps: true,       // or arbitrary string
+    once: true,
+    endTrigger: ".selector",     // selector or element
+    horizontal: true,            // switches mode
+    invalidateOnRefresh: true,   // clears start values on refresh
+    refreshPriority: 1,          // influence refresh order
+    onEnter: callback
+    // other callbacks:
+    // onLeave, onEnterBack, onLeaveBack, onUpdate,
+    // onToggle, onRefresh, onRefreshInit, onScrubComplete
+  }
+});
+```
+
+---
+
+## Plugins
+
+### Registering plugins
+
+```js
+// Register GSAP plugins (once) before using them
+gsap.registerPlugin(Draggable, TextPlugin);
+```
+
+### Available plugins (by category)
+
+- General: Draggable, GSDevTools, Observer, InertiaPlugin.[page:1]
+- SVG: DrawSVGPlugin, MorphSVGPlugin, MotionPathPlugin, MotionPathHelper.[page:1]
+- Scroll: ScrollTrigger, ScrollSmoother, ScrollToPlugin.[page:1]
+- Text: SplitText, ScrambleTextPlugin, TextPlugin.[page:1]
+- Other: Physics2DPlugin, PhysicsPropsPlugin, PixiPlugin, Flip.[page:1]
+
+---
+
+## Installation
+
+```js
+// Import and register GSAP
+import { gsap } from "gsap";
+import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
+
+gsap.registerPlugin(DrawSVGPlugin);
+```
+
+---
+
+## Utility Methods
+
+```js
+// accessible through gsap.utils.foo()
+gsap.utils.checkPrefix(prop);   // get relevant browser prefix for property
+gsap.utils.clamp(min, max);     // clamp value to range
+gsap.utils.distribute(config);  // distribute value among an array
+gsap.utils.getUnit(str);        // get unit of string
+gsap.utils.interpolate(a, b);   // interpolate between values
+gsap.utils.mapRange(a1, a2, b1, b2); // map one range to another
+gsap.utils.normalize(min, max); // map a range to the 0–1 range
+gsap.utils.pipe(fn1, fn2);      // sequence function calls
+gsap.utils.random(min, max, snapIncrement, [seed]);
+gsap.utils.selector(scope);     // scoped selector function
+gsap.utils.shuffle(array);      // shuffles an array in-place
+gsap.utils.snap(incrementOrArray); // snap to increment or array
+gsap.utils.splitColor(color);   // splits color into RGB array
+gsap.utils.toArray(targets);    // convert array-like to array
+gsap.utils.unitize(fn, unit);   // adds unit to function results
+gsap.utils.wrap(min, max);      // wrap number in range
+gsap.utils.wrapYoyo(min, max);  // wrap in range, reversing on wrap
+```
+
+---
+
+## Nesting Timelines
+
+```js
+function scene1() {
+  let tl = gsap.timeline();
+  tl.to(".box1", { x: 100 }).to(".box1", { y: 50 }); // build scene 1
+  return tl;
+}
+
+function scene2() {
+  let tl = gsap.timeline();
+  tl.to(".box2", { x: 200 }).to(".box2", { rotation: 45 }); // build scene 2
+  return tl;
+}
+
+let master = gsap.timeline()
+  .add(scene1())
+  .add(scene2(), "-=0.5"); // overlap slightly
+```
+
+---
+
+## Miscellaneous
+
+```js
+// Get the current value of a property
+gsap.getProperty("#id", "x");        // 20
+gsap.getProperty("#id", "x", "px");  // "20px"
+```
+
+```js
+// Set GSAP's global tween defaults
+gsap.defaults({
+  ease: "power2.in",
+  duration: 1
+});
+```
+
+```js
+// Configure GSAP's non-tween-related settings
+gsap.config({
+  autoSleep: 60,
+  force3D: false,
+  nullTargetWarn: false,
+  trialWarn: false,
+  units: {
+    left: "%",
+    top: "%",
+    rotation: "rad"
+  }
+});
+```
+
+### Effects API
+
+```js
+// Register an effect for reuse
+gsap.registerEffect({
+  name: "fade",
+  effect: (targets, config) => {
+    return gsap.to(targets, {
+      duration: config.duration,
+      opacity: 0
+    });
+  },
+  defaults: { duration: 2 },
+  extendTimeline: true
+});
+
+// Use effect
+gsap.effects.fade(".box");
+
+// Or directly on timelines
+tl.fade(".box", { duration: 3 });
+```
+
+### Ticker
+
+```js
+// Add listener with gsap.ticker
+gsap.ticker.add(myFunction);
+
+function myFunction(time, deltaTime, frame) {
+  // Executes on every tick after the core engine updates
+}
+
+// Remove the listener later
+gsap.ticker.remove(myFunction);
+```
+
+### quickSetter / quickTo
+
+```js
+// Faster way to repeatedly set property than .set()
+let setX = gsap.quickSetter("#id", "x", "px");
+
+document.addEventListener("mousemove", e => setX(e.clientX));
+
+// quickTo - for animation based on updates
+let xTo = gsap.quickTo("#id", "x", {
+  duration: 0.4,
+  ease: "power3"
+});
+
+document.addEventListener("mousemove", e => xTo(e.pageX));
+```
+```
