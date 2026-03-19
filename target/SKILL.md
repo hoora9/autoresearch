@@ -1,6 +1,16 @@
 ---
 name: notion-meeting-intelligence
-description: Prepares meeting materials by gathering context from Notion, enriching with Claude research, and creating both an internal pre-read and external agenda saved to Notion. Helps you arrive prepared with comprehensive background and structured meeting docs.
+description: >
+  Prepares meeting materials by gathering context from Notion, enriching with Claude
+  research, and creating both an internal pre-read and external agenda saved to Notion.
+  Use this skill whenever the user says "prep for my meeting", "I have a meeting with X",
+  "meeting tomorrow", "prepare agenda", "meeting prep", "pre-read for the meeting",
+  "get ready for my call with", "set up meeting docs", or describes an upcoming meeting
+  they want to prepare for. Also trigger when asked to create meeting notes, agendas,
+  or pre-read documents in Notion.
+  Do NOT trigger for: general Notion page creation without meeting context (use
+  notion-knowledge-capture), research documentation (use notion-research-documentation),
+  or converting specs to tasks (use notion-spec-to-implementation).
 ---
 
 # Meeting Intelligence
@@ -275,6 +285,14 @@ Update agenda with:
 ## Advanced Features
 
 **Meeting templates**: See [reference/template-selection-guide.md](reference/template-selection-guide.md) for comprehensive template library
+
+## Good/Bad Example: Pre-Read Background Section
+
+> ✅ **Background Context:** "Belveo's brand platform has been in development for 6 months across 12 versions. V12 was validated by the founder on March 5th. The remaining work is integrating the manifesto V2 copy. This meeting is to align on final manifesto wording before designer handoff scheduled for March 25th. See [Belveo Brand Platform](notion-link) for full history."
+
+> ❌ **Background Context:** "This meeting is about the brand platform. We need to discuss next steps and align on priorities. The project has been ongoing and there are several outstanding items to address."
+
+---
 
 ## Common Issues
 
