@@ -1,9 +1,13 @@
 ---
 name: gsap-cheat-sheet-skills
-description: Quick reference of commonly used GSAP APIs and patterns extracted from the GSAP Cheat Sheet page.[page:1]
+description: >
+  Quick reference for GSAP animation APIs — tweens, timelines, ScrollTrigger, easing, plugins, and utility methods. Use when the user asks: 'how do I use GSAP', 'GSAP syntax', 'ScrollTrigger setup', 'GSAP timeline', 'GSAP easing', 'what GSAP plugins are available', 'GSAP cheat sheet', or needs a specific GSAP API reference while building animations. This is a lookup reference, not a design system.
+  Do NOT trigger for: full website builds with scroll animation design (use kinetic-minimalism), Figma-to-code with animation (use figma-designer), CodePen code sourcing (use codepen), or creative web design advisory (use web-coding-assistant).
 ---
 
-here are the instructions for Gsap animations -use them when building websites or apps
+# GSAP Cheat Sheet
+
+Quick reference for GSAP animation APIs. Use this as a lookup when writing GSAP code — consult for syntax, parameters, and patterns.
 
 
 ## Basics
