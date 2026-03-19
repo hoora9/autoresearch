@@ -1,6 +1,6 @@
 ---
 name: canva-designer
-description: Master Canva design creation, management, and automation via the Canva MCP Server. Use this skill whenever the user mentions Canva, wants to create designs, generate social media graphics, autofill brand templates, export designs as PDF or images, search existing Canva designs, resize designs for multiple platforms, import files into Canva, manage Canva folders and assets, create presentations or docs in Canva, or wants to use Canva's AI design generation including morphing effects. Also trigger when the user says "make me a Canva design", "create a social post", "autofill my template", "export from Canva", "resize for Instagram/LinkedIn/Facebook", "generate a presentation", "morph transition", or references brand kits, Magic Design, or any Canva workflow. This skill covers the full Canva MCP tool suite from design generation to batch operations and advanced creative techniques.
+description: Master Canva design creation, management, and automation via the Canva MCP Server. Use this skill whenever the user mentions Canva, wants to create designs, generate social media graphics, autofill brand templates, export designs as PDF or images, search existing Canva designs, resize designs for multiple platforms, import files into Canva, manage Canva folders and assets, create presentations or docs in Canva, or wants to use Canva's AI design generation including morphing effects. Also trigger when the user says "make me a Canva design", "create a social post", "autofill my template", "export from Canva", "resize for Instagram/LinkedIn/Facebook", "generate a presentation", "morph transition", or references brand kits, Magic Design, or any Canva workflow. This skill covers the full Canva MCP tool suite from design generation to batch operations and advanced creative techniques. Do NOT trigger for: PowerPoint/PPTX presentations (use michels-presentation-designer), Excalidraw diagrams (use excalidraw-diagram), Figma design work (use figma-designer), or general graphic design theory without Canva-specific actions.
 ---
 
 # Canva Designer Skill
@@ -46,6 +46,10 @@ Design type + Purpose + Visual style + Key content + Dimensions
 - "Create a professional Instagram post for a tech startup launch. Use dark navy background with gold accents. Include the headline 'AI That Works For You' and a futuristic abstract graphic. 1080x1080."
 - "Generate a LinkedIn banner for Ocean Peak Capital, a private equity firm. Minimal, institutional aesthetic with deep blue tones. Include the tagline 'Navigating Global Markets' in clean sans-serif typography. 1584x396."
 - "Create a presentation deck for a quarterly investor update. 10 slides with a clean white background, navy text, and subtle geometric accents. Include placeholder charts and data tables."
+
+**Good vs. bad prompts:**
+> ✅ "Create a professional Instagram post (1080x1080) for Belveo outdoor furniture. Background: warm sunset terrace scene. Colors: #2C3E50 navy text, #E67E22 accent. Headline: 'Votre terrasse, votre territoire.' Subtitle: 'Mobilier outdoor premium.' Clean sans-serif typography, minimal layout."
+> ❌ "Make a nice Instagram post for a furniture company."
 
 **Tips for generation:**
 - Specify exact dimensions when you know the platform
