@@ -1,534 +1,250 @@
 ---
-name: kinetic-minimalism
-description: >
-  A motion-first web design system that fuses restrained, elegant aesthetics with purposeful,
-  scroll-driven animation. Use this skill whenever the user wants to build websites, landing pages,
-  portfolios, or institutional pages that feature scroll-triggered animations, GSAP effects,
-  kinetic typography, parallax scrolling, smooth scroll experiences, micro-interactions, or
-  any combination of minimalist design with sophisticated motion. Also trigger when the user
-  mentions "motion design", "scroll animation", "GSAP", "ScrollTrigger", "ScrollSmoother",
-  "kinetic type", "parallax", "entrance animations", "reveal effects", "scrub animation",
-  "pin sections", "luxury web aesthetic", "institutional website", or wants to add life and
-  motion to a clean, minimal layout. If the user asks for a website that should feel "premium",
-  "cinematic", "alive", or "sophisticated" — this is the skill to use.
-  Do NOT trigger for: static websites without animation (use frontend-design), 3D/WebGL scenes
-  (use webgl-3d-dev), video-to-website conversions (use video-to-website), general GSAP API
-  reference (use gsap-cheat-sheet-skills), or Figma-to-code without motion requirements (use figma-designer).
+name: figma-designer
+description: Transform Figma designs into production-ready, animated websites and components. Use this skill whenever the user mentions Figma, references a Figma file or URL, asks to extract designs from Figma, wants to convert Figma to code, or needs design tokens/variables pulled from Figma. Also trigger when the user says "pull from Figma", "match my Figma", "Figma to HTML/React", "design handoff", "extract my design", or references design specs, component libraries, or design systems from Figma. This skill bridges Figma's static designs with sophisticated animated web implementations using GSAP, scroll effects, and premium motion design. Requires Figma MCP tools. Combines well with frontend-design and kinetic-minimalism skills.
 ---
 
-# Kinetic Minimalism — Motion & Design System
+# Figma Designer Skill
 
-A philosophy where **less content meets more motion**. Every pixel is intentional, every animation earns its place. The result: websites that breathe, respond, and feel alive — without clutter.
+Transform Figma designs into pixel-perfect, animated, production-grade websites and components. This skill orchestrates the full pipeline from Figma extraction to deployed code.
 
-## Core Philosophy
+## Core Workflow
 
-Kinetic Minimalism lives at the intersection of two forces:
-
-1. **Restraint** — Clean layouts, generous whitespace, limited palettes, typographic hierarchy
-2. **Intentional Motion** — Every animation has a narrative purpose: to guide, reveal, emphasize, or delight
-
-The rule: **If it moves, it must mean something.** Decorative animation is noise. Purposeful animation is language.
-
----
-
-## Design Principles
-
-### The Five Laws of Kinetic Minimalism
-
-1. **Motion as Hierarchy** — Animation defines what the eye sees first, second, third. Stagger reveals to create reading order.
-2. **Whitespace is a Stage** — Empty space isn't wasted; it's where motion performs. Give animations room to breathe.
-3. **One Hero Moment Per Viewport** — Each scroll-stop has ONE dominant animation. Supporting elements enter quietly.
-4. **Easing is Emotion** — `power2.out` feels confident. `power4.out` feels dramatic. `back.out(1.2)` feels playful. Choose easing like you choose words.
-5. **Performance is Design** — A janky animation is worse than no animation. 60fps or remove it.
-
-### Visual Identity Parameters
-
-When building a Kinetic Minimalism site, establish these tokens early:
-
-| Token | Purpose | Recommended Range |
-|-------|---------|-------------------|
-| `--km-duration-fast` | Micro-interactions, hovers | `0.25s – 0.4s` |
-| `--km-duration-medium` | Entrance reveals, transitions | `0.6s – 1.0s` |
-| `--km-duration-slow` | Hero animations, scroll sequences | `1.2s – 2.0s` |
-| `--km-stagger` | Delay between sequential reveals | `0.08s – 0.15s` |
-| `--km-ease-default` | General motion | `power2.out` |
-| `--km-ease-dramatic` | Hero moments | `power3.out` or `power4.out` |
-| `--km-ease-smooth` | Scroll-scrubbed motion | `none` (linear for scrub) |
-| `--km-translate-y` | Vertical entrance offset | `30px – 60px` |
-| `--km-translate-x` | Horizontal entrance offset | `40px – 80px` |
-
----
-
-## Typography in Motion
-
-### Kinetic Typography Patterns
-
-Kinetic type is the signature of this system. Text isn't static — it arrives, transforms, and responds.
-
-**Pattern 1: Staggered Character Reveal**
-Split headlines into individual characters. Reveal them sequentially with slight vertical offset and opacity fade. Use `SplitText` or manual `<span>` wrapping.
-
-```js
-// GSAP SplitText approach
-const split = new SplitText(".hero-title", { type: "chars" });
-gsap.from(split.chars, {
-  y: 40,
-  opacity: 0,
-  duration: 0.6,
-  stagger: 0.03,
-  ease: "power3.out",
-});
+```
+1. EXTRACT  →  Pull design context, variables, screenshots from Figma
+2. ANALYZE  →  Map typography, colors, spacing, layout structure
+3. PLAN     →  Decide animation strategy and component architecture
+4. BUILD    →  Generate production code with animations
+5. REFINE   →  Compare against screenshot, iterate
 ```
 
-**Pattern 2: Line-by-Line Scroll Reveal**
-Split paragraphs into lines. Tie each line's opacity and position to scroll progress via `scrub`.
+## Step 1: Extract from Figma
 
-**Pattern 3: Kinetic Headline on Scroll**
-Pin a headline and transform it as the user scrolls — scale, rotate, color shift, or letter-spacing expansion.
+When the user references a Figma file or has one open in the Figma desktop app:
 
-**Pattern 4: Split-and-Part**
-A word splits into two halves that slide apart, revealing an image or section beneath. Great for hero transitions.
+### Pull Design Context
+Use `Figma:get_design_context` to extract UI code, layout specs, and component structure. If the user provides a Figma URL, extract the node ID from it:
+- URL format: `https://figma.com/design/:fileKey/:fileName?node-id=1-2`
+- Extracted nodeId: `1:2`
 
-### Font Selection Guidelines
+### Capture Visual Reference
+Use `Figma:get_screenshot` to capture the exact visual appearance. This is your ground truth for pixel-perfect implementation.
 
-Kinetic Minimalism demands typography that commands space:
+### Map the Structure
+Use `Figma:get_metadata` to get the full layer tree in XML format — node IDs, layer types, names, positions, and sizes. This helps understand the component hierarchy.
 
-- **Display / Headlines**: Choose fonts with strong geometry and presence. Bank Gothic, Novecento Sans Wide, PP Neue Montreal, Syne, Instrument Serif, Playfair Display, or custom variable fonts.
-- **Body**: Clean, highly legible sans-serifs. Outfit, Satoshi, General Sans, DM Sans, or Switzer.
-- **Monospace accents** (for labels, captions): JetBrains Mono, IBM Plex Mono, Fira Code.
+### Extract Design Tokens
+Use `Figma:get_variable_defs` to pull the design system variables:
+- Colors (primary, secondary, accent, neutrals)
+- Typography scales (font families, sizes, weights, line heights)
+- Spacing values (padding, margins, gaps)
+- Border radius, shadows, and other tokens
 
-NEVER default to Inter, Roboto, or Arial. These are invisible fonts — they have no kinetic presence.
+### Check Code Connect
+Use `Figma:get_code_connect_map` to see if components are already mapped to codebase components. This avoids rebuilding what already exists.
 
----
+## Step 2: Analyze the Design
 
-## Color & Atmosphere
+After extraction, build a **Design Brief** that captures:
 
-### Palette Construction
+### Typography System
+```
+Primary Font:     [extracted or identified from screenshot]
+Secondary Font:   [if applicable]
+Scale:            [h1 → body sizes, weights, letter-spacing]
+Special:          [any display/decorative fonts]
+```
 
-Kinetic Minimalism typically operates in one of three modes:
+### Color Palette
+```
+Background:       [hex + css variable name]
+Text Primary:     [hex]
+Text Secondary:   [hex]
+Accent:           [hex]
+Surface:          [hex for cards/containers]
+Border:           [hex]
+```
 
-**Mode 1: Dark Institutional**
-Deep backgrounds (near-black, navy, charcoal) with light text and a single accent color. Premium, authoritative.
+### Layout Grid
+```
+Max Width:        [container width]
+Columns:          [grid system]
+Gutter:           [gap between columns]
+Breakpoints:      [responsive behavior]
+```
+
+### Component Inventory
+List all unique components identified:
+- Navigation (type: sticky/fixed/relative)
+- Hero section (layout pattern)
+- Cards/tiles (grid arrangement)
+- CTAs (button styles)
+- Footer structure
+
+## Step 3: Plan Animation Strategy
+
+Based on the design's aesthetic, select the appropriate animation approach.
+Read `references/animation-patterns.md` for the full animation library.
+
+### Animation Selection Matrix
+
+| Design Aesthetic | Recommended Approach | Key Techniques |
+|-----------------|---------------------|----------------|
+| Institutional/Corporate | Subtle reveals | Fade-up on scroll, staggered text |
+| Luxury/Premium | Kinetic minimalism | Parallax, smooth scroll, letter animations |
+| Tech/SaaS | Dynamic interactions | Hover states, micro-animations, counters |
+| Creative/Portfolio | Bold motion | Page transitions, 3D transforms, morphing |
+| Editorial/Magazine | Typography-led | Text reveals, pull quotes, reading progress |
+
+### Default Animation Stack
+Unless the design suggests otherwise, implement:
+1. **Page load**: Staggered fade-in of hero elements (0.6s, ease-out)
+2. **Scroll reveals**: Elements animate in as they enter viewport
+3. **Hover states**: Subtle scale/color transitions on interactive elements
+4. **Navigation**: Smooth scroll with active state tracking
+
+## Step 4: Build Production Code
+
+### Technology Decisions
+
+**Single-page / Landing page:**
+- HTML + CSS + vanilla JS + GSAP (via CDN)
+- Output as single `.html` artifact
+
+**Multi-component / App:**
+- React (`.jsx`) with Tailwind CSS
+- GSAP via import or CDN
+
+**WordPress integration:**
+- Generate clean HTML/CSS that can be embedded
+- Provide separate CSS file if needed
+
+### Implementation Checklist
+
+Before writing code, verify:
+- [ ] All fonts loaded (Google Fonts CDN or system fonts)
+- [ ] Color variables defined as CSS custom properties
+- [ ] Responsive breakpoints planned (mobile-first)
+- [ ] GSAP CDN included if animations needed
+- [ ] ScrollTrigger plugin registered if scroll animations used
+- [ ] Images referenced with proper paths or placeholders
+
+### Code Quality Standards
+
+**CSS Architecture:**
 ```css
 :root {
-  --km-bg: #0a0a0f;
-  --km-surface: #14141c;
-  --km-text: #f0ece4;
-  --km-muted: #6b6b7b;
-  --km-accent: #c9a96e; /* warm gold */
+  /* Colors extracted from Figma */
+  --color-bg: #0a0a0a;
+  --color-text: #ffffff;
+  --color-accent: #c8a050;
+  /* Typography */
+  --font-display: 'Bank Gothic', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  /* Spacing */
+  --space-section: clamp(80px, 10vw, 160px);
 }
 ```
 
-**Mode 2: Light Editorial**
-White/cream backgrounds, dark type, generous whitespace. The motion itself creates visual richness.
-```css
-:root {
-  --km-bg: #faf9f6;
-  --km-surface: #ffffff;
-  --km-text: #1a1a2e;
-  --km-muted: #9e9e9e;
-  --km-accent: #2d5016; /* forest green */
-}
-```
-
-**Mode 3: Tonal Monochrome**
-Single-hue palette with value variations. Sophisticated and cohesive. Motion and type do all the heavy lifting.
-```css
-:root {
-  --km-bg: #1a1a2e;
-  --km-surface: #22223a;
-  --km-text: #e8e8f0;
-  --km-muted: #5a5a7a;
-  --km-accent: #8b8bff; /* soft violet */
-}
-```
-
-### Atmospheric Effects
-
-Depth comes from subtle environmental cues, not heavy decoration:
-
-- **Grain overlays**: `filter: url(#grain)` or CSS noise via `background-image` with tiny SVG data-URI
-- **Gradient washes**: Radial gradients at 5-10% opacity behind key sections
-- **Blur layers**: `backdrop-filter: blur()` on overlapping panels (glassmorphism-lite)
-- **Vignettes**: Subtle radial gradient at viewport edges on dark themes
-
----
-
-## Animation System — GSAP Implementation
-
-### Architecture & Setup
-
-Always centralize GSAP initialization. Register plugins once:
-
-```js
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollSmoother } from "gsap/ScrollSmoother";
-import { SplitText } from "gsap/SplitText";
-
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
-
-// Smooth scroll wrapper (optional but recommended)
-ScrollSmoother.create({
-  smooth: 1.2,
-  effects: true,
-  normalizeScroll: true,
-});
-```
-
-HTML structure for ScrollSmoother:
-```html
-<div id="smooth-wrapper">
-  <div id="smooth-content">
-    <!-- ALL CONTENT HERE -->
-  </div>
-</div>
-```
-
-### The Animation Toolkit
-
-Build every page from these composable patterns:
-
-#### 1. Entrance Reveals (Scroll-Triggered)
-
-The bread and butter. Elements fade/slide into view as they enter the viewport.
-
-```js
-// Fade up — the workhorse
-gsap.from(".reveal-up", {
-  scrollTrigger: { trigger: ".reveal-up", start: "top 85%" },
-  y: 40,
-  opacity: 0,
-  duration: 0.8,
-  ease: "power2.out",
-  stagger: 0.1,
-});
-
-// Fade from left
-gsap.from(".reveal-left", {
-  scrollTrigger: { trigger: ".reveal-left", start: "top 80%" },
-  x: -60,
-  opacity: 0,
-  duration: 0.8,
-  ease: "power3.out",
-});
-
-// Scale reveal (for images/cards)
-gsap.from(".reveal-scale", {
-  scrollTrigger: { trigger: ".reveal-scale", start: "top 85%" },
-  scale: 0.9,
-  opacity: 0,
-  duration: 1,
-  ease: "power2.out",
-});
-```
-
-#### 2. Parallax Layers
-
-Create depth by moving elements at different scroll speeds.
-
-```html
-<div data-speed="0.8">Slower background</div>
-<div data-speed="1.2">Faster foreground</div>
-```
-
-Or manual parallax with ScrollTrigger:
-```js
-gsap.to(".parallax-bg", {
-  scrollTrigger: {
-    trigger: ".parallax-section",
-    start: "top bottom",
-    end: "bottom top",
-    scrub: 1,
-  },
-  y: -120,
-  ease: "none",
-});
-```
-
-#### 3. Pinned Sections
-
-Pin a section while content transforms within it. Ideal for storytelling sequences.
-
-```js
-const tl = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".pin-section",
-    start: "top top",
-    end: "+=200%",
-    scrub: 1,
-    pin: true,
-  },
-});
-
-tl.from(".pin-title", { opacity: 0, y: 60, duration: 1 })
-  .from(".pin-description", { opacity: 0, y: 40, duration: 1 }, "-=0.5")
-  .to(".pin-image", { scale: 1.1, duration: 2 }, "-=1");
-```
-
-#### 4. Horizontal Scroll Sections
-
-Transform vertical scroll into horizontal movement for galleries or timelines.
-
-```js
-const sections = gsap.utils.toArray(".horizontal-panel");
-gsap.to(sections, {
-  xPercent: -100 * (sections.length - 1),
-  ease: "none",
-  scrollTrigger: {
-    trigger: ".horizontal-container",
-    pin: true,
-    scrub: 1,
-    end: () => "+=" + document.querySelector(".horizontal-container").offsetWidth,
-  },
-});
-```
-
-#### 5. Clip-Path / Mask Reveals
-
-Reveal images or sections by animating `clipPath`.
-
-```js
-gsap.from(".clip-reveal", {
-  scrollTrigger: { trigger: ".clip-reveal", start: "top 80%" },
-  clipPath: "inset(100% 0% 0% 0%)",
-  duration: 1.2,
-  ease: "power4.out",
-});
-```
-
-#### 6. Counter / Number Animations
-
-For statistics or data-driven sections:
-
-```js
-gsap.from(".stat-number", {
-  scrollTrigger: { trigger: ".stat-number", start: "top 85%" },
-  textContent: 0,
-  duration: 2,
-  ease: "power1.out",
-  snap: { textContent: 1 },
-});
-```
-
-#### 7. Cursor-Reactive Elements
-
-Subtle parallax or rotation that follows the cursor. Use sparingly.
-
-```js
-document.addEventListener("mousemove", (e) => {
-  const x = (e.clientX / window.innerWidth - 0.5) * 20;
-  const y = (e.clientY / window.innerHeight - 0.5) * 20;
-  gsap.to(".cursor-react", { x, y, duration: 0.6, ease: "power2.out" });
-});
-```
-
----
-
-## Micro-Interactions
-
-Small motions that communicate state and create delight:
-
-| Element | Interaction | Animation |
-|---------|-------------|-----------|
-| Buttons | Hover | Scale 1.03, subtle shadow lift, 0.3s `power2.out` |
-| Links | Hover | Underline slides in from left via `scaleX`, color shift |
-| Cards | Hover | Slight Y lift (-4px), shadow expansion, 0.35s |
-| Nav items | Hover | Letter-spacing expand + opacity indicator |
-| Images | Hover | Subtle scale 1.05 with `overflow: hidden` on parent |
-| Inputs | Focus | Border color transition + label float, 0.25s |
-
-### Hover Pattern (CSS-first, GSAP for complex):
-
-```css
-.km-button {
-  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              box-shadow 0.3s ease;
-}
-.km-button:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-}
-```
-
----
-
-## Layout Patterns
-
-### Section Templates
-
-**Hero — Centered Statement**
-Pinned hero with oversized headline. Text fades in letter-by-letter, background image parallaxes. Single CTA appears last.
-
-**Content — Split Asymmetric**
-60/40 or 70/30 image-text split. Image reveals via clipPath, text staggers in from the content side.
-
-**Gallery — Elastic Grid**
-Masonry or grid layout where columns scroll at different speeds (ScrollSmoother `data-lag`).
-
-**Stats — Horizontal Counter Bar**
-Pinned section with horizontal scroll. Numbers count up as each stat panel enters center viewport.
-
-**Testimonials — Fade Carousel**
-Single testimonial visible at a time. Crossfade with slight Y-shift on scroll or auto-advance.
-
-**Footer — Reveal from Below**
-Main content slides up and away, revealing a dark footer beneath (negative margin + clip technique).
-
-### Spacing Scale
-
-Use a consistent spacing system. Recommended 8px base:
-
-```css
-:root {
-  --km-space-xs: 0.5rem;   /* 8px */
-  --km-space-sm: 1rem;     /* 16px */
-  --km-space-md: 2rem;     /* 32px */
-  --km-space-lg: 4rem;     /* 64px */
-  --km-space-xl: 8rem;     /* 128px */
-  --km-space-2xl: 12rem;   /* 192px */
-}
-```
-
-Sections should have `--km-space-xl` to `--km-space-2xl` vertical padding. Generous spacing IS the minimalism.
-
----
-
-## Performance Rules
-
-1. **Use `will-change` sparingly** — Only on elements about to animate. Remove after animation completes.
-2. **Animate transforms and opacity only** — Never animate `width`, `height`, `top`, `left`, `margin`, or `padding`. These trigger layout recalculations.
-3. **Lazy-load below-fold images** — Use `loading="lazy"` or Intersection Observer.
-4. **Use WebP/AVIF** — Compress images aggressively. Motion should be the visual richness, not heavy assets.
-5. **Respect `prefers-reduced-motion`** — Always provide a reduced-motion fallback:
-
-```js
-const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-if (prefersReducedMotion) {
-  gsap.globalTimeline.timeScale(0);
-  // Or: skip all ScrollTrigger animations, show content immediately
-  gsap.set(".reveal-up, .reveal-left, .reveal-scale", { clearProps: "all" });
-}
-```
-
-6. **Keep ScrollTrigger instances tidy** — Kill triggers on route change (SPA). Store references and clean up:
-
-```js
-const triggers = [];
-triggers.push(
-  ScrollTrigger.create({ /* ... */ })
-);
-// Cleanup
-triggers.forEach(t => t.kill());
-```
-
-7. **Test on mobile** — Use `normalizeScroll: true` on ScrollSmoother. Test touch scroll behavior on real devices.
-
----
-
-## Responsive Motion Strategy
-
-Not all animations should exist on all screens:
-
-| Viewport | Approach |
-|----------|----------|
-| Desktop (>1024px) | Full animation suite: parallax, pinning, horizontal scroll, cursor effects |
-| Tablet (768–1024px) | Reduce parallax intensity by 50%, remove cursor effects, simplify pins |
-| Mobile (<768px) | Entrance reveals only (fade-up). Remove parallax, pinning, horizontal scroll. Keep micro-interactions. |
-
-```js
-const mm = gsap.matchMedia();
-
-mm.add("(min-width: 1024px)", () => {
-  // Desktop animations
-});
-
-mm.add("(max-width: 1023px)", () => {
-  // Simplified mobile animations
-});
-```
-
----
-
-## Implementation Checklist
-
-Before shipping a Kinetic Minimalism page, verify:
-
-- [ ] All animations serve a narrative purpose (guide, reveal, emphasize, delight)
-- [ ] One hero moment per viewport — no competing animations
-- [ ] Consistent easing across the page (don't mix 5 different ease curves)
-- [ ] Stagger values feel rhythmic, not random
-- [ ] `prefers-reduced-motion` is respected
-- [ ] 60fps on target devices (check with Chrome DevTools Performance tab)
-- [ ] ScrollTrigger `markers: true` removed before deploy
-- [ ] Images optimized (WebP, lazy-loaded)
-- [ ] Mobile tested on real device (not just DevTools emulation)
-- [ ] No layout shifts (CLS) caused by animations
-- [ ] Font loading doesn't cause FOUT that breaks kinetic type
-
----
-
-## Quick-Start Template
-
-For a new Kinetic Minimalism page, start with this structure:
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kinetic Minimalism</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <!-- Load display + body font pair -->
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      /* Palette */
-      --km-bg: #0a0a0f;
-      --km-surface: #14141c;
-      --km-text: #f0ece4;
-      --km-muted: #6b6b7b;
-      --km-accent: #c9a96e;
-      /* Spacing */
-      --km-space-lg: 4rem;
-      --km-space-xl: 8rem;
-      /* Motion */
-      --km-duration: 0.8s;
+**GSAP Initialization Pattern:**
+```javascript
+// Register plugins
+gsap.registerPlugin(ScrollTrigger);
+
+// Batch scroll reveals
+gsap.utils.toArray('.reveal').forEach(el => {
+  gsap.from(el, {
+    y: 40,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: el,
+      start: 'top 85%',
+      toggleActions: 'play none none none'
     }
-    html, body { background: var(--km-bg); color: var(--km-text); font-family: 'Your Body Font', sans-serif; }
-    section { padding: var(--km-space-xl) var(--km-space-lg); }
-    .hero-title { font-family: 'Your Display Font', serif; font-size: clamp(3rem, 8vw, 7rem); line-height: 1.05; }
-  </style>
-</head>
-<body>
-  <div id="smooth-wrapper">
-    <div id="smooth-content">
-      <section class="hero">
-        <h1 class="hero-title">Your Statement</h1>
-        <p class="hero-subtitle reveal-up">Supporting line</p>
-      </section>
-      <!-- More sections -->
-    </div>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <!-- Add ScrollSmoother, SplitText if using Club plugins -->
-  <script>
-    gsap.registerPlugin(ScrollTrigger);
-    // Initialize animations here
-  </script>
-</body>
-</html>
+  });
+});
 ```
 
----
+**Responsive Pattern:**
+```css
+/* Mobile-first, then scale up */
+.hero-title {
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 1.1;
+}
+```
 
-## Reference Files
+## Step 5: Refine and Compare
 
-For deeper guidance on specific areas, read these references:
+After initial build:
+1. Take a screenshot of the Figma design (`Figma:get_screenshot`)
+2. Visually compare against your implementation
+3. Check for:
+   - Font matching (family, size, weight, spacing)
+   - Color accuracy (compare hex values)
+   - Spacing consistency (padding, margins)
+   - Layout alignment (grid, flex behavior)
+   - Responsive behavior at breakpoints
+4. Iterate until the implementation matches the design
 
-- `references/easing-guide.md` — Complete easing curve recommendations by context
-- `references/animation-patterns.md` — Extended code examples for all 7 animation patterns
-- `references/responsive-motion.md` — Detailed breakpoint strategy and `gsap.matchMedia()` patterns
+## Special Workflows
+
+### Figma URL Extraction
+When user pastes a Figma URL:
+1. Parse the URL to extract `fileKey` and `node-id`
+2. Convert `node-id` format: `1-2` in URL becomes `1:2` as nodeId
+3. Use the nodeId with all Figma tools
+
+### Design System Generation
+When user asks to create design system rules:
+1. Use `Figma:create_design_system_rules` to generate coding guidelines
+2. Combine with extracted variables for a complete design system
+3. Output as a reference document or CSS variables file
+
+### Component Mapping
+When user wants to connect Figma to existing code:
+1. Use `Figma:get_code_connect_map` to see existing mappings
+2. Use `Figma:add_code_connect_map` to create new mappings
+3. Document the component library with Figma ↔ Code references
+
+### Multi-Page Site from Figma
+When the design has multiple pages/frames:
+1. Use `Figma:get_metadata` on the page node to see all frames
+2. Extract each frame individually with `Figma:get_design_context`
+3. Identify shared components (nav, footer, typography)
+4. Build shared CSS first, then page-specific layouts
+5. Ensure consistent animations across pages
+
+## Animation Reference
+
+For detailed animation patterns, recipes, and GSAP configurations:
+→ Read `references/animation-patterns.md`
+
+This reference includes:
+- 20+ scroll animation recipes
+- Typography animation techniques
+- Parallax implementation patterns
+- Page transition effects
+- Performance optimization tips
+
+## Institutional Finance Aesthetic
+
+For premium institutional websites (private equity, venture capital, advisory):
+→ Read `references/institutional-finance.md`
+
+This reference covers:
+- Approved color palettes (abyssal blue, steel grey, etc.)
+- Typography pairings (Bank Gothic, Novecento Sans Wide)
+- Layout patterns from top PE/VC firms
+- Animation restraint guidelines
+- Trust-building design patterns
+
+## Common Pitfalls
+
+1. **Don't over-animate**: Institutional sites need restraint. 2-3 animation types max.
+2. **Don't ignore mobile**: Always test responsive. GSAP ScrollTrigger needs `matchMedia` for mobile.
+3. **Don't skip font loading**: Use `font-display: swap` and preload critical fonts.
+4. **Don't hardcode colors**: Always use CSS variables extracted from Figma tokens.
+5. **Don't forget performance**: Use `will-change` sparingly, prefer `transform` and `opacity` for animations.
+6. **Don't rebuild mapped components**: Check Code Connect before building from scratch.
