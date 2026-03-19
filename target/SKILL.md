@@ -260,3 +260,16 @@ The gap between a tech demo and a premium experience is almost always art direct
 | Physics | Rapier, Cannon-es, Ammo.js |
 | Profiling | Spector.js, Chrome DevTools, stats.js |
 | Inspiration | Awwwards, Codrops, Three.js examples gallery |
+
+---
+
+## Good vs Bad Example
+
+User asks: "How do I add a 3D product viewer to my e-commerce site?"
+
+❌ **Bad (generic, no performance awareness):**
+> Load your 3D model with Three.js and add OrbitControls. Here's a basic setup.
+
+✅ **Good (production-ready, performance-conscious):**
+> Use GLTFLoader with DRACOLoader for compressed geometry. Target < 500KB for the hero model.
+> Set up a Three.js scene with: MeshStandardMaterial for PBR, an HDRI environment map for realistic reflections, ContactShadows for grounding. Use OrbitControls with `enableDamping: true` and constrain rotation (`minPolarAngle`/`maxPolarAngle`) so users can't flip the product upside down. Add GPU detection to serve lower-quality textures on mobile (1K vs 2K). Preload with a skeleton placeholder to avoid layout shift. Profile with `renderer.info` to keep draw calls under 50.
