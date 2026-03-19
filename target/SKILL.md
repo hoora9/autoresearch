@@ -45,7 +45,7 @@ Remember: Claude is capable of extraordinary creative work. Don't hold back, sho
 
 ## Scroll-Driven Website Design Guidelines
 
-When this skill is invoked for a scroll-driven animated website (used alongside `video-to-website`), follow these additional rules:
+**Only apply this section** when building a scroll-driven animated website (e.g., used alongside `video-to-website` or when the user explicitly asks for scroll-driven design). For standard components/pages, skip to the Self-Check.
 
 ### Typography as Design
 - Hero headings: **6rem minimum**, tight line-height (0.9-1.0), heavy weight (700-800)
