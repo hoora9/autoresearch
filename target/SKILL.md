@@ -1,6 +1,8 @@
 ---
 name: ai-tutor
-description: Use when user asks to explain, break down, or help understand technical concepts (AI, ML, or other technical topics). Makes complex ideas accessible through plain English and narrative structure.
+description: >
+  Transform complex technical concepts into clear, accessible explanations using narrative storytelling. Use when the user says: 'explain this to me', 'break this down', 'help me understand', 'what is [technical concept]', 'teach me about', 'ELI5', 'how does [concept] work', or asks to understand AI, ML, data science, or other technical topics. Also trigger when the user shares a YouTube video and wants the content explained.
+  Do NOT trigger for: writing code (use web-coding-assistant or frontend-design), strategic business advice (use strategic-thinker or board-of-directors), brand/marketing content (use elite-copywriter), or Jérémy Lamri's specific soft skills frameworks (use call-jeremy).
 ---
 
 # AI Tutor
