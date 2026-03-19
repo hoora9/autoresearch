@@ -1,29 +1,148 @@
 ---
 name: prepare-workflow
-description: workflow step by step
+description: >
+  Prepares a Claude workflow for execution by creating the folder structure, files, prompt stack, and MCP/skill configuration on the user's computer. Use when the user says: 'prepare this workflow', 'set up this workflow', 'get this workflow ready to run', 'create the folder and files for this', 'prepare the prompt stack', or describes a workflow they want scaffolded on their machine before running it.
+  Do NOT trigger for: documenting a workflow as a manual (use workflow-to-manual-skill), designing workflow architecture (use architecture), orchestrating self-improving agent loops (use workflow-orchestration), or executing the workflow itself (just run it).
 ---
 
-import anthropic
+# Prepare Workflow
 
-client = anthropic.Anthropic(
-    # defaults to os.environ.get("ANTHROPIC_API_KEY")
-    api_key="my_api_key",
-)
+Set up everything a Claude workflow needs to run: folders, files, prompt stack, MCP servers, and skill configuration — so the user can execute with a single prompt.
 
-message = client.messages.create(
-    model="claude-opus-4-6",
-    max_tokens=20000,
-    temperature=1,
-    messages=[
-        {
-            "role": "user",
-            "content": [
-                {
-                    "type": "text",
-                    "text": "i want to turn these examples into an skill so that everytime I speak to claude that it knows that it should come out with the output that tells me what i need to set up first - i,e, create a folder, then add one image- add this prompt ( which may have mcps or stacked skills, etc...) it needs to guide me to turn my worflow into a manual of step by step instructions of how to use my computer, files, prompts and mcp's. Here are some scenarios  - 1. Strategy deck from a transcript (Projects ➜ Cowork)\nScenario\nYou already have a Claude Project in Chat that turns raw material (e.g. call transcript, brief) into a strategy slide deck using a template and brand guidelines.  \nYou want to stop re-uploading files and instead drop them in a local folder, hit one prompt, and get a finished first-draft deck saved on your machine.  \nPrompt “stack” she’s using\nIn Claude Chat (Projects):\nProject instructions: detailed workflow on “Generate a strategy deck from any given material, using X template and Y brand guidelines.” \nProject files: slide template, brand guidelines, any supporting docs. \nIn Cowork:\n“Use the same workflow as my ‘Strategy Deck’ Claude Project, read all relevant files in this working folder (transcript, brief, guidelines, template) and generate a ready-to-present slide deck. Save it to this folder and show me a to-do list as you work.”  \nOutcome\nClaude loads your project instructions and files into Cowork automatically. \nIt creates a to-do list, plans sub-tasks (parse transcript, outline deck, write slides, apply template), and executes them one by one.  \nA first-draft deck is generated and saved locally following your brand template and structure. \nHow you’d do it (step-by-step)\nIn Claude Desktop, go to Chat ➜ your existing Strategy Deck project ➜ “Add to Cowork”. \nIn Cowork, click Choose folder and select your /Strategy Deck folder (with transcript, template, guidelines inside).  \nIn the Cowork text box, paste a prompt like: “Use the Strategy Deck project instructions you imported. Read all relevant files in this working folder (call transcript, brief, brand guidelines, PowerPoint template). Create a complete strategy slide deck tailored to this brand. Save the final deck as Brand-Strategy-v1.pptx in this folder. Show me a to-do list and your progress as you work.” \nHit Run and let Cowork execute the to-do list end-to-end.  \n\n2. Ad creatives pipeline (images + copy + tracker)\nScenario\nYou have a campaign with multiple products and need batch creative production: ad images, descriptions, and a master spreadsheet tracking everything.  \nYou’ve set up folders (raw images, output images) and a master planner spreadsheet listing products and image paths, plus internal guidelines.  \nPrompt “stack” she’s using\nFolder structure + connector + one master Cowork prompt that forces parallel sub-agents:  “From this working folder, use the master planner spreadsheet, raw product images, Nano Banana MCP server, and our product description guideline. Split the work into two parallel tasks:\nGenerate three ad image variations per product using Nano Banana, saving them in the ad_creative folder and updating the image file paths in the master spreadsheet.\nResearch each product and write a compelling product description using our internal guideline, then update the master spreadsheet with the description. When finished, mark each row as complete in the status column and confirm all generated files.”\n\nOutcome\nCowork spins up two sub-agents: one for image generation, one for copywriting.  \nIt pulls images, calls the Nano Banana MCP server, writes descriptions, and keeps everything orchestrated via the master spreadsheet.  \nThe spreadsheet ends up with product rows, image paths, descriptions, and completion status updated; images are saved into the correct folder with three variations each.  \nHow you’d do it\nCreate a folder like /Marketing Creative Projects with:\n/raw_images, /ad_creatives, master_plan.xlsx, “Nano Banana prompting guide”, “Product description guideline”.  \nEnsure Nano Banana MCP is installed and enabled in Cowork’s MCP settings.  \nIn Cowork, choose /Marketing Creative Projects as the working folder. \nIn the text box, paste a prompt like the one above, explicitly asking to split into two parallel tasks and update the master spreadsheet.\n\n3. Research ➜ spreadsheet ➜ interactive dashboard ➜ strategy deck\nScenario\nYou have a large repository of research (e.g. all Lenny’s growth podcast transcripts) plus brand context files. \nYou want:\na spreadsheet of extracted insights,\nan interactive dashboard,\nand a growth strategy deck tailored to your brand, all in one run. \nPrompt “stack” she’s using\nOne big Cowork prompt that specifies three parallel tasks + a progress tracker:\n\n“From this working folder, read all podcast transcripts and the brand context files. Create a progress tracker so you can tick off each transcript as you process it and avoid missing any files. Then run three parallel tasks:\nAnalyze all transcripts to identify the top growth frameworks, tools, and repeated themes. Save the result as a structured spreadsheet.\nBuild an interactive dashboard that visualizes topic distribution, top frameworks, and top tools used by growth experts.\nCreate a growth strategy playbook slide deck for our brand, choosing the most relevant frameworks and outlining implementation steps and metrics. If you find missing or unprocessed transcripts, re-scan the folder and update the tracker until everything is covered.”\nOutcome\nCowork launches multiple sub-agents to batch-process transcripts, track which ones are done, and keep a progress checklist. \nIt outputs:\nA spreadsheet with episode topics, tools, key takeaways. \nAn interactive dashboard for exploration. \nA tailored strategy deck summarizing top frameworks and an implementation plan. \nHow you’d do it\nPut all transcripts and brand docs into a single project folder (e.g. /Growth Research). \nIn Cowork, select that folder as the working directory. \nPaste the prompt above, making sure you explicitly ask for: three parallel tasks + progress tracker + re-check for missed files. \nOnce it finishes, ask a follow-up like: “Double-check the progress tracker and confirm no transcripts were skipped. If any are missing, process them and update the outputs.” \n\n4. Browser-based landing page audit (Custom Skill + Chrome MCP)\nScenario\nYou want a repeatable live landing page audit that:\nopens a URL in the browser via Claude in Chrome MCP,\nchecks it against your conversion framework,\noutputs a structured audit report. \nPrompt “stack” she’s using\nIn Claude Code (Desktop), to create the skill:  “In this folder, create a custom skill called landing_page_audit using the Claude in Chrome MCP connector. The skill should:\nTake a target URL and one or more competitor URLs.\nBrowse and scroll each page using Claude in Chrome.\nEvaluate them using my specified conversion framework and criteria (messaging clarity, offer, social proof, visual hierarchy, UX, mobile, speed, etc.).\nGenerate a detailed audit report that includes scores, side-by-side comparison, individual page analysis by section, and prioritized recommendations. Use the Skill Creator to format the skill properly and save it into this folder as a ZIP-ready skill.”\n\nIn Cowork after installing the skill:   “List all skills you can access so I can confirm landing_page_audit is installed.” \nThen to run an audit:  “Using the landing_page_audit skill and Claude in Chrome MCP, audit this landing page against these competitor URLs. Use my conversion framework and produce the full report.” \nOutcome\nA reusable skill that turns Claude into a browser agent for live audits. \nYou get an audit report with scores, side-by-side comparison, detailed section analysis, and prioritized recommendations, cutting a 2-hour task to under 30 minutes. \nHow you’d do it\nIn Claude Code, pick your /skills/landing_page_audit folder. \nPaste the “create a custom skill” prompt above and let it build the skill. \nIn Cowork settings ➜ Capabilities, add the skill ZIP.  \nTurn on Claude in Chrome MCP, then in Cowork run the audit prompt with your URLs. \n\n5. Packaging a manual workflow into a skill (AI search result tracking)\nScenario\nYou have a manual workflow: tracking Google AI Mode search results for a set of prompts, extracting top cited URLs/domains, counting frequency, and summarizing findings. \nYou first run this as a one-off workflow, then “package” it into a reusable skill. \nPrompt “stack” she’s using\nFirst, run the workflow manually:  “Here is the detailed workflow I want you to follow to track Google AI Mode search results for these 10 prompts. For each prompt:\nRun a Google AI Mode search.\nCapture the top 5 cited page URLs and their domains.\nRecord them in a spreadsheet with columns for prompt, URL, domain, and rank.\nMaintain a domain frequency table across all prompts. After processing all prompts, generate a written report summarizing the most frequently cited domains and key insights. Use your browser MCP tools for the live search.”\n\nAfter it works, package it into a skill:  “Now package this entire workflow into a reusable skill called ai_search_result_tracker. Use Skill Creator and any relevant MCP tools you just used. The skill should take a list of search prompts as input and automatically:\nRun searches in Google AI Mode,\nBuild the tracking spreadsheet,\nBuild the domain frequency table,\nGenerate the written summary report. Add any improvements you think will make it more robust. Save it into this folder as a skill I can install in Cowork.”\n\nOutcome\nYou get a skill that automates what was previously a tedious manual tracking process. \nNext time, you just supply a list of prompts; it generates a tracking sheet plus a summary report automatically. \nHow you’d do it\nIn Cowork or Claude Code, run the initial workflow with a small set of queries to prove it out. \nOnce the outputs look good, run the “package into a skill” prompt above in Claude Code, targeting your skill library folder. \nInstall that skill into Cowork and call it with a short command whenever you need updated AI search tracking.  \n\n6. Building and using a custom marketing plugin (commands + skills + MCP)\nScenario\nYou now have a library of marketing skills (e.g. landing page audit, AI search tracking, research analyzers) and want to group them as a plugin for yourself or your team. \nYou also install the official marketing plugin to see how a polished one is structured. \nPrompt “stack” she’s using\nInstall official plugin in Cowork: \nClick Add plugin ➜ choose official marketing plugin ➜ Install.\nThen: “List all commands and skills in the installed marketing plugin and show me their prompt definitions.” \nBuild your own plugin in Claude Code:  “Using the official plugin docs and my skills/marketing folder, create a plugin called marketing_team. Include these skills and commands: [list your skills/commands]. Ensure they use the appropriate MCP connections, agents, hooks, and are configured so commands are manual triggers and skills can be auto-invoked by Cowork. Save the plugin in this folder so I can upload it to Cowork.” \nUse the plugin in Cowork for a “stacked” workflow:  “Using the marketing_team plugin, first run the AI search result tracking command for these queries, then perform keyword research based on those results, and finally draft an AI-search-friendly blog post in our brand voice. Output:\nA blog article ready to publish.\nAn updated AI search tracking report.\nA detailed tracking spreadsheet of all cited domains.”\n\nOutcome\nA bundle that includes all your skills, commands, hooks, and MCP config in one sharable unit. \nOne command in Cowork can now trigger a whole multi-output pipeline (search tracking ➜ keyword research ➜ blog draft), with files saved in your working folder. \nHow you’d do it\nIn Cowork, install the official plugin as a reference and explore commands/skills. \nIn Claude Code, point to your skill library folder and run the plugin-creation prompt above. \nUpload the resulting plugin package to Cowork (Add plugin ➜ Upload). \nIn Cowork’s text box, call your command by name, describing the multi-step workflow and expected outputs, as in the prompt above. "
-                }
-            ]
-        }
-    ]
-)
-print(message.content)
+---
+
+## Process
+
+### Step 1: Understand the Workflow
+
+Ask the user (if not already clear):
+1. **What does this workflow do?** (e.g., "turns call transcripts into strategy decks")
+2. **What inputs are needed?** (files, URLs, data sources)
+3. **What outputs should it produce?** (decks, spreadsheets, reports, images)
+4. **Which Claude environment?** (Claude Desktop Chat/Projects, Cowork, Claude Code)
+5. **Any MCP servers or skills required?** (e.g., Nano Banana for image generation, Chrome MCP for browsing)
+
+### Step 2: Create the Folder Structure
+
+Create the working folder with all necessary subfolders:
+
+```bash
+mkdir -p ~/Documents/[workflow-name]/{input,output,templates}
+```
+
+Organize by function:
+- `/input/` — raw materials the workflow reads
+- `/output/` — where generated files are saved
+- `/templates/` — brand templates, guidelines, reference docs
+
+### Step 3: Place or Create Required Files
+
+For each file the workflow needs:
+1. **If the user has it** → tell them exactly where to place it (e.g., "Put your brand template in `/templates/brand-template.pptx`")
+2. **If it needs to be created** → create it (e.g., a master tracking spreadsheet with the right columns)
+3. **If it's a config file** → generate it with the correct structure
+
+### Step 4: Configure MCP Servers
+
+For each required MCP server:
+1. Check if it's already installed: have the user verify in Claude Desktop → Settings → MCP Servers
+2. If not installed, provide setup instructions or link to docs
+3. Confirm it shows green/active status
+
+### Step 5: Configure Skills
+
+For each required skill:
+1. Check if it exists in the user's skill library
+2. If it needs to be created first, create it before proceeding
+3. Verify with: "List all skills you can access"
+
+### Step 6: Write the Prompt Stack
+
+Create the exact prompts the user will paste, in execution order. Each prompt must be:
+- **Complete** — includes all file paths, folder references, MCP tool names, skill names
+- **Copy-paste ready** — no placeholders the user needs to fill in (use the actual paths from Steps 2-3)
+- **Explicit about parallelism** — if sub-tasks can run in parallel, say so
+
+### Step 7: Verify Setup
+
+Before the user runs anything, confirm:
+- [ ] Folder structure exists with all required files in place
+- [ ] MCP servers are installed and active
+- [ ] Skills are accessible
+- [ ] Prompt stack is ready to paste
+
+---
+
+## Output Format
+
+When preparing a workflow, produce this structure:
+
+```
+## Workflow: [Name]
+**Summary**: [One line — what this workflow does]
+**Environment**: [Cowork / Claude Code / Chat Projects]
+
+### Folder Structure
+[Tree diagram with annotations]
+
+### Files Placed
+| File | Location | Source |
+|------|----------|--------|
+| [name] | /[path] | [user provides / auto-generated / template] |
+
+### MCP Servers
+| Server | Status | Setup |
+|--------|--------|-------|
+| [name] | [installed/needed] | [instructions if needed] |
+
+### Skills Required
+| Skill | Status |
+|-------|--------|
+| [name] | [available/needs creation] |
+
+### Prompt Stack
+**Prompt 1 of N** — [Purpose]
+Where to paste: [location]
+```
+[exact prompt text]
+```
+
+### Ready to Run
+[Checklist of verification items]
+```
+
+---
+
+## Good vs Bad Example
+
+User says: "Prepare a workflow that takes podcast transcripts and creates a growth strategy deck."
+
+❌ **Bad (vague, no actual setup):**
+> You'll need a folder with your transcripts and a prompt. Make sure you have the right tools.
+
+✅ **Good (actually creates everything):**
+> ```bash
+> mkdir -p ~/Documents/growth-research/{transcripts,brand-docs,output}
+> ```
+>
+> **Files to place:**
+> | File | Location | Source |
+> |------|----------|--------|
+> | *.txt transcripts | /transcripts/ | User provides |
+> | brand-guidelines.pdf | /brand-docs/ | User provides |
+>
+> **Prompt 1 of 1** — "Analyze transcripts and create strategy deck"
+> Where to paste: Cowork text box (folder: ~/Documents/growth-research/)
+> ```
+> Read all podcast transcripts in /transcripts/ and the brand context in /brand-docs/. Create a progress tracker to tick off each transcript. Then: (1) Extract top growth frameworks, tools, and themes into a spreadsheet. (2) Create a growth strategy deck for our brand using the most relevant frameworks, with implementation steps and metrics. Save all outputs to /output/. If any transcripts were missed, re-scan and update.
+> ```
+
+---
+
+## Rules
+
+- **Actually create the folders and files** — don't just describe them. Use bash commands to set up the structure.
+- **Never use placeholders in prompts** — use the real paths and file names from the setup steps.
+- **Ask before assuming** — if you don't know what MCP servers the user has, ask.
+- **Scale to complexity** — a simple single-prompt workflow gets a lean setup. A multi-MCP pipeline with parallel tasks gets the full treatment.
+- **Test the setup** — after creating folders and files, verify they exist before handing off the prompt stack.
