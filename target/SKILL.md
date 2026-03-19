@@ -242,6 +242,28 @@ This reference covers:
 - Animation restraint guidelines
 - Trust-building design patterns
 
+## Good vs Bad Example
+
+User shares a Figma URL for a dark-themed landing page hero section.
+
+❌ **Bad (ignores Figma, generic output):**
+> Here's a basic hero section with some animations. I used default colors and Inter font.
+
+✅ **Good (Figma-faithful, tokens extracted, purposeful animation):**
+> **Design Brief extracted from Figma:**
+> - Font: PP Neue Montreal (display), Satoshi (body)
+> - Palette: `--color-bg: #0c0c14`, `--color-text: #f0ece4`, `--color-accent: #c9a96e`
+> - Layout: 1280px max-width, centered hero with 160px top padding
+>
+> ```html
+> <section class="hero" style="background: var(--color-bg); padding: clamp(80px, 10vw, 160px) var(--space-lg);">
+>   <h1 class="hero-title reveal" style="font-family: 'PP Neue Montreal'; font-size: clamp(3rem, 7vw, 6rem); color: var(--color-text);">
+>     Your Statement Here
+>   </h1>
+> </section>
+> ```
+> Colors, fonts, and spacing match the Figma design exactly. Scroll reveal animation added with 0.8s fade-up.
+
 ## Common Pitfalls
 
 1. **Don't over-animate**: Institutional sites need restraint. 2-3 animation types max.
