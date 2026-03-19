@@ -1,111 +1,203 @@
 ---
-name: notion-research-documentation
-description: >
-  Searches across your Notion workspace, synthesizes findings from multiple pages, and
-  creates comprehensive research documentation saved as new Notion pages. Use this skill
-  when the user says "research X in Notion", "find everything about X", "compile a report
-  on X", "what do we know about X", "gather info on X from Notion", "create a research doc",
-  "synthesize our notes on X", or asks to search Notion and produce structured documentation.
-  Do NOT trigger for: meeting preparation (use notion-meeting-intelligence), capturing
-  conversation insights (use notion-knowledge-capture), or turning specs into tasks
-  (use notion-spec-to-implementation).
+name: notion-knowledge-capture
+description: Transforms conversations and discussions into structured documentation pages in Notion. Captures insights, decisions, and knowledge from chat context, formats appropriately, and saves to wikis or databases with proper organization and linking for easy discovery.
 ---
 
-# Research & Documentation
+# Knowledge Capture
 
-Enables comprehensive research workflows: search for information across your Notion workspace, fetch and analyze relevant pages, synthesize findings, and create well-structured documentation.
+Transforms conversations, discussions, and insights into structured documentation in your Notion workspace. Captures knowledge from chat context, formats it appropriately, and saves it to the right location with proper organization and linking.
 
 ## Quick Start
 
-When asked to research and document a topic:
+When asked to save information to Notion:
 
-1. **Search for relevant content**: Use `Notion:notion-search` to find pages
-2. **Fetch detailed information**: Use `Notion:notion-fetch` to read full page content
-3. **Synthesize findings**: Analyze and combine information from multiple sources
-4. **Create structured output**: Use `Notion:notion-create-pages` to write documentation
+1. **Extract content**: Identify key information from conversation context
+2. **Structure information**: Organize into appropriate documentation format
+3. **Determine location**: Use `Notion:notion-search` to find appropriate wiki page/database
+4. **Create page**: Use `Notion:notion-create-pages` to save content
+5. **Make discoverable**: Link from relevant hub pages, add to databases, or update wiki navigation so others can find it
 
-## Research Workflow
+## Knowledge Capture Workflow
 
-### Step 1: Search for relevant information
-
-```
-Use Notion:notion-search with the research topic
-Filter by teamspace if scope is known
-Review search results to identify most relevant pages
-```
-
-### Step 2: Fetch page content
+### Step 1: Identify content to capture
 
 ```
-Use Notion:notion-fetch for each relevant page URL
-Collect content from all relevant sources
-Note key findings, quotes, and data points
+From conversation context, extract:
+- Key concepts and definitions
+- Decisions made and rationale
+- How-to information and procedures
+- Important insights or learnings
+- Q&A pairs
+- Examples and use cases
 ```
 
-### Step 3: Synthesize findings
+### Step 2: Determine content type
 
-Analyze the collected information:
-- Identify key themes and patterns
-- Connect related concepts across sources
-- Note gaps or conflicting information
-- Organize findings logically
+```
+Classify the knowledge:
+- Concept/Definition
+- How-to Guide
+- Decision Record
+- FAQ Entry
+- Meeting Summary
+- Learning/Post-mortem
+- Reference Documentation
+```
 
-### Step 4: Create structured documentation
 
-Use the appropriate documentation template (see [reference/format-selection-guide.md](reference/format-selection-guide.md)) to structure output:
-- Clear title and executive summary
-- Well-organized sections with headings
-- Citations linking back to source pages
-- Actionable conclusions or next steps
+### Step 3: Structure the content
 
-## Output Format Specs
+```
+Format appropriately based on content type:
+- Use templates for consistency
+- Add clear headings and sections
+- Include examples where helpful
+- Add relevant metadata
+- Link to related pages
+```
 
-Choose format based on the user's needs:
 
-| Format | When to use | Length | Structure |
-|---|---|---|---|
-| Quick Brief | "Give me a summary", time-sensitive requests | 200–400 words | Title → 3-sentence executive summary → 3–5 key findings (1 sentence each) → sources list |
-| Research Summary | Default for most research requests | 500–1000 words | Title → executive summary (1 paragraph) → findings organized by theme (3–5 sections) → gaps/questions → recommended next steps → sources |
-| Comprehensive Report | "Deep dive", "full report", complex topics | 1000–2500 words | Title → executive summary → methodology → findings by theme (5+ sections with citations) → analysis → gaps → recommendations → appendix of sources |
+### Step 4: Determine destination
 
-**Citation format:** Use Notion page mentions inline: "According to [Project Brief](notion-mention), the target launch date is..." Every claim from Notion must link to its source page.
+```
+Where to save:
+- Wiki page (general knowledge base)
+- Specific project page (project-specific knowledge)
+- Documentation database (structured docs)
+- FAQ database (questions and answers)
+- Decision log (architecture/product decisions)
+- Team wiki (team-specific knowledge)
+```
 
-### Good/Bad Example: Research Finding
+### Step 5: Create the page
 
-> ✅ "Three separate project pages ([Q4 Planning](mention), [Marketing Roadmap](mention), [CEO Update Dec 2025](mention)) confirm the target launch date is March 2026. However, the [Engineering Status](mention) page (last updated Feb 15) flags a 2-week delay risk on the API integration. No page addresses the contingency plan for this delay."
+```
+Use Notion:notion-create-pages:
+- Set appropriate title
+- Use structured content from template
+- Set properties if in database
+- Add tags/categories
+- Link to related pages
+```
 
-> ❌ "Based on the available information, the project seems to be on track with some potential challenges. The team should continue monitoring progress and address any issues as they arise."
+### Step 6: Make content discoverable
+
+```
+Link the new page so others can find it:
+
+1. Update hub/index pages:
+   - Add link to wiki table of contents page
+   - Add link from relevant project page
+   - Add link from category/topic page (e.g., "Engineering Docs")
+   
+2. If page is in a database:
+   - Set appropriate tags/categories
+   - Set status (e.g., "Published")
+   - Add to relevant views
+   
+3. Optionally update parent page:
+   - If saved under a project, add to project's "Documentation" section
+   - If in team wiki, ensure it's linked from team homepage
+
+Example:
+Notion:notion-update-page
+page_id: "team-wiki-homepage-id"
+command: "insert_content_after"
+selection_with_ellipsis: "## How-To Guides..."
+new_str: "- <mention-page url='...'>How to Deploy to Production</mention-page>"
+```
+
+This step ensures the knowledge doesn't become "orphaned" - it's properly connected to your workspace's navigation structure.
+
+## Content Types
+
+Choose appropriate structure based on content:
+
+**Concept**: Overview → Definition → Characteristics → Examples → Use Cases → Related
+**How-To**: Overview → Prerequisites → Steps (numbered) → Verification → Troubleshooting → Related
+**Decision**: Context → Decision → Rationale → Options Considered → Consequences → Implementation
+**FAQ**: Short Answer → Detailed Explanation → Examples → When to Use → Related Questions
+**Learning**: What Happened → What Went Well → What Didn't → Root Causes → Learnings → Actions
+
+
+## Destination Patterns
+
+**General Wiki**: Standalone page → add to index → tag → link from related pages
+
+**Project Wiki**: Child of project page → link from project overview → tag with project name
+
+**Documentation Database**: Use properties (Title, Type, Category, Tags, Last Updated, Owner)
+
+**Decision Log Database**: Use properties (Decision, Date, Status, Domain, Deciders, Impact)
+
+**FAQ Database**: Use properties (Question, Category, Tags, Last Reviewed, Useful Count)
+
+See [reference/database-best-practices.md](reference/database-best-practices.md) for database selection guide and individual schema files.
+
+## Content Extraction from Conversations
+
+**Chat Discussion**: Key points, conclusions, resources, action items, Q&A
+
+**Problem-Solving**: Problem statement, approaches tried, solution, why it worked, future considerations
+
+**Knowledge Sharing**: Concept explained, examples, best practices, common pitfalls, resources
+
+**Decision Discussion**: Question, options, trade-offs, decision, rationale, next steps
+
+## Formatting Best Practices
+
+**Structure**: Use `#` (title), `##` (sections), `###` (subsections) consistently
+
+**Writing**: Start with overview, use bullets, keep paragraphs short, add examples
+
+**Linking**: Link related pages, mention people, reference resources, create bidirectional links
+
+**Metadata**: Include date, author, tags, status
+
+**Searchability**: Clear titles, natural keywords, common search tags, image alt-text
+
+## Indexing and Organization
+
+**Wiki Index**: Organize by sections (Getting Started, How-To Guides, Reference, FAQs, Decisions) with page links
+
+**Category Pages**: Create landing pages with overview, doc links, and recent updates
+
+**Tagging Strategy**: Use consistent tags for technology/tools, topics, audience, and status
+
+## Update Management
+
+**Create New**: Content is substantive (>2 paragraphs), will be referenced multiple times, part of knowledge base, needs independent discovery
+
+**Update Existing**: Adding to existing topic, correcting info, expanding concept, updating for changes
+
+**Versioning**: Add update history section for significant changes (date, author, what changed, why)
 
 ## Best Practices
 
-1. **Cast a wide net first**: Start with broad searches, then narrow down
-2. **Cite sources**: Always link back to source pages using mentions
-3. **Verify recency**: Check page last-edited dates for current information
-4. **Cross-reference**: Validate findings across multiple sources
-5. **Structure clearly**: Use headings, bullets, and formatting for readability
-
-## Page Placement
-
-By default, create research documents as standalone pages. If the user specifies:
-- A parent page → use `page_id` parent
-- A database → fetch the database first, then use appropriate `data_source_id`
-- A teamspace → create in that context
+1. **Capture promptly**: Document while context is fresh
+2. **Structure consistently**: Use templates for similar content
+3. **Link extensively**: Connect related knowledge
+4. **Write for discovery**: Use searchable titles and tags
+5. **Include context**: Why this matters, when to use
+6. **Add examples**: Concrete examples aid understanding
+7. **Maintain**: Review and update periodically
+8. **Get feedback**: Ask if documentation is helpful
 
 ## Advanced Features
 
-**Search filtering**: See [reference/advanced-search.md](reference/advanced-search.md)
-**Citation styles**: See [reference/citations.md](reference/citations.md)
+**Documentation databases**: See [reference/database-best-practices.md](reference/database-best-practices.md) for database schema patterns.
 
 ## Common Issues
 
-**"No results found"**: Try broader search terms or different teamspaces
-**"Too many results"**: Add filters or search within specific pages
-**"Can't access page"**: User may lack permissions, ask them to verify access
+**"Not sure where to save"**: Default to general wiki, can move later
+**"Content is fragmentary"**: Group related fragments into cohesive doc
+**"Already exists"**: Search first, update existing if appropriate
+**"Too informal"**: Clean up language while preserving insights
 
 ## Examples
 
-See [examples/](examples/) for complete workflow demonstrations:
-- [examples/market-research.md](examples/market-research.md) - Researching market trends
-- [examples/technical-investigation.md](examples/technical-investigation.md) - Technical deep-dive
-- [examples/competitor-analysis.md](examples/competitor-analysis.md) - Multi-source synthesis
+See [examples/](examples/) for complete workflows:
+- [examples/conversation-to-faq.md](examples/conversation-to-faq.md) - FAQ from Q&A
+- [examples/decision-capture.md](examples/decision-capture.md) - Decision record
+- [examples/how-to-guide.md](examples/how-to-guide.md) - How-to from discussion
 
