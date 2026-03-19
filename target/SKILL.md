@@ -1,150 +1,206 @@
 ---
-name: workflow-orchestration
-description: >
-  Framework for orchestrating AI agents that plan, verify, and improve themselves over time. Use when the user says: 'orchestrate this workflow', 'set up agent orchestration', 'plan-verify-improve loop', 'self-improving agents', 'multi-agent workflow', 'autonomous task pipeline', or asks how to make Claude plan before acting, use subagents effectively, track lessons learned, or build self-correcting AI workflows.
-  Do NOT trigger for: simple one-off tasks (just do them), writing code without orchestration needs (use web-coding-assistant), designing visual workflows (use visual-workflow-builder), converting workflows to manual docs (use workflow-to-manual-skill), or general architecture questions (use architecture).
+name: workflow-to-manual-skill
+description: This skill transforms any described workflow into a clear, step-by-step manual that tells the user exactly what to set up on their computer — folders, files, prompts, MCPs, skills, and plugins — before they can run it. Every time the user describes a workflow, Claude produces a structured setup-and-execution guide.
 ---
 
-# Workflow Orchestration
+Workflow-to-Manual Skill
+Purpose
+This skill transforms any described workflow into a clear, step-by-step manual that tells the user exactly what to set up on their computer — folders, files, prompts, MCPs, skills, and plugins — before they can run it. Every time the user describes a workflow, Claude produces a structured setup-and-execution guide.
 
-A framework for AI agents that plan before acting, verify before marking done, and improve from every mistake.
+When to Activate
+Activate this skill whenever the user describes a workflow, automation, or repeatable process they want to run using Claude (Desktop, Cowork, Claude Code, Projects, or any combination). Also activate when the user says things like:
 
----
+"How do I set this up?"
+"Turn this into steps"
+"Make me a manual for this"
+"What do I need to do first?"
+Or simply describes a desired outcome involving files, prompts, MCPs, or skills
 
-## Phase 1: Plan Before Building
 
-Enter plan mode for ANY non-trivial task (3+ steps or architectural decisions).
+Output Format
+For every workflow described, produce a manual with these exact sections:
 
-### Process
+📋 WORKFLOW MANUAL: [Workflow Name]
+One-line summary: [What this workflow does in plain English]
 
-1. **Assess complexity**: If the task has 3+ steps, touches multiple files, or involves architectural decisions → enter plan mode. Simple, obvious fixes → skip planning.
-2. **Write a spec**: Define what success looks like before writing code. Include inputs, outputs, constraints, and edge cases.
-3. **Break into checkable tasks**: Write plan to `tasks/todo.md` with checkable items (`- [ ] task`).
-4. **Check in**: Share the plan with the user before starting implementation.
-5. **Re-plan on failure**: If something goes sideways, STOP and re-plan immediately — don't keep pushing a broken approach.
+SECTION 1: PREREQUISITES — What You Need Before You Start
+List every dependency. Be explicit. Assume the user has never done this before.
+Software & Access:
 
----
+ [e.g., Claude Desktop installed and logged in]
+ [e.g., Claude Pro/Team subscription for Cowork access]
+ [e.g., Chrome browser installed]
 
-## Phase 2: Use Subagents Strategically
+MCP Servers Required:
 
-Keep the main context window clean by offloading work to subagents.
+ [MCP name] — [what it does] — [how to install/enable it, or link to docs]
+ [Repeat for each MCP]
 
-### When to Use Subagents
+Custom Skills Required:
 
-| Scenario | Action |
-|----------|--------|
-| Research or exploration | Spawn a subagent to investigate and report back |
-| Parallel analysis (e.g., check 3 files) | Spawn multiple subagents concurrently |
-| Complex problem needing more compute | Throw more subagents at it |
-| Simple, single-file edit | Do it yourself — subagent overhead isn't worth it |
+ [Skill name] — [whether it needs to be created first or already exists]
 
-### Rules
+Plugins Required:
 
-- One task per subagent for focused execution
-- Give subagents clear, self-contained prompts (they don't share your context)
-- Use subagent results to inform your next move — don't duplicate their work
+ [Plugin name] — [official or custom, how to install]
 
----
+If none are needed for a category, write "None required."
 
-## Phase 3: Self-Improvement Loop
+SECTION 2: FOLDER SETUP — What to Create on Your Computer
+Provide the exact folder structure to create. Use a tree diagram.
+Copy/[Root Folder Name]/
+├── /[subfolder_1]/          ← [what goes here]
+├── /[subfolder_2]/          ← [what goes here]
+├── [filename.ext]           ← [what this file is / where to get it]
+├── [filename.ext]           ← [what this file is / where to get it]
+└── [filename.ext]           ← [what this file is / where to get it]
+Step-by-step to create this:
 
-After ANY correction from the user, capture the lesson so it never happens again.
+Open Finder/File Explorer
+Navigate to [location, e.g., Desktop or Documents]
+Create a new folder called [name]
+Inside that folder, create subfolders: [list]
+Place the following files into the root folder: [list each file and where it comes from]
+Place the following files into [subfolder]: [list]
 
-### Process
 
-1. **Detect correction**: User says "no", "don't do that", "that's wrong", or redirects your approach.
-2. **Extract the pattern**: What category of mistake was this? (e.g., "assumed X without checking", "over-engineered Y")
-3. **Write a rule**: Add to `tasks/lessons.md` in this format:
+SECTION 3: FILES TO PREPARE — What Goes in Each Folder
+For each file the workflow needs, specify:
+FileFormatWhat It ContainsWhere to Get / Create ItWhich Folder[name][.xlsx/.pptx/.txt/.pdf/etc.][description][create manually / export from X / download from Y]/[folder]
+If a file needs specific structure (like a spreadsheet with certain columns), describe it:
 
-```markdown
-## [Category]
-- **Mistake**: [What went wrong]
-- **Rule**: [Concrete rule to prevent recurrence]
-- **Example**: [Specific instance]
-```
+[filename.ext] structure:
 
-4. **Review at session start**: Read `tasks/lessons.md` at the beginning of each session for the relevant project.
-5. **Iterate**: If the same category appears 3+ times, the rule isn't specific enough — rewrite it.
+Column A: [label] — [description]
+Column B: [label] — [description]
+[etc.]
 
----
 
-## Phase 4: Verify Before Done
 
-Never mark a task complete without proving it works.
+SECTION 4: CLAUDE SETUP — Where to Configure Things
+Depending on the workflow, walk through the exact Claude interface steps:
+If using Claude Projects (Chat):
 
-### Verification Checklist
+Open Claude Desktop → Chat
+Click "Projects" → "New Project"
+Name it: [name]
+In Project Instructions, paste the following:
 
-- [ ] Run tests — all pass
-- [ ] Check logs — no errors or warnings
-- [ ] Diff behavior — compare main vs. your changes when relevant
-- [ ] Self-review — "Would a staff engineer approve this?"
-- [ ] Demonstrate correctness — show the user evidence, not just assertions
+Copy[Exact project instructions text]
 
-### For Bug Fixes
+Upload these files to the project: [list]
 
-- Point at logs, errors, failing tests → then resolve them
-- Zero context switching required from the user
-- Fix failing CI tests autonomously — don't ask how
+If using Cowork:
 
----
+Open Claude Desktop → Cowork
+Click "Choose folder" → select /[folder path]
+[If importing from a Project]: Go to your [Project Name] project → click "Add to Cowork"
+In the Cowork text box, paste the prompt from Section 5
 
-## Phase 5: Demand Elegance (Balanced)
+If using Claude Code:
 
-- For non-trivial changes: pause and ask "is there a more elegant way?"
-- If a fix feels hacky: "Knowing everything I know now, implement the elegant solution."
-- Skip this for simple, obvious fixes — don't over-engineer.
-- Challenge your own work before presenting it.
+Open Claude Code
+Navigate to /[folder path]
+Paste the prompt from Section 5
 
----
+MCP Configuration:
 
-## Output Format
+In Claude Desktop → Settings → MCP Servers (or Cowork → Settings → Capabilities)
+Ensure the following are toggled ON:
 
-### tasks/todo.md Structure
+ [MCP name]
+ [MCP name]
 
-```markdown
-# [Project/Task Name]
 
-## Plan
-- [ ] Step 1: [description]
-- [ ] Step 2: [description]
-- [x] Step 3: [completed step]
 
-## Review
-- **What worked**: [summary]
-- **What didn't**: [summary]
-- **Changes from plan**: [deviations and why]
-```
+Skills Configuration:
 
-### tasks/lessons.md Structure
+[If skill needs to be created first, say so and point to a creation step]
+In Cowork → Settings → Capabilities → Add Skill
+Upload [skill file/ZIP]
+Verify by prompting: "List all skills you can access"
 
-```markdown
-# Lessons Learned
+Plugins Configuration:
 
-## Over-Engineering
-- **Mistake**: Added abstraction layer for a one-time operation
-- **Rule**: Don't create helpers/utilities for single-use code. Three similar lines > premature abstraction.
-- **Example**: Created a `formatResponse()` helper called exactly once
+In Cowork → Add Plugin → [Upload / Choose from official list]
+Install [plugin name]
+Verify by prompting: "List all commands and skills in the [plugin name] plugin"
 
-## Assumptions
-- **Mistake**: Assumed API returned paginated results without checking
-- **Rule**: Always read the API response shape before writing parsing code
-- **Example**: Wrote pagination loop for an endpoint that returns all results at once
-```
 
-### Progress Updates
+SECTION 5: THE PROMPT(S) — Exactly What to Paste
+Provide every prompt the user needs to copy-paste, in execution order.
+Prompt 1 of [N] — [Purpose, e.g., "Run the main workflow"]
+Where to paste this: [Cowork text box / Claude Code / Chat project]
+Copy[Exact prompt text, fully written out, ready to copy-paste. Include all specifics — file names, folder references, MCP tool names, skill names, output file names, parallel task instructions, progress tracker requests, etc.]
+Prompt 2 of [N] — [Purpose, e.g., "Verification / follow-up"]
+Where to paste this: [location]
+Copy[Exact prompt text]
+[Repeat for each prompt in the stack]
 
-At each milestone, give the user a brief update:
+SECTION 6: WHAT TO EXPECT — Outputs & Where to Find Them
+OutputFormatWhere It Will Be SavedWhat It Contains[name][.pptx/.xlsx/.html/etc.]/[folder]/[filename][description]
+During execution, you should see:
 
-```
-✅ Step 2/5 complete: Database schema migrated
-   Next: Updating API endpoints to match new schema
-```
+ [e.g., A to-do list appearing in Cowork showing sub-tasks]
+ [e.g., Sub-agents spinning up for parallel tasks]
+ [e.g., Progress tracker updating as files are processed]
+ [e.g., Files appearing in your output folder as they're generated]
 
----
 
-## Core Principles
+SECTION 7: TROUBLESHOOTING & VERIFICATION
+After the workflow completes, verify:
 
-- **Simplicity first**: Make every change as simple as possible. Impact minimal code.
-- **No laziness**: Find root causes. No temporary fixes. Senior developer standards.
-- **Minimal impact**: Changes should only touch what's necessary. Avoid introducing bugs.
-- **Plan → Build → Verify → Learn**: This is the loop. Every task follows it.
+ [Check: e.g., Open the spreadsheet and confirm all rows have status "Complete"]
+ [Check: e.g., Count output files in /ad_creatives — should be [N] images]
+ [Check: e.g., Open the deck and confirm it follows the brand template]
+
+If something went wrong:
+
+Missing outputs? → Paste this follow-up prompt: "Double-check the progress tracker and confirm no [items] were skipped. If any are missing, process them and update the outputs."
+MCP not working? → Go to Settings → MCP Servers → confirm [name] shows a green status. Restart Claude Desktop if needed.
+Skill not recognized? → Run: "List all skills you can access" and verify [skill name] appears.
+Files not found? → Confirm the working folder in Cowork points to the correct path. Files must be in the root or specified subfolders.
+
+
+SECTION 8: MAKING IT REUSABLE (Optional)
+If the user wants to reuse this workflow:
+To run this again with new inputs:
+
+[e.g., Replace the transcript file in /[folder] with the new one]
+[e.g., Update row data in the master spreadsheet]
+[e.g., Re-run Prompt 1 from Section 5]
+
+To package this as a skill:
+Paste this prompt in Claude Code pointing to your skill library folder:
+Copy[Provide the exact skill-creation prompt tailored to this workflow]
+To package this as a plugin (for team sharing):
+Paste this prompt in Claude Code:
+Copy[Provide the exact plugin-creation prompt if applicable]
+
+Processing Rules
+When generating a manual, follow these rules:
+
+Never assume the user knows where to click. Spell out the interface path (e.g., "Claude Desktop → Cowork → Settings → Capabilities").
+Always provide copy-paste-ready prompts. Never say "write a prompt that does X." Write the actual prompt.
+Always specify exact file names and folder paths. Use the names from the user's description, or propose sensible defaults and flag them as suggestions.
+If the workflow requires an MCP, state which one and how to enable it. If you don't know the exact installation steps, say: "Ensure [MCP name] is installed and enabled — check Claude's MCP documentation for setup instructions."
+If the workflow involves skills that don't exist yet, include a creation step BEFORE the execution step. Make it clear the user must build the skill first.
+If the workflow involves parallel sub-tasks, explicitly note this in the prompt and in the "What to Expect" section.
+If information is missing from the user's description, ASK before generating. Specifically ask about:
+
+What files they already have vs. need to create
+Which MCPs they have installed
+Whether they want outputs in specific formats
+Whether this should be a one-off or reusable (skill/plugin)
+
+
+Scale the manual to the complexity. A simple one-prompt workflow gets a shorter manual. A multi-MCP, multi-skill pipeline gets the full treatment with all 8 sections.
+Use checkboxes for every action item so the user can track progress.
+End every manual with the verification steps. Never skip Section 7.
+
+
+Example Interaction
+User says: "I want to take a call transcript and turn it into a strategy deck using my brand template."
+Claude responds with the full manual, starting by asking any clarifying questions needed, then producing all 8 sections with exact folders to create, files to place, prompts to paste, and outputs to expect.
+
+This skill is always active. Any time a user describes a workflow involving files, prompts, MCPs, skills, or Claude tools, produce the manual in this format.
