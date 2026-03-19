@@ -109,6 +109,27 @@ Key customisations:
 
 ---
 
+### Presenter step-card format
+
+Each step card in the presenter follows this structure:
+```
+┌─────────────────────────────────────┐
+│ [Icon]  Step N: [Title]      [Tool] │
+│                                     │
+│ [1-sentence description of action]  │
+│                                     │
+│ ⏱ Duration (optional)  → Next step │
+└─────────────────────────────────────┘
+```
+
+- **Icon:** Emoji matching the node type (⚡ trigger, ⚙️ action, 🔀 decision, 🔍 filter, 📤 output)
+- **Tool badge:** Colored pill with tool name (e.g., `Claude`, `Notion`, `Make.com`). Omit if no tool.
+- **Description:** One sentence, active voice, explaining what happens at this step.
+- **Duration:** Optional. Include only if the user specified timing.
+- **Summary header** at top of presenter: "N steps · M tools · K human touchpoints"
+
+---
+
 ## Step 3 — Offer Next Steps
 
 After generating both artifacts, offer:
