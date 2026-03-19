@@ -1,6 +1,6 @@
 ---
 name: brand-platform-workshop
-description: "Michel Gotlib's complete Brand Platform methodology — a 6-workshop process for building comprehensive brand strategies. Use this skill whenever Michel mentions brand platform, workshops, mission statement, brand positioning, 'Who We Are', brand ambition, priority targets, customer journey, brand elements, brand values, brand personality, persona generation, stakeholder mapping, marketing plan, brand brief, designer brief, copywriter brief, or any client engagement related to brand strategy consulting. Also trigger when Michel says 'new client', 'proposal', 'workshop prep', 'Mural board', 'cluster stickies', 'tally votes', 'generate mission', or references any phase (0-8) of the brand platform process. This skill orchestrates 3 sub-skills: michels-presentation-designer (for all PPTX), strategic-thinker (for strategy), and elite-copywriter (for brand copy). Always load this skill first, then reference sub-skills as needed."
+description: "Michel Gotlib's complete Brand Platform methodology — a 6-workshop process for building comprehensive brand strategies. Use this skill whenever Michel mentions brand platform, workshops, mission statement, brand positioning, 'Who We Are', brand ambition, priority targets, customer journey, brand elements, brand values, brand personality, persona generation, stakeholder mapping, marketing plan, brand brief, designer brief, copywriter brief, or any client engagement related to brand strategy consulting. Also trigger when Michel says 'new client', 'proposal', 'workshop prep', 'Mural board', 'cluster stickies', 'tally votes', 'generate mission', or references any phase (0-8) of the brand platform process. This skill orchestrates 3 sub-skills: michels-presentation-designer (for all PPTX), strategic-thinker (for strategy), and elite-copywriter (for brand copy). Always load this skill first, then reference sub-skills as needed. Do NOT trigger for: standalone brand copy requests without workshop context (use elite-copywriter), general branding theory or positioning questions (use strategic-thinker), tone-of-voice ghostwriting (use mg-tone-of-voice), or presentation design unrelated to brand platform workshops (use michels-presentation-designer)."
 ---
 
 # Brand Platform Workshop
@@ -56,8 +56,6 @@ Execute this cycle instantly whenever Michel signals it. This is the most repeat
 
 ## Phase-by-Phase Reference
 
-Detailed instructions for each phase are in `references/phases.md`. Read the relevant phase section when Michel triggers that phase.
-
 Quick reference for what each phase produces:
 
 **Phase 0 — Proposal:** Professional PPTX proposal with variable fields (client name, workshops, price, dates) + 50% deposit invoice (France e-invoicing compliant 2026).
@@ -95,9 +93,14 @@ List stakeholders, define criteria, score 1-10, identify top 5-10, build persona
     /briefs/          → designer-brief.docx, copywriter-brief.docx
 ```
 
-## Cowork Prompts
+## Edge Cases
 
-Ready-to-use prompts for each phase are in `references/cowork-prompts.md`. Read the relevant section when entering each phase.
+- **Skipped phase:** Michel may skip phases or do them out of order. Each phase is self-contained — execute whatever phase Michel requests without requiring prior phases to be complete.
+- **No Mural MCP:** If Mural is not connected, generate sticky-note content as markdown tables (columns: idea, cluster, votes) and ask Michel to paste into Mural manually.
+- **Mid-workshop restart:** If Michel says "redo" or "start over" for a component, discard prior output for that component only and re-run the Generate→Cluster→Vote cycle.
+- **Partial engagement:** Some clients do 3 workshops, not 6. Only execute the phases Michel requests.
+
+---
 
 ## MCP Connections
 
