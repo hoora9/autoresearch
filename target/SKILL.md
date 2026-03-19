@@ -1,6 +1,8 @@
 ---
 name: ai-screenshot-organizer
-description: "Scan the user's Mac Photos library for AI-related screenshots, organize them into a dedicated folder, extract information from each screenshot, and build a Word document with a clickable numbered table of contents, categorized sections, and researched explanations. This is a living document that updates incrementally on each run. Use this skill whenever the user mentions organizing AI screenshots, extracting info from screenshots into a document, building an AI knowledge base from photos, or wants to scan their photos for AI-related content. Also trigger when the user says 'update my AI doc', 'scan for new AI screenshots', 'organize my AI folder', or references this workflow in any way."
+description: >
+  Scan the user's Mac Photos library for AI-related screenshots, organize them into ~/Documents/AI/screenshots/, extract information, and build a living Word document with clickable TOC, categorized sections, and researched explanations. Use when the user says: 'update my AI doc', 'scan for new AI screenshots', 'organize my AI folder', 'organize AI screenshots', 'build AI knowledge base from photos', 'scan photos for AI content', or references this workflow.
+  Do NOT trigger for: general photo organization (not AI-specific), screenshot-to-code tasks (use frontend-design or web-coding-assistant), reading a single screenshot the user shares (just use Read tool), or document creation unrelated to AI screenshot cataloging.
 ---
 
 # AI Screenshot Organizer
