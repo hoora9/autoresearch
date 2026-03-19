@@ -1,6 +1,8 @@
 ---
 name: board-of-directors
-description: "A RAG knowledge base of legendary business leaders (Steve Jobs, Elon Musk, Sara Blakely, etc.) acting as an AI Board of Directors. Use when the user wants strategic business advice, product thinking, leadership guidance, or entrepreneurial mentorship from iconic founders and executives."
+description: >
+  A RAG knowledge base of legendary business leaders (Steve Jobs, Alex Hormozi, Geoffrey Hinton, MrBeast, Einstein, Ray Dalio, Satya Nadella, Jony Ive, Beyoncé, Warren Buffett) acting as an AI Board of Directors. Use when the user asks: 'what would Steve Jobs do', 'ask the board', 'board of directors', 'get advice from [leader name]', 'what would [leader] think about this', 'run this by the board', 'advisory panel', 'consult the founders', or wants strategic business advice framed through specific iconic leader personas.
+  Do NOT trigger for: general business strategy without leader personas (use strategic-thinker), brand copywriting (use elite-copywriter), tone-of-voice guidance (use mg-tone-of-voice), or generic ChatGPT-style advice not tied to a specific leader's philosophy.
 ---
 
 
