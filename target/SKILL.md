@@ -1,6 +1,8 @@
 ---
 name: figma-designer
-description: Transform Figma designs into production-ready, animated websites and components. Use this skill whenever the user mentions Figma, references a Figma file or URL, asks to extract designs from Figma, wants to convert Figma to code, or needs design tokens/variables pulled from Figma. Also trigger when the user says "pull from Figma", "match my Figma", "Figma to HTML/React", "design handoff", "extract my design", or references design specs, component libraries, or design systems from Figma. This skill bridges Figma's static designs with sophisticated animated web implementations using GSAP, scroll effects, and premium motion design. Requires Figma MCP tools. Combines well with frontend-design and kinetic-minimalism skills.
+description: >
+  Transform Figma designs into production-ready, animated websites and components. Use this skill whenever the user mentions Figma, references a Figma file or URL, asks to extract designs from Figma, wants to convert Figma to code, or needs design tokens/variables pulled from Figma. Also trigger when the user says 'pull from Figma', 'match my Figma', 'Figma to HTML/React', 'design handoff', 'extract my design', or references design specs, component libraries, or design systems from Figma. Requires Figma MCP tools. Combines well with frontend-design and kinetic-minimalism skills.
+  Do NOT trigger for: building websites without a Figma reference (use frontend-design or kinetic-minimalism), creating Figma diagrams in FigJam (use Figma MCP directly), 3D/WebGL development (use webgl-3d-dev), or general GSAP animation questions without a Figma design (use gsap-cheat-sheet-skills).
 ---
 
 # Figma Designer Skill
