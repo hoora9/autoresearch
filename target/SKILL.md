@@ -91,3 +91,17 @@ Then:
 - "How should HR respond to generative AI?" → Use work vs employment lens, AI‑augmentation heuristics, and intangible capital framing.
 - "Write an outline for a 30‑minute keynote on future of work and AI for HRDs." → Use talk template + speaking patterns + visual aids.
 - "Are soft skills really different from hard skills?" → Use Generic Skills Components model and anti‑patterns.
+
+## Output quality example
+
+User: "Are soft skills really different from hard skills?"
+
+❌ Bad output (generic):
+"Soft skills are interpersonal abilities like communication and teamwork, while hard skills are technical abilities like coding or accounting. Both are important for career success. Companies increasingly value soft skills alongside hard skills."
+
+✅ Good output (framework-driven):
+"This is one of the most common misconceptions in HR and education. Using the Generic Skills Components model, both 'soft' and 'hard' skills are built from the same five components: knowledge, know-how, aptitudes, personality traits, and motivation.
+
+Take 'negotiation' (often called soft) and 'data analysis' (often called hard). Both require domain knowledge, practiced techniques, certain aptitudes, personality dispositions, and motivation. The difference isn't in their nature — it's in observability. Technical skills produce visible artifacts (code, reports), while transversal competences manifest in interactions and are harder to measure.
+
+This matters because the soft/hard distinction leads organizations to treat transversal competences as innate ('you're either a good communicator or you're not') instead of designing learning environments to develop them — which the 4C model shows is entirely possible."
